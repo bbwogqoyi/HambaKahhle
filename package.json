@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "init-server": "npm install -g live-server",
-    "build": "postcss src/css/tailwind.css -o public/build/tailwind.css && postcss src/css/custom.css -o public/build/custom.css",
+    "build": "postcss postcss_dev/css/tailwind.css -o public/css/tailwind.css && postcss postcss_dev/css/custom.css -o public/css/custom.css",
     "server": "live-server public",
     "watch": "postcss --watch src/**/*.css --dir public/build",
     "dev": "npm-run-all -p watch server",
+    "deploy": "",
     "test": "echo \"Error: no test specified\""
   },
   "repository": {
