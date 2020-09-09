@@ -1,0 +1,11 @@
+Getting Started
+- Create a new project: mkdir myProject && cd myProject
+- Initialise the NPM directory: npm init
+- Install tailwind, postcss (for processing) and autoprefixer (adds vendor prefixes to your code): npm install tailwindcss postcss-cli autoprefixer
+- Create a tailwind config file (tailwind.config.js): npx tailwind init
+- Create a postcss.config.js file, and copy the exports from below¹: touch postcss.config.js
+- Create a the tailwind css file & directory, and copy the includes from below²: mkdir css && touch css/tailwind.css
+- Add a build script to package.json: "build": "postcss css/tailwind.css -o public/build/tailwind.css"
+- Build the files: npm run build
+- Create your index.html file, and include the built css: <link rel="stylesheet" href="build/tailwind.css">
+- Follow the Tailwind CSS docs and get designing!
