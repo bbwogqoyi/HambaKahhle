@@ -6,13 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/tailwind.css" />
   <link rel="stylesheet" href="../css/custom.css" />
+  <script type="text/javascript" src="validators.js"></script>
   <title>Sign Up</title>
 </head>
 
 <?php
-  require_once("../common/utils.php");
+  require("../common/utils.php");
 
-  if(isset($_REQUEST['newUser'])) {
+  if(isset($_REQUEST['newUser']) && isset($_REQUEST["submit"])) {
     $id = $_POST['idNum'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -21,21 +22,20 @@
     $password = $_POST['password'];
 
     $query = 
-      "INSERT INTO table_name (column1, column2, column3, ...)
-        VALUES (value1, value2, value3, ...);";
-    if(executeQuery($query)) {
-      header("Location: sign-in.php");
-    } else {
-      header("Location: ../common/404.html");
-    }
+      "INSERT INTO clients (firstname, lastname, contactNumber, email, password)
+        VALUES ('$firstname', '$lastname', '$contact', '$email', '$password');";
+    // $result = executeQuery($query);
+    // if($result) {
+    //   header("Location: sign-in.php");
+    // } else {
+    //   header("Location: ../common/404.html");
+    // }
     
   } else {
-    include 'sign-up-template.php';
+    include 'register_html.php';
   }
 
 
 ?>
-
-
 
 </html>

@@ -2,7 +2,7 @@
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-2/3 lg:w-1/3">
       <h1 class="font-light text-4xl mb-6 text-center">Register</h1>
-      <form action="sign-up.php" method="POST">
+      <form id="newUserForm" action="register.php" method="POST" onsubmit="return validateRegistation();">
         <div class="border-blue-500 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg">
           <div class="mb-4">
             <label class="font-bold text-grey-darker block mb-2">
@@ -62,7 +62,7 @@
           </div>
           <div class="inline-flex">
             <div class="flex items-center">
-              <button type="submit" id="newUser" name="newUser" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded">
+              <button onclick="validateRegistration()" id="newUser" name="newUser" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded">
                 Register
               </button>
             </div>
@@ -81,3 +81,44 @@
     </div>
   </div>
 </body>
+<script>
+  var validateRegistation = function() {
+  var isValid = inputValidator
+    .getElementById("idNum")
+    .exactNumberOfDigits(13)
+    .getState();
+  
+  isValid = isValid && 
+    inputValidator
+    .getElementById("firstname")
+    .isNotEmptyOrWhitespace()
+    .getState();
+
+  isValid = isValid && 
+    inputValidator
+    .getElementById("lastname")
+    .isNotEmptyOrWhitespace()
+    .getState();
+
+  isValid = isValid && 
+    inputValidator
+    .getElementById("email")
+    .emailFormat()
+    .getState();
+  
+  isValid = inputValidator
+    .getElementById("contact")
+    .predicate(
+      function(value) {
+        return value.length>=10 && value.length<12;
+      }
+    )
+    .getState();
+  
+  if(isValid) {
+    //document.getElementById("newUserForm").submit();
+  } 
+
+  return isValid;
+}
+</script>

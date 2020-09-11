@@ -2,7 +2,7 @@
 // reusable helper function to execute queries on the DB
 function executeQuery($query) {
   // database credentials
-  require_once("config.php");
+  require_once("config.local.php");
 
   // make connection to db
   $conn = 
@@ -11,8 +11,8 @@ function executeQuery($query) {
   
   // execute query
   $result = 
-    mysqli_query($conn, $query);
-    //or die("Could not execute query!");
+    mysqli_query($conn, $query)
+    or die("Could not execute query!");
 
   // close db connection
   mysqli_close($conn);
