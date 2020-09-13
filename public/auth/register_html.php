@@ -2,16 +2,9 @@
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-2/3 lg:w-1/3">
       <h1 class="font-light text-4xl mb-6 text-center">Register</h1>
-      <form id="newUserForm" onsubmit="return validateRegistation();">
+      <form id="newUserForm" action="register.php" method="POST" onsubmit="return validateRegistation();">
         <div class="border-blue-500 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg">
-          <div class="mb-4">
-            <label class="font-bold text-grey-darker block mb-2">
-              ID Number
-            </label>
-            <input type="text" id="idNum" name="idNum"
-              class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
-              placeholder="930601 XXXX 082" />
-          </div>
+
           <div class="mb-4">
             <label class="font-bold text-grey-darker block mb-2">
               Name
@@ -62,7 +55,7 @@
           </div>
           <div class="inline-flex">
             <div class="flex items-center">
-              <button id="newUser" name="newUser" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded">
+              <button type="submit" id="newUser" name="newUser" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded">
                 Register
               </button>
             </div>
@@ -83,17 +76,11 @@
 </body>
 <script>
   var validateRegistation = function() {
-    var isValid = inputValidator
-      .getElementById("idNum")
-      .exactNumberOfDigits(13)
-      .getState();
-    
     isValid = 
       inputValidator
       .getElementById("firstname")
       .isNotEmptyOrWhitespace()
-      .getState()
-      && isValid;
+      .getState();
   
     isValid =
       inputValidator
@@ -114,7 +101,7 @@
       .getElementById("contact")
       .predicate(
         function(value) {
-          return value!==undefined && length>=10 && value.length<12;
+          return value!==undefined && value.length>=10 && value.length<12;
         }
       )
       .getState()
@@ -130,10 +117,11 @@
     isValid = 
       inputValidator
       .getElementById("confirm_password")
-      .matchingValue(document.getElementById('password').value)
+      .matchingHTMLElement("password")
       .getState()
       && isValid;
     
+    console.log(isValid);
     if(isValid) document.getElementById("newUserForm").submit();
     return isValid;
   }

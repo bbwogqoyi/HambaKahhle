@@ -13,7 +13,7 @@
 <?php
   require("../common/utils.php");
 
-  if(isset($_REQUEST['newUser']) && isset($_REQUEST["submit"])) {
+  if(isset($_REQUEST['newUser'])) {
     $id = $_POST['idNum'];
     $firstname = filter_var($_POST['firstname'], FILTER_SANITIZE_STRING);
     $lastname = filter_var($_POST['lastname'], FILTER_SANITIZE_STRING);

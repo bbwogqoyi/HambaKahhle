@@ -17,32 +17,29 @@ var inputValidator = {
       },
       'isNotEmptyOrWhitespace': function() {
         var value = 
-          this._node.value == null || 
-          this._node.value == undefined || 
-          String.prototype.trim(this._node.value).length === 0;
+          this._node.value === undefined || 
+          this._node.value.length === 0;
         this._setState(!value);
         return this;
       },
       'exactNumberOfDigits': function(count) {
         var isNumber = 
-          !(this._node.value == undefined || 
-          String.prototype.trim(this._node.value).length === 0) && 
+          !(this._node.value === undefined || 
+          this._node.value.length === 0) && 
           !isNaN(this._node.value);
         var isInRange = this._node.value.length===count;
         this._setState(isNumber && isInRange);
         return this;
       },
-      'matchingValue': function(value) {
-        var matching = 
-          !(this._node.value == undefined || 
-          String.prototype.trim(this._node.value).length === 0) && 
-          this._node.value === value;
-          this._setState(matching);
-          return this;
+      'matchingHTMLElement': function(id) {
+        var elem = document.getElementById(id);
+        var matching = this._node.value === elem.value; 
+        this._setState(matching);
+        return this;
       },
       'predicate': function(fn) {
         var value = this._node.value || '';
-        var verdict = fn.call(value);
+        var verdict = fn.call(this, value);
         this._setState(verdict);
         return this;
       },
