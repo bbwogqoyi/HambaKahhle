@@ -18,20 +18,31 @@ var inputValidator = {
       'isNotEmptyOrWhitespace': function() {
         var value = 
           this._node.value == null || 
+          this._node.value == undefined || 
           String.prototype.trim(this._node.value).length === 0;
         this._setState(!value);
         return this;
       },
       'exactNumberOfDigits': function(count) {
         var isNumber = 
-          this.isNotEmptyOrWhitespace() && 
+          !(this._node.value == undefined || 
+          String.prototype.trim(this._node.value).length === 0) && 
           !isNaN(this._node.value);
         var isInRange = this._node.value.length===count;
         this._setState(isNumber && isInRange);
         return this;
       },
+      'matchingValue': function(value) {
+        var matching = 
+          !(this._node.value == undefined || 
+          String.prototype.trim(this._node.value).length === 0) && 
+          this._node.value === value;
+          this._setState(matching);
+          return this;
+      },
       'predicate': function(fn) {
-        var verdict = fn.call(this._node.value)
+        var value = this._node.value || '';
+        var verdict = fn.call(value);
         this._setState(verdict);
         return this;
       },
@@ -54,6 +65,6 @@ var inputValidator = {
         this._isValidationValid = flag;
         this._node.style.borderColor = this._isValidationValid ? '#e2e8f0': '#f56565';
       }
-    };
+    }
   }
 }
