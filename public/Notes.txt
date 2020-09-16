@@ -1,0 +1,51 @@
+Notes
+https://www.geeksforgeeks.org/php-filter_var-function/
+https://pristine.js.org/
+https://codepen.io/luca-vercelli/pen/KKzMJvR
+
+Lato
+Nunito Sans
+"Helvetica Neue"
+...defaultTheme.fontFamily.sans
+
+<script>
+  window.onload = function () {
+    var form = document.getElementById("newUserForm");
+
+    // create the pristine instance
+    var pristine = new Pristine(form);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      
+      // check if the form is valid
+      var valid = pristine.validate(); // returns true or false
+    });
+  };
+</script>
+
+<body class="h-screen font-sans">
+  <div class="h-40 w-full bg-light-grayish-blue shadow-lg"> 
+    <div class="w-10/12 mx-auto flex justify-between">
+      <div>
+        <img class="h-40 w-40" src="./images/02_mountain.png" />
+        <p class="text-4xl -mt-12 ml-1">Black Peak</p>
+      </div>
+      <div class="text-xl md:text-3xl font-light w-2/6 flex justify-between items-end mb-12">
+        <a class="border-navy-blue  border-b-4">Home</a>
+        <a>About</a>
+        <a>Contact</a>
+      </div>
+      <div class="inline-flex items-center mr-3">
+        <svg class="h-20 w-20 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <div class="flex-col font-normal">
+          <p class="text-base">Nkosinathi Nkomo</p>
+          <p class="text-sm text-gray-400">Admin</p>
+          <p class="text-sm text-gray-400">Grahamstown, ZA</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
