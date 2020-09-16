@@ -1,0 +1,194 @@
+.slide-1 {
+  background-size: 50%;
+  background-position: left;
+ }
+
+ .slide-1:before {
+  content: "";
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  background: #343a40;
+  opacity: .9;
+  border-bottom-right-radius: 0px;
+ }
+
+.headerlist {
+    width: 50%;
+    position: relative;
+    left: 25%;
+    background-color: #555;
+}
+
+.headerHolder {
+    background-color: rgba(128, 128, 128,0.9);
+    
+}
+
+
+.navbar {
+    overflow: auto;
+}
+
+    /* Navbar links */
+.navbar a {
+    float: left;
+    text-align: center;
+    padding: 12px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Arial;
+}
+
+/* Navbar links on mouse-over */
+.navbar a:hover {
+    background-color: #999;
+}
+
+/* Current/active navbar link */
+.active {
+    background-color: #4CAF50;
+}
+
+.bookButton {
+    float: right;
+    text-align: center;
+    padding: 12px;
+    color: #0094ff;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Arial;
+}
+
+    .bookButton button:hover {
+        background-color: #999;
+      
+    }
+.Welcome_text, .About_text, .Contact_head {
+    text-align: center;
+    margin: auto;
+    font-size: 40px;
+}
+
+
+.Text-area, .info_about_class {
+    position: center;
+    width: 70%;
+    margin-left: 15%;
+}
+
+.Welcome_text_headtext, .About_text_headtext {
+    text-align: center;
+    font-size: 25px;
+}
+
+.Contact_info_class{
+    margin-left:15%;
+}
+
+.Contact_container{
+    background-color:#171717;
+    color:#fff;
+}
+
+/* footer */
+.footer
+{
+    background: #171717;
+    color: #d3d3d3;
+    height: 400px;
+    position: relative;
+
+}
+
+
+.footer .footer_bottom
+{
+  background: #343a40;
+  color: #fff;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
+  left:0px;
+  padding-top: 20px;
+}
+
+.foot-address_content, .footer_content {
+  margin-left: 20%;
+  width: 60%;
+  text-align:center;
+
+}
+
+.foot-address_content p
+{
+
+width: 200px;
+
+
+}
+#pic{
+    margin-left: 27%;
+}
+.Foot_head {
+  margin-left: -65%;
+  width: 60%;
+}
+.footer-section_links {
+  margin-left: 20%;
+  width: 60%;
+  text-align: start;
+}
+.Terms_and_condition {
+  margin-left: 15%;
+  margin-top:70px;
+}
+
+/*Profile Page css*/
+
+.box1 {
+  background: gray;
+}
+.box2 {
+  background: black;
+}
+.box3 {
+  background: #343a40;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 400px 600px;
+  grid-template-rows: 400px 400px 400px;
+  justify-content: center;
+  color:white;
+}
+.box3{
+  grid-column-start:1;
+  grid-column-end:3;
+}
+
+.box2 {
+  padding: 10px;
+}
+.box1{
+  padding:10px;
+}
+.box3 {
+  padding: 10px;
+}
+.Edit_information {
+  display: flex;
+  justify-content: center;
+}
+.box1 ul{
+  padding:10px;
+}
+.password_info {
+  display: flex;
+  justify-content: space-around;
+  text-align:right;
+}
