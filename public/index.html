@@ -1,71 +1,286 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="stylesheet" href="css/tailwind.css" />
-  <link rel="stylesheet" href="css/custom.css" />
-  <title>Admin Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styling.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
-  <style>
-    #menu-toggle:checked+#menu {
-      display: block;
-    }
-
-    #searchBar:focus + #searchBtn{
-      display: flex;
-    }
-  </style>
+  <title>Hamba Kahle</title>
 </head>
 
-<body class="antialiased bg-gray-200">
-  <!-- Top Navbar -->
-  <header class="bg-white lg:py-0 py-2">
-    <div class="w-full flex flex-wrap items-center md:w-3/4 px-6 md:px-0 md:mx-auto">
-      <div class="flex-1 flex justify-between items-center">
-        <a href="#">
-          <svg class="w-20 h-20" viewBox="0 0 261 220" fill="none">
-            <path
-              d="M.634 176v-35.547h12.451c4.313 0 7.585.83 9.814 2.49 2.23 1.644 3.345 4.061 3.345 7.251 0 1.742-.447 3.28-1.343 4.615-.895 1.318-2.14 2.286-3.735 2.905 1.823.456 3.255 1.375 4.297 2.759 1.058 1.383 1.587 3.076 1.587 5.078 0 3.418-1.09 6.006-3.272 7.763-2.18 1.758-5.29 2.653-9.326 2.686H.634zm7.324-15.479v9.595h6.274c1.726 0 3.069-.407 4.029-1.22.976-.831 1.465-1.97 1.465-3.418 0-3.256-1.685-4.908-5.054-4.957H7.958zm0-5.175h5.42c3.695-.065 5.542-1.538 5.542-4.419 0-1.612-.472-2.767-1.416-3.467-.928-.716-2.4-1.074-4.419-1.074H7.958v8.96zM66.392 170.116h15.551V176H59.067v-35.547h7.325v29.663zM133.224 168.676h-12.842L117.94 176h-7.788l13.233-35.547h6.787L143.478 176h-7.789l-2.465-7.324zm-10.865-5.933h8.887l-4.468-13.305-4.419 13.305zM200.666 164.159c-.277 3.825-1.693 6.836-4.248 9.033-2.539 2.198-5.892 3.296-10.059 3.296-4.557 0-8.146-1.53-10.766-4.59-2.604-3.076-3.906-7.291-3.906-12.646v-2.173c0-3.418.602-6.429 1.806-9.033 1.205-2.604 2.922-4.598 5.152-5.982 2.246-1.399 4.85-2.099 7.812-2.099 4.102 0 7.406 1.098 9.912 3.296 2.507 2.197 3.955 5.281 4.346 9.253h-7.324c-.179-2.295-.822-3.955-1.929-4.981-1.091-1.041-2.759-1.562-5.005-1.562-2.441 0-4.272.879-5.493 2.636-1.205 1.742-1.823 4.452-1.856 8.13v2.686c0 3.841.578 6.649 1.734 8.423 1.172 1.774 3.011 2.661 5.517 2.661 2.263 0 3.947-.513 5.054-1.538 1.123-1.042 1.766-2.645 1.929-4.81h7.324zM243.108 161.742l-3.808 4.102V176h-7.324v-35.547h7.324v16.113l3.222-4.419 9.058-11.694h9.009l-12.622 15.796L260.955 176h-8.716l-9.131-14.258zM36.857 207.476V220h-7.324v-35.547H43.4c2.67 0 5.013.488 7.032 1.465 2.034.977 3.597 2.368 4.687 4.175 1.09 1.79 1.636 3.833 1.636 6.128 0 3.483-1.196 6.233-3.589 8.252-2.376 2.002-5.672 3.003-9.888 3.003h-6.42zm0-5.933H43.4c1.937 0 3.41-.456 4.42-1.367 1.025-.912 1.537-2.214 1.537-3.906 0-1.742-.512-3.15-1.538-4.224-1.025-1.074-2.441-1.628-4.248-1.66h-6.714v11.157zM109.695 204.595H95.633v9.521h16.504V220H88.309v-35.547h23.779v5.933H95.633v8.471h14.062v5.738zM163.002 212.676H150.16L147.719 220h-7.788l13.232-35.547h6.787L173.256 220h-7.788l-2.466-7.324zm-10.864-5.933h8.886l-4.467-13.305-4.419 13.305zM214.209 205.742l-3.809 4.102V220h-7.324v-35.547h7.324v16.113l3.223-4.419 9.058-11.694h9.008l-12.622 15.796L232.056 220h-8.716l-9.131-14.258zM129.5 0L172 67l45 68-76-58.5 10.5-27L41 135 129.5 0z"
-              fill="#000" />
-          </svg>
-        </a>
-      </div>
-  
-      <label for="menu-toggle" class="pointer-cursor lg:hidden block">
-        <svg class="fill-current text-gray-900"
-          xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-          <title>menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-        </svg>
-      </label>
-      <input class="hidden" type="checkbox" id="menu-toggle" />
-  
-      <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
-        <nav>
-          <ul class="pt-4 lg:pt-0 lg:flex items-center justify-between text-base text-gray-700">
-            <li><a
-                class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400"
-                href="#">Bookings</a></li>
-            <li><a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
-                href="#">Employees</a></li>
-            <li><a
-                class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
-                href="#">Assets</a></li>
+<body>
+  <!-- Header -->
+  <section id="header">
+    <div class="header container">
+      <div class="nav-bar">
+        <div class="brand">
+          <a href="#hero"><h1><span>h</span>amba <span>k</span>ahle</h1></a>
+        </div>
+        <div class="nav-list">
+          <div class="hamburger"><div class="bar"></div></div>
+          <ul>
+            <li><a href="#hero" data-after="Home">Home</a></li>
+            <li><a href="about2.html">About</a></li>
+            <li><a href="CONTACT.html" >Contact</a></li>
+            <li><a href="booking/booking.php" type="button" class="neon" >Book now</a></li>
+
+            
           </ul>
-        </nav>
-        <a href="#" class="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor">
-          <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
-            src="https://images.unsplash.com/photo-1509305717900-84f40e786d82?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=144&h=144&q=80"
-            alt="Nkosinathi Nkomo">
-        </a>
-  
+        </div>
       </div>
     </div>
+  </section>
+  <!-- End Header -->
 
 
-  </header>
+  <!-- Hero Section  -->
+  <section id="hero">
+    <div class="hero container">
+      <div>
+        <h1>Welcome <span></span></h1>
+        <h1>To <span></span></h1>
+        <h1>Hamba Kahle Transport <span></span></h1>
+        <a href="booking/booking.php" type="button" class="cta">Book Now</a>
+      </div>
+    </div>
+  </section>
+  <!-- End Hero Section  -->
+
+  <!-- Service Section -->
+  <section id="services">
+    <div class="services container">
+      <div class="service-top">
+        <h1 class="section-title">Serv<span>i</span>ces</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum deleniti maiores pariatur assumenda quas magni et, doloribus quod voluptate quasi molestiae magnam officiis dolorum, dolor provident atque molestias voluptatum explicabo!</p>
+      </div>
+      <div class="service-bottom">
+        <div class="service-item">
+          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/services.png"/></div>
+          <h2>Web Design</h2>
+          <img src="images\about10.png" class="avatar">
+
+          <p>LEARN MORE</p>
+        </div>
+        <div class="service-item">
+          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/services.png"/></div>
+          <h2>Web Design</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis debitis rerum, magni voluptatem sed architecto placeat beatae tenetur officia quod</p>
+        </div>
+        <div class="service-item">
+          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/services.png"/></div>
+          <h2>Web Design</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis debitis rerum, magni voluptatem sed architecto placeat beatae tenetur officia quod</p>
+        </div>
+
+        
+
+
+      
+    </div>
+  </section>
+  <!-- End Service Section -->
+
+
+  <div class="middle">
+    <div class="counting-sec">
+      <div class="inner-width">
+        <div class="col">
+          <img src="images\about10.png" class="avatar">
+          <div class="num">130</div>
+          vehicles
+        </div>
+  
+        <div class="col">
+          <img src="images\about3.jpg" class="avatar">
+          <div class="num">10</div>
+          Services
+        </div>
+  
+        <div class="col">
+          <img src="images\about4.jpg" class="avatar">
+          <div class="num">69</div>
+          drivers
+        </div>
+  
+        <div class="col">
+        <img src="images\about2.jpg" class="avatar">
+          <div class="num">1300</div>
+          completed trips
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <script type="text/javascript">
+    $(".num").counterUp({delay:10,time:1000});
+  </script>
+  
+  
+  
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <div class="projects container">
+      <div class="projects-header">
+        <h1 class="section-title">About<span>Hamba Kahle</span></h1>
+      </div>
+      <div class="all-projects">
+        <div class="project-item">
+          <div class="project-info">
+            <h1>Project 1</h1>
+            <h2>Coding is Love</h2>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, iusto cupiditate voluptatum impedit unde rem ipsa distinctio illum quae mollitia ut, accusantium eius odio ducimus illo neque atque libero non sunt harum? Ipsum repellat animi, fugit architecto voluptatum odit et!</p>
+          </div>
+          <div class="project-img">
+            <img src="C:\Users\hulisani\Desktop\front\images\car3.png" alt="img">
+          </div>
+        </div>
+        <div class="project-item">
+          <div class="project-info">
+            <h1>Project 2</h1>
+            <h2>Coding is Love</h2>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, iusto cupiditate voluptatum impedit unde rem ipsa distinctio illum quae mollitia ut, accusantium eius odio ducimus illo neque atque libero non sunt harum? Ipsum repellat animi, fugit architecto voluptatum odit et!</p>
+          </div>
+          <div class="project-img">
+            <img src="Z:\g17V2139\sysdev\cute.jpg" alt="img">
+          </div>
+        </div>
+        <div class="project-item">
+          <div class="project-info">
+            <h1>Project 3</h1>
+            <h2>Coding is Love</h2>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, iusto cupiditate voluptatum impedit unde rem ipsa distinctio illum quae mollitia ut, accusantium eius odio ducimus illo neque atque libero non sunt harum? Ipsum repellat animi, fugit architecto voluptatum odit et!</p>
+          </div>
+          <div class="project-img">
+            <img src="Z:\g17V2139\sysdev\pic2.jpg" alt="img">
+          </div>
+        </div>
+        <div class="project-item">
+          <div class="project-info">
+            <h1>Project 4</h1>
+            <h2>Coding is Love</h2>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, iusto cupiditate voluptatum impedit unde rem ipsa distinctio illum quae mollitia ut, accusantium eius odio ducimus illo neque atque libero non sunt harum? Ipsum repellat animi, fugit architecto voluptatum odit et!</p>
+          </div>
+          <div class="project-img">
+            <img src="Z:\g17V2139\sysdev\loc.jpg" alt="img">
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  <!-- End Projects Section -->
+
+  <!-- About Section -->
+  <section id="about"> 
+    <div class ="hero-imagea">
+    <div class="about container">
+     <!-- <div class="col-left">
+        <div class="about-img">
+          <img src="C:\Users\hulisani\Desktop\front\img\bg2.png" alt="img">
+        </div>
+      </div>
+      -->
+      
+      <div class="col-right">
+        <h1 class="section-title">Humba <span> Kahle</span></h1>
+        <h2>tranport services</h2>
+        <a href="#" class="cta">book now</a>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores, velit alias eius non illum beatae atque repellat ratique earum omnis ipsum rem accusantium quis, quas quia, accusamus provident suscipit mro enim!</p>
+        
+      </div>
+    </div>
+    </div>
+  </section>
+  <!-- End About Section -->
+  
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="contact container">
+      <div><h1 class="section-title">Contact <span>info</span></h1></div>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/phone.png"/></div>
+          <div class="contact-info">
+            <h1>Phone</h1>
+            <h2>+1 234 123 1234</h2>
+            <h2>+1 234 123 1234</h2>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/new-post.png"/></div>
+          <div class="contact-info">
+            <h1>Email</h1>
+            <h2>info@gmail.com</h2>
+            <h2>abcd@gmail.com</h2>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/map-marker.png"/></div>
+          <div class="contact-info">
+            <h1>Address</h1>
+            <h2>Fatikchhari, Chittagong, Bangladesh</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Contact Section -->
+
+  <!-- Footer 
+  <section id="footer">
+    
+      <div class="foot-col-1">
+        <div class="logo">
+          <a href="#"><img src="//www.sofitmobile.com/images/sofit-icon.png"></a>
+        </div>
+        <p>Lorem ipsum dolor sit amet, feugiat delicat liberavisse id cum no quo. Lorem ipsum dolor sit amet, feugiat delicat liberavisse id cum no quo. Lorem ipsum dolor sit amet, feugiat delicat liberavisse id cum no quo.</p>
+      </div>
+    
+    
+        <div class="foot-col-2">
+          <h4>Navigation</h4>
+          
+          <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="CONTACT.html">contact</a></li>
+            <li><a href="about2.html">About</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">refund policy</a></li>
+            <li><a href="#">site</a></li>
+          </ul>
+        </div>
+    
+        <div class="foot-col-3">
+          <h4>find us on </h4>
+          
+          <ul>
+            <li><a href="#"><i class='fab fa-instagram' style='font-size:24px;color:white'>instgram</i>
+              <li><a href="#"><i class='fab fa-facebook' style='font-size:24px;color:white'>facebook</i>
+              
+            
+          </ul>
+         
+        </div>
+    
+    
+      <div class="foot-col-4">
+        <h4>Info</h4>
+        <p>Wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex commodo consequat. Autem vel hendrerit iriure dolor in hendrerit.</p>
+      </div>
+    
+      
+      </div>
+      <p>Copyright © 2020 BlackPeak. All rights reserved</p>
+    
+  </section>
+  End Footer -->
+  <script src="js/app.js"></script>
+</body>
 </html>
