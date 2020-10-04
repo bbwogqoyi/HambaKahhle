@@ -16,15 +16,14 @@
 		  
 				if($row["email"] == $email){
 
-					if($row['password'] == $password){
+					
 						define("EMAIL", $row['email']);
 						define("FIRSTNAME", $row['firstName']);
 						define("LASTNAME", $row['lastName']);
 						define("CONTACT_NUMBER", $row['contactNumber']);
-					}
-					else{
-						echo " <script type='text/javascript'>alert('Incorrect password');</script>";
-					}
+						define("CLIENTID", $row['clientID']);
+					
+					
 
 				}
 				else{
