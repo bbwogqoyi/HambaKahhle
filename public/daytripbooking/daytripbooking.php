@@ -1,63 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../css/tailwind.css" />
-  <link rel="stylesheet" href="../css/custom.css" />
-  <title>Log In</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/tailwind.css" />
+    <link rel="stylesheet" href="../css/custom.css" />
+
+    <title>Add day trip to booking</title>
 </head>
 
 <body class="bg-grey-100 h-screen font-sans">
-	<?php
 
-  require_once("../config/config.php");
-
-  if(isset($_REQUEST['submit'])) {
-	   $conn = mysqli_connect($servername, $username, $password, $database) or die("There was a problem connecting to the server!");
-
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-
-		$query = 
-		  "SELECT clientID,email,password FROM clients WHERE email =\"" . $email ."\"";
-		  $result = mysqli_query($conn, $query) or die("Could not execute query");
-
-		  if($row = $result->fetch_assoc()){
-		  
-				if($row["email"] == $email){
-
-					if($row['password'] == $password){
-						echo " <script type='text/javascript'>alert('Logged in succesfully');</script>";
-						setcookie("email", $email,time() + 3600, '/');
-						setcookie("clientID", $row["clientID"],time() + 3600, '/');
-							header("Location: ../clientdashboard/clientdashboard.php");
-					}
-					else{
-						echo " <script type='text/javascript'>alert('Incorrect password');</script>";
-					}
-
-				}
-				else{
-					echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
-				}
-
-
-		    
-		  }
-		  else{
-			echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
-		   }
-		mysqli_close($conn);
-
-  }else{
-  }
-
-?>
-
-	 <header class="bg-white lg:py-0 py-2">
+<header class="bg-white lg:py-0 py-2">
         <div class="w-full flex flex-wrap items-center md:w-3/4 px-6 md:px-0 md:mx-auto">
             <div class="flex-1 flex justify-between items-center">
                 <a href="#">
@@ -82,7 +37,7 @@
                     <ul class="pt-4 lg:pt-0 lg:flex items-center justify-between text-base text-gray-700">
                         <li>
                             <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400"
-                               href="#">Bookings</a>
+                               href="#">Day Trips</a>
                         </li>
                         <li>
                             <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
@@ -105,49 +60,92 @@
 
 
     </header>
+    </div >
+            <div class="container mx-auto h-full flex justify-center items-center ">
+                <div class="w-2/3 lg:w-1/3">
+                    <h1 class="font-light text-4xl mb-1/8 text-center">Add a Day Trip</h1>
+                    <form action="daytripbooking.php" method="POST" >
+                        <div class="border-blue-500 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg">
+                          
+                          
+                            <div class="mb-4">
+                                <label for="start">Trip date:</label>
+                                <div style="width: 10%;"></div>
+                                <input type="date" id="tripDate" name="tripDate"
+                                      value="2020-07-22"
+                                       min="2020-01-01" max="2021-12-31">
+                            </div>
+                            <div class="mb-4">
+                                <label for="start">Pick up time:</label>
+                                <div style="width: 10%;"></div>
+                                <input type="time" id="tripTime" name="tripTime"
+                                       value="2020-07-22"
+                                       min="2020-01-01" max="2021-12-31">
+                            </div>
+                            <div class="mb-4">
+                                <label for="start">Pick up location:</label>
+                                <div style="width: 10%;"></div>
+                                <input type="text" id="pickLocation" name="picLocation" >
+                      
+                            </div>
+                            <div class="mb-4">
+                                <label for="start">drop off location:</label>
+                                <div style="width: 10%;"></div>
+                                <input type="text" id="dropLocation" name="dropLocation" >
+                      
+                            </div>
+                           
+                         
+                          
+                            <div class="inline-flex">
+                                <div class="flex items-center">
+                                    <input type="submit"  id="submit" name="submit" value ="ADD" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded"/>
+                                    
+                                    
+                                </div>
+                                <div class="flex items-center ml-2">
+                                    <button class="bg-red-600 hover:bg-teal text-white font-bold py-2 px-4 rounded">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                   
+                </div>
+            </div>
 
-    <form action="login.php" method="POST">
+	<?php
+	if(isset($_REQUEST['submit'])){
+		$tripDate =  $_REQUEST['tripDate'];
+		$tripTime =  $_REQUEST['tripTime'];
+		$pickLocation =  $_REQUEST['pickLocation'];
+		$dropLocation =  $_REQUEST['dropLocation'];
 
-  <div class="container mx-auto h-full flex justify-center items-center">
-    <div class="w-2/3 lg:w-1/3">
-      <h1 class="font-light text-4xl mb-6 text-center">Log In</h1>
-      <div class="border-blue-500 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg">
-        <div class="mb-4">
-          <label class="font-bold text-grey-darker block mb-2">
-            Username or Email
-          </label>
-          <input type="text" name="email" id="email"
-            class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
-            placeholder="n.nkomo@campus.ru.ac.za" />
-        </div>
-        <div class="mb-4">
-          <label class="font-bold text-grey-darker block mb-2">
-            Password
-          </label>
-          <input type="password" name="password" id="password"
-            class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
-            placeholder="Password" />
-        </div>
-        <div class="flex items-center justify-between">
-          <div class="inline-flex">
-            <input type="submit" name="submit" id="submit" value="Login" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded" />
-             
-            <button class="bg-red-600 ml-2 hover:bg-teal text-white font-bold py-2 px-4 rounded">
-                Cancel
-            </button>
-          </div>
+		$bookingID =  $_REQUEST['id'];
 
-          <a class="no-underline inline-block align-baseline font-bold text-sm text-blue hover:text-blue-dark float-right" href="#">
-              Forgot Password?
-          </a>
-        </div>
-      </div>
-      <div class="text-center">
-        <p class="text-grey-dark text-sm">Don't have an account? <a href="#" class="no-underline text-blue font-bold">Create an Account</a>.</p>
-    </div>
-    </div>
-  </div>
-  </form>
+		require_once("../config/config.php");
+		$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
+		
+			$query = "INSERT INTO daytrip (tripDate, bookingID, tripTime, pickLocation,dropLocation)
+			VALUES ('$tripDate','$bookingID', '$tripTime','$pickLocation', '$dropLocation');";
+
+
+			$result = mysqli_query($conn, $query) ;
+			if($result === false) {
+			echo " <script type='text/javascript'>alert('failed to add!.');</script>";
+				echo "Could not execute query: " . $result . " query: " . $query ;
+			
+			}
+			else{
+				echo " <script type='text/javascript'>alert('Added daytrip successfully!.');</script>";
+				header("Location: ../daytripdashboard/daytripdashboard.php");
+			}
+			mysqli_close($conn);
+	}
+	else{
+		echo " <script type='text/javascript'>alert('not working!.');</script>";
+}
+	?>
 </body>
-
-</html>
+  </html>

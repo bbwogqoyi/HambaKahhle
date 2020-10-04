@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/tailwind.css" />
+    <link rel="stylesheet" href="../css/custom.css" />
+
+    <title>Add day trip to booking</title>
+</head>
+
+<body class="bg-grey-100 h-screen font-sans">
+    <div style="height: 30px;">
+    </div >
+            <div class="container mx-auto h-full flex justify-center items-center">
+                <div class="w-2/3 lg:w-1/3">
+                    <h1 class="font-light text-4xl mb-1/8 text-center">Book a Trip</h1>
+                    <form action="daytripbooking.php" method="POST">
+                        <div class="border-blue-500 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg">
+                          
+                          
+                            <div class="mb-4">
+                                <label for="start">Trip date:</label>
+                                <div style="width: 10%;"></div>
+                                <input type="date" id="tripDate" name="tripDate"
+                                      value="2020-07-22"
+                                       min="2020-01-01" max="2021-12-31">
+                            </div>
+                            <div class="mb-4">
+                                <label for="start">Pick up time:</label>
+                                <div style="width: 10%;"></div>
+                                <input type="time" id="tripTime" name="tripTime"
+                                       value="2020-07-22"
+                                       min="2020-01-01" max="2021-12-31">
+                            </div>
+                            <div class="mb-4">
+                                <label for="start">Pick up location:</label>
+                                <div style="width: 10%;"></div>
+                                <input type="text" id="pickLocation" name="picLocation" >
+                      
+                            </div>
+                            <div class="mb-4">
+                                <label for="start">drop off location:</label>
+                                <div style="width: 10%;"></div>
+                                <input type="text" id="dropLocation" name="dropLocation" >
+                      
+                            </div>
+                           
+                         
+                          
+                            <div class="inline-flex">
+                                <div class="flex items-center">
+                                    <button type="submit"  class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded">
+                                       Add Day trip
+                                    </button>
+                                </div>
+                                <div class="flex items-center ml-2">
+                                    <button class="bg-red-600 hover:bg-teal text-white font-bold py-2 px-4 rounded">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                   
+                </div>
+            </div>
+</body>
+
+</html>
