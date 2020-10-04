@@ -1,3 +1,9 @@
+<?php
+  if(!isset($_REQUEST["id"])) {
+    header("Location: ../index.php");
+  }
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -6,8 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="stylesheet" href="../css/tailwind.css" />
-  <link rel="stylesheet" href="../css/custom.css" />
+  <link rel="stylesheet" href="../../css/tailwind.css" />
+  <link rel="stylesheet" href="../../css/custom.css" />
   <title>Booking Overview</title>
 
   <style>
@@ -25,7 +31,29 @@
 <body class="antialiased bg-gray-200">
   <!-- Top Navbar -->
   <?php
-    require_once("../component_partials/topbar.nav.php");
+    require_once("../../component_partials/topbar.nav.php");
+
+
+    //import database credentials
+    require_once(dirname(__DIR__) . "../../common/db.config.php");
+
+    function getBookingDetails($bookingID){
+      //connect to the database 
+      $conn = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE)
+            or die("Sorry , could not connect ot the database!");
+
+      //issue query instructions
+      $query = "SELECT * FROM booking b, clients c WHERE bookingID=$bookingID";  
+      $result = mysqli_query($conn, $query) or die("Error on query!");
+
+      //disconnect 
+      mysqli_close($conn);
+      return $result;
+    }
+
+    $result = mysqli_fetch_assoc(
+      getBookingDetails($_REQUEST["id"])
+    );
   ?>
 
   <!-- Page Content-->
@@ -85,28 +113,30 @@
           </svg>
           <p class="text-xl font-bold text-gray-900">Booking Summary</p>
         </span>
-        
-        <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
-          <p class="text-base text-gray-500">Client Name</p>
-          <p class="text-base font-semibold text-gray-700">Nkosinathi Nkosinathi</p>
-        </div>
-        <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
-          <p class="text-base text-gray-500">Pick-up Town</p>
-          <p class="text-base font-semibold text-gray-700">Grahamstown</p>
-        </div>
-        <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
-          <p class="text-base text-gray-500">Number of passengers</p>
-          <p class="text-base font-semibold text-gray-700">5</p>
-        </div>
-        <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
-          <p class="text-base text-gray-500">E-mail</p>
-          <p class="text-base font-semibold text-gray-700">n.nkomo@blackpeak.co.za</p>
-        </div>
-        <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
-          <p class="text-base text-gray-500">Contact Number</p>
-          <p class="text-base font-semibold text-gray-700">(+27)76 000 1234</p>
-        </div>
-        
+        <?php
+          echo '
+          <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
+            <p class="text-base text-gray-500">Client Name</p>
+            <p class="text-base font-semibold text-gray-700">'. $result["firstName"] . ' ' . $result["lastName"] .'</p>
+          </div>
+          <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
+            <p class="text-base text-gray-500">Pick-up Town</p>
+            <p class="text-base font-semibold text-gray-700">'. $result["initialCollectionPoint"] .'</p>
+          </div>
+          <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
+            <p class="text-base text-gray-500">Number of passengers</p>
+            <p class="text-base font-semibold text-gray-700">'. $result["numberOfPassengers"] .'</p>
+          </div>
+          <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
+            <p class="text-base text-gray-500">E-mail</p>
+            <p class="text-base font-semibold text-gray-700">'. $result["email"] .'</p>
+          </div>
+          <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
+            <p class="text-base text-gray-500">Contact Number</p>
+            <p class="text-base font-semibold text-gray-700">'. $result["contactNumber"] .'</p>
+          </div>
+          ';
+        ?>
         
       </div>
   
@@ -148,8 +178,8 @@
           </svg>
           <p class="text-xl font-bold text-gray-900">Driver</p>
         </span>
-        <div class="w-full mx-auto py-8 flex justify-center border border-indigo-200 bg-indigo-100 shadow">
-          <a href="./admin.driver.php">
+        <div class="w-full mx-auto py-8 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
+          <a href="../driver/admin.driver.php">
             <span class="pb-6 flex items-center">
               <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>

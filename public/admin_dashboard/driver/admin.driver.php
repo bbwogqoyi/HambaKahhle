@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="stylesheet" href="../css/tailwind.css" />
-  <link rel="stylesheet" href="../css/custom.css" />
+  <link rel="stylesheet" href="../../css/tailwind.css" />
+  <link rel="stylesheet" href="../../css/custom.css" />
   <title>Assign Driver</title>
 
   <style>
@@ -25,7 +25,7 @@
 <body class="antialiased bg-gray-200">
   <!-- Top Navbar -->
   <?php
-    require_once("../component_partials/topbar.nav.php");
+    require_once("../../component_partials/topbar.nav.php");
   ?>
 
   <!-- Page Content-->
@@ -33,7 +33,7 @@
     <!-- Searchbar + Cancel Button -->
     <div class="flex justify-between w-full items-center mb-10"> 
       <?php
-        require_once("../component_partials/searchbar.php");
+        require_once("../../component_partials/searchbar.php");
         echo searchbar('index.php');
       ?>
 

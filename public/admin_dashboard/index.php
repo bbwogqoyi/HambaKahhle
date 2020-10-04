@@ -45,7 +45,7 @@
     </div>
 
     <?php
-      require_once("./admin.bookings.list.php");
+      require_once("./booking/admin.bookings.list.php");
     ?>
 
 
