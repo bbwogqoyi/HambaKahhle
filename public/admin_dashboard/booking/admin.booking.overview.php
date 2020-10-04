@@ -149,24 +149,29 @@
           </svg>
           <p class="text-xl font-bold text-gray-900">Vehicle And Trailers</p>
         </span>
+
         <!-- Assign Vehicle Section -->
-        <div class="w-full mx-auto py-8 mb-6 flex justify-center border border-indigo-200 bg-indigo-100 shadow">
-          <span class="pb-6 flex items-center">
-            <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <p class="text-xl font-bold text-gray-900">Assign Vehicle</p>
-          </span>
+        <div class="w-full mx-auto py-8 mb-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
+          <a href="../vehicle/vehicle.list.php">
+            <span class="pb-6 flex items-center">
+              <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <p class="text-xl font-bold text-gray-900">Assign Vehicle</p>
+            </span>
+          </a>
         </div>
+        
         <!-- Add Trailers Section -->
-        <div class="w-full mx-auto py-8 my-6 flex justify-center border border-indigo-200 bg-indigo-100 shadow">
-          <span class="pb-6 flex items-center">
-            <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <p class="text-xl font-bold text-gray-900">Add Trailers</p>
-          </span>
-          
+        <div class="w-full mx-auto py-8 my-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
+          <a href="#">
+            <span class="pb-6 flex items-center">
+              <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <p class="text-xl font-bold text-gray-900">Add Trailers</p>
+            </span>
+          </a>
         </div>
       </div>
 

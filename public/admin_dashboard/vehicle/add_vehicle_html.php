@@ -1,3 +1,23 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="stylesheet" href="../../css/tailwind.css" />
+  <link rel="stylesheet" href="../../css/custom.css" />
+  <title>Vehicle</title>
+
+  <style>
+    #menu-toggle:checked+#menu {
+      display: block;
+    }
+
+  </style>
+</head>
+
 <body class="bg-grey-100 h-screen font-sans">
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-2/3 lg:w-1/3">

@@ -32,7 +32,7 @@
   <!-- Page Content-->
   <div class="mt-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full lg:w-4/5">
     <!-- Searchbar + Button -->
-    <div class="flex justify-between w-full items-center   mb-10"> 
+    <div class="flex justify-between w-full items-center mb-10"> 
       <?php
         require_once("../component_partials/searchbar.php");
         echo searchbar('index.php');
