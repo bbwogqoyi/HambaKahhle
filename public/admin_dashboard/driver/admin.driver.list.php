@@ -1,65 +1,47 @@
 <?php
-$test_data = array(
-  0 => array(
-    "driverID" => 0,
-    "name" => "Andiswa Qwaba",
-    "licenceList" => array(
-      "code 10", "code 14"
-    ),
-    "dateOfBirth" => "01 January 1995",
-    "contact" => "076 000 1234",
-    "dateEmployed" => "31 November 2018",
-    "homeTown" => "Grahamstown"
-  ),
-  1 => array(
-    "driverID" => 3,
-    "name" => "Nkosinathi Nkomo",
-    "licenceList" => array(
-      "code 8"
-    ),
-    "dateOfBirth" => "01 January 1995",
-    "contact" => "081 123 0004",
-    "dateEmployed" => "31 November 2020",
-    "homeTown" => "Johannesburg"
-  )
-);
-
 function buildLicenceList($licenceList) {
   $html = "";
   foreach($licenceList as $entry) {
     $html = $html . '<p class="font-medium">'.$entry.'</p>';
   }
-
   return $html;
 }
 
-function renderDriverEntry($driverID, $name, $licenceList, $dateOfBirth, $contact, $homeTown, $actionLink) {
-  return '
-    <tr>
-      <td class="border px-4 py-2">'.$name.'</td>
-      <td class="border px-4 py-2">
-        '. buildLicenceList($licenceList) .'
-      </td>
-      <td class="border px-4 py-2">'.$homeTown.'</td>
-      <td class="border px-4 py-2">'.$dateOfBirth.'</td>
-      <td class="border px-4 py-2">'.$contact.'</td>
-      <td class="border py-2">
-        <a href="./admin.booking.overview.php?'.$actionLink.'" >
-          <div class="flex items-center group">
-            <svg class="w-12 h-12 pl-2 pr-1 text-gray-400 group-hover:text-indigo-700"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            <p class="py-2 text-gray-400 font-medium group-hover:font-bold group-hover:text-indigo-700">
-            Assign</p>
-          </div>
-        </a>
-      </td>
-    </tr>
-  ';
+// import database utils
+require_once(dirname(__DIR__) . "../../common/utils.php");
 
+function queryAvailableDrivers() {
+  $query = 
+    "SELECT d.*, GROUP_CONCAT(dl.licenseCode) as licenceList from driverlicense dl, (
+      SELECT * from driver d
+      where d.driverID not in (
+        select b.driverID from booking b
+        where b.status>=3 and b.status<=5
+      )
+    ) d
+    where dl.driverID = d.driverID
+    group by dl.driverID";
+
+  $result = executeQuery($query);
+  return $result;
 }
 
-?>
+// href="../booking/admin.booking.overview.php'
+// ./admin.driver.list.php?bookingID=xxx?driverID=yyy
+function assignDriverOntoBooking($bookingID, $driverID) {
+  $query = "UPDATE booking b SET b.driverID=$driverID WHERE b.bookingID=$bookingID";
+
+  $result = executeQuery($query);
+  return $result;
+}
+
+if( isset($_REQUEST['driverID']) ) {
+  assignDriverOntoBooking($_REQUEST['bookingID'], $_REQUEST['driverID']);
+  $redirectURL = '../booking/admin.booking.overview.php?id='. $_REQUEST['bookingID'];
+  header("Location: $redirectURL");
+}
+
+?> 
 
 <!-- Content Table -->
 <table class="table-auto text-left w-full">
@@ -76,11 +58,39 @@ function renderDriverEntry($driverID, $name, $licenceList, $dateOfBirth, $contac
   </thead>
   <tbody class="text-gray-700">
     <?php
-      foreach($test_data as $model) {
-        echo renderDriverEntry(
-          $model["driverID"], $model["name"], $model["licenceList"], $model["dateOfBirth"],
-           $model["contact"], $model["homeTown"], "#"
-        );
+      $result = queryAvailableDrivers();
+      if($result==null || mysqli_num_rows($result)<1) 
+      {
+        echo 
+        '<tr class="text-2xl text-gray-600 text-center">
+        <td colspan="6">No Bookings</td>
+        </tr>';
+      }
+
+      while($result!=null && $row = mysqli_fetch_assoc($result)) {
+        $actionLink = "?bookingID=".$_REQUEST['bookingID']."&driverID=".$row["driverID"];
+        echo '
+          <tr>
+            <td class="border px-4 py-2">'. $row["firstName"] .' '. $row["lastName"] .'</td>
+            <td class="border px-4 py-2">
+              '. buildLicenceList( explode(",", $row["licenceList"]) ) .'
+            </td>
+            <td class="border px-4 py-2">'. $row["hometown"] .'</td>
+            <td class="border px-4 py-2">'. $row["dateOFBirth"] .'</td>
+            <td class="border px-4 py-2">' .$row["contactNumber"] .'</td>
+            <td class="border py-2">
+              <a href="./admin.driver.list.php'. $actionLink .'" >
+                <div class="flex items-center group">
+                  <svg class="w-12 h-12 pl-2 pr-1 text-gray-400 group-hover:text-indigo-700"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                  <p class="py-2 text-gray-400 font-medium group-hover:font-bold group-hover:text-indigo-700">
+                  Assign</p>
+                </div>
+              </a>
+            </td>
+          </tr>
+        ';
       }
     ?>
   </tbody>

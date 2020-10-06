@@ -1,11 +1,46 @@
+<!doctype html>
+<html lang="en">
 <?php
   if(!isset($_REQUEST["id"])) {
     header("Location: ../index.php");
   }
-?>
 
-<!doctype html>
-<html lang="en">
+  //import database credentials
+  require_once(dirname(__DIR__) . "../../common/db.config.php");
+
+  function getBookingDetails($bookingID){
+    //connect to the database 
+    $conn = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE)
+          or die("Sorry , could not connect ot the database!");
+
+    //issue query instructions
+    $bookingInfoQuery =
+      "SELECT b.*, c.firstName, c.lastName, c.contactNumber, c.email FROM booking b, clients c 
+        WHERE bookingID=$bookingID and b.clientID=c.clientID"; 
+    
+    $vehicleBookingQuery = 
+      "SELECT vb.bookingID, v.* from vehicle v, vehiclebooking vb
+        where v.registrationNumber = vb.registrationNumber and vb.bookingID=$bookingID";
+
+    $driverQuery =
+      "SELECT b.bookingID, d.* from driver d, booking b
+        where d.driverID=b.driverID and b.bookingID=$bookingID";
+
+    $bookingInfoResult = mysqli_query($conn, $bookingInfoQuery) or die("Error on query!");
+    $vehicleBookingResult = mysqli_query($conn, $vehicleBookingQuery) or die("Error on query!");
+    $driverInfoResult = mysqli_query($conn, $driverQuery) or die("Error on query!");
+
+    $result['bookingInfoResult'] = $bookingInfoResult;
+    $result['vehicleBookingResult'] = $vehicleBookingResult;
+    $result['driverInfoResult'] = $driverInfoResult;
+
+    //disconnect 
+    mysqli_close($conn);
+    return $result;
+  }
+  
+  $resultSet = getBookingDetails($_REQUEST["id"]);
+?>
 
 <head>
   <meta charset="utf-8">
@@ -32,28 +67,6 @@
   <!-- Top Navbar -->
   <?php
     require_once("../../component_partials/topbar.nav.php");
-
-
-    //import database credentials
-    require_once(dirname(__DIR__) . "../../common/db.config.php");
-
-    function getBookingDetails($bookingID){
-      //connect to the database 
-      $conn = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE)
-            or die("Sorry , could not connect ot the database!");
-
-      //issue query instructions
-      $query = "SELECT * FROM booking b, clients c WHERE bookingID=$bookingID";  
-      $result = mysqli_query($conn, $query) or die("Error on query!");
-
-      //disconnect 
-      mysqli_close($conn);
-      return $result;
-    }
-
-    $result = mysqli_fetch_assoc(
-      getBookingDetails($_REQUEST["id"])
-    );
   ?>
 
   <!-- Page Content-->
@@ -114,32 +127,34 @@
           <p class="text-xl font-bold text-gray-900">Booking Summary</p>
         </span>
         <?php
+          // get associated information about the booking and client
+          $bookingInfo = mysqli_fetch_assoc( $resultSet['bookingInfoResult'] );
+
           echo '
           <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
             <p class="text-base text-gray-500">Client Name</p>
-            <p class="text-base font-semibold text-gray-700">'. $result["firstName"] . ' ' . $result["lastName"] .'</p>
+            <p class="text-base font-semibold text-gray-700">'. $bookingInfo["firstName"] . ' ' . $bookingInfo["lastName"] .'</p>
           </div>
           <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
             <p class="text-base text-gray-500">Pick-up Town</p>
-            <p class="text-base font-semibold text-gray-700">'. $result["initialCollectionPoint"] .'</p>
+            <p class="text-base font-semibold text-gray-700">'. $bookingInfo["initialCollectionPoint"] .'</p>
           </div>
           <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
             <p class="text-base text-gray-500">Number of passengers</p>
-            <p class="text-base font-semibold text-gray-700">'. $result["numberOfPassengers"] .'</p>
+            <p class="text-base font-semibold text-gray-700">'. $bookingInfo["numberOfPassengers"] .'</p>
           </div>
           <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
             <p class="text-base text-gray-500">E-mail</p>
-            <p class="text-base font-semibold text-gray-700">'. $result["email"] .'</p>
+            <p class="text-base font-semibold text-gray-700">'. $bookingInfo["email"] .'</p>
           </div>
           <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
             <p class="text-base text-gray-500">Contact Number</p>
-            <p class="text-base font-semibold text-gray-700">'. $result["contactNumber"] .'</p>
+            <p class="text-base font-semibold text-gray-700">'. $bookingInfo["contactNumber"] .'</p>
           </div>
           ';
         ?>
         
       </div>
-  
       <!-- Vehicles Summary -->
       <div class="px-8 my-6 ml-1 w-1/3 border-gray-400 border-r">
         <span class="pb-6 flex items-center justify-center">
@@ -151,16 +166,44 @@
         </span>
 
         <!-- Assign Vehicle Section -->
-        <div class="w-full mx-auto py-8 mb-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
-          <a href="../vehicle/vehicle.list.php">
-            <span class="pb-6 flex items-center">
-              <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <p class="text-xl font-bold text-gray-900">Assign Vehicle</p>
-            </span>
-          </a>
-        </div>
+        <?php
+          // get associated information about the vehicles reserved for the booking
+          $vehicleBooking = mysqli_fetch_assoc( $resultSet['vehicleBookingResult'] );
+
+          if(mysqli_num_rows( $resultSet['vehicleBookingResult'] ) > 0)
+          {
+            echo '
+              <div class="flex justify-between items-center border-b border-indigo-200 mx-1 my-4 pb-2">
+                <p class="text-base text-gray-500">Make</p>
+                <p class="text-base font-semibold text-gray-700">'. $vehicleBooking["make"] .'</p>
+              </div>
+              <div class="flex justify-between items-center border-b border-indigo-200 mx-1 my-4 pb-2">
+                <p class="text-base text-gray-500">Model</p>
+                <p class="text-base font-semibold text-gray-700">'. $vehicleBooking["model"] .'</p>
+              </div>
+              <div class="flex justify-between items-center border-b border-indigo-200 mx-1 my-4 pb-2">
+                <p class="text-base text-gray-500">Registration</p>
+                <p class="text-base font-semibold text-gray-700">
+                  <span class="text-sm font-normal text-indigo-700"> ('. $vehicleBooking["year"] .') </span>
+                  '.$vehicleBooking["registrationNumber"].'
+                </p>
+              </div>
+              
+            ';
+          } else {
+            echo '
+              <a href="../vehicle/vehicle.list.php?bookingID='. $_REQUEST["id"] .'" class="w-full mx-auto py-8 mb-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
+                <span class="pb-6 flex items-center">
+                  <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <p class="text-xl font-bold text-gray-900">Assign Vehicle</p>
+                </span>
+              </a>
+            ';
+          }
+        ?>
+        
         
         <!-- Add Trailers Section -->
         <div class="w-full mx-auto py-8 my-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
@@ -183,17 +226,42 @@
           </svg>
           <p class="text-xl font-bold text-gray-900">Driver</p>
         </span>
-        <div class="w-full mx-auto py-8 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
-          <a href="../driver/admin.driver.php">
-            <span class="pb-6 flex items-center">
-              <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <p class="text-xl font-bold text-gray-900">Assign Driver</p>
-            </span>
-          </a>
-          
-        </div>
+        <?php
+          // get associated information about the vehicles reserved for the booking
+          $driverInfo = mysqli_fetch_assoc( $resultSet['driverInfoResult'] );
+
+          if(mysqli_num_rows( $resultSet['driverInfoResult'] ) > 0)
+          {
+            echo '
+              <div class="flex justify-between items-center border-b border-indigo-200 mx-1 my-4 pb-2">
+                <p class="text-base text-gray-500">Fullname</p>
+                <p class="text-base font-semibold text-gray-700">
+                  '. $driverInfo["firstName"] .' '. $driverInfo["lastName"] .'
+                  </p>
+              </div>
+              <div class="flex justify-between items-center border-b border-indigo-200 mx-1 my-4 pb-2">
+                <p class="text-base text-gray-500">Contact Number</p>
+                <p class="text-base font-semibold text-gray-700">
+                  '. $driverInfo["contactNumber"] .'
+                  </p>
+              </div>
+            ';
+          } else {
+            echo '
+              <div class="w-full mx-auto py-8 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
+                <a href="../driver/admin.driver.php?bookingID='. $_REQUEST["id"] .'">
+                  <span class="pb-6 flex items-center">
+                    <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <p class="text-xl font-bold text-gray-900">Assign Driver</p>
+                  </span>
+                </a>
+              </div>
+            ';
+          }
+        ?>
+
       </div>
     </div>
     
