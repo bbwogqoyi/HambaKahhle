@@ -3,9 +3,9 @@ ALTER TABLE booking ADD COLUMN status INT;
 ALTER TABLE `booking` MODIFY COLUMN `status` int NOT NULL;
 
 CREATE TABLE booking_status (
-id INT AUTO_INCREMENT PRIMARY KEY,
+statusID INT AUTO_INCREMENT PRIMARY KEY,
 short_description VARCHAR(32) NOT NULL UNIQUE,
-long_description VARCHAR(256) NOT NULL,
+long_description VARCHAR(256) NOT NULL
 );
 
 INSERT INTO booking_status(id, short_description, long_description)
@@ -18,4 +18,4 @@ VALUES
 (6, 'Completed' , 'The booking has ended and all cost of service have been debited'),
 (7, 'Cancelled' , 'Either cancelled by admin or client; or the booking was never confirmed within the allowed time period');
 
-ALTER TABLE `booking` ADD FOREIGN KEY (`status`) REFERENCES `booking_status`(`id`);
+ALTER TABLE `booking` ADD FOREIGN KEY (`status`) REFERENCES `booking_status`(`statusID`);

@@ -8,12 +8,12 @@ function getBookings(){
          or die("Sorry , could not connect ot the database!");
 
   //issue query instructions
-  $query = "
-    select c.firstName, c.lastName, b.* 
-    from clients c, (select * from booking) b
-    where b.clientID = c.clientID
-    limit 20
-  ";  
+  $query = 
+  "SELECT c.firstName, c.lastName, b.*, s.*
+    from clients c, booking_status s, (select * from booking) b
+    where b.clientID = c.clientID and s.id=b.status and b.status>=2
+    limit 20;
+  ";  //and b.status>=2
   $result = mysqli_query($conn, $query) or die("Error on query!");
 
   //disconnect 
@@ -52,11 +52,11 @@ function getBookings(){
             <td class="border px-4 py-2">'. $row["initialCollectionPoint"] .'</td>
             <td class="border px-4 py-2">'. $row["startDate"] .'</td>
             <td class="border px-4 py-2">'. $row["endDate"] .'</td>
-            <td class="border px-4 py-2">'. $row["status"] .'</td>
+            <td class="border px-4 py-2">'. $row["short_description"] .'</td>
             <td class="border py-2">
               <span class="inline-flex justify-evenly w-full">
                 <!-- Edit button -->
-                <a href="./booking/admin.booking.overview.php?id='. $row["bookingID"].'">
+                <a href="./admin.booking.overview.php?id='. $row["bookingID"].'">
                   <span class="flex flex-col items-center justify-items-center">
                     <svg alt="Edit" class="text-blue-300 hover:text-blue-700 h-6 w-6 m-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>

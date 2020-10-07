@@ -16,7 +16,7 @@
     //issue query instructions
     $bookingInfoQuery =
       "SELECT b.*, c.firstName, c.lastName, c.contactNumber, c.email FROM booking b, clients c 
-        WHERE bookingID=$bookingID and b.clientID=c.clientID"; 
+        WHERE b.clientID=c.clientID and bookingID=$bookingID"; 
     
     $vehicleBookingQuery = 
       "SELECT vb.bookingID, v.* from vehicle v, vehiclebooking vb
@@ -38,8 +38,32 @@
     mysqli_close($conn);
     return $result;
   }
+
+  if( isset($_REQUEST['submit']) ) {
+    $conn = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE)
+          or die("Sorry , could not connect ot the database!");
+    
+    // changing booking status to 'Awaiting Client Confirmation'
+    $updateBookingQuery = 
+      "UPDATE booking b
+        SET b.status = 3
+        WHERE b.bookingID=".$_REQUEST['id']
+      ;
+
+    $updateBookingResult = mysqli_query($conn, $updateBookingQuery) or die("Error on query!");
+    mysqli_close($conn);
+
+    $redirectURL = './index.php'. $_REQUEST['bookingID'];
+    header("Location: $redirectURL");
+  }
   
   $resultSet = getBookingDetails($_REQUEST["id"]);
+
+  // get associated information about the vehicles reserved for the booking
+  $vehicleBooking = mysqli_fetch_assoc( $resultSet['vehicleBookingResult'] );
+
+  // get associated information about the booking and client
+  $bookingInfo = mysqli_fetch_assoc( $resultSet['bookingInfoResult'] );
 ?>
 
 <head>
@@ -73,47 +97,73 @@
   <div class="mt-16 mx-auto w-full lg:w-4/5">
 
     <!-- Booking Status Visualizer -->
-    <div class="mb-8 px-8 pt-2 w-full flex items-center justify-between content-evenly bg-white border border-indigo-100 shadow-sm">
-      <div>
-        <p class="text-sm text-gray-400">
-          Step One
-        </p>
-        <p class="text-lg">
-          New Booking
-        </p>
-      </div>
-      <div class="border-indigo-400 border-b-4 pb-4 pl-2">
-        <p class="text-sm text-indigo-500">
-          Step Two
-        </p>
-        <p class="text-lg font-medium">
-          Assign Vehicle
-        </p>
-      </div>
-      <div>
-        <p class="text-sm text-gray-400">
-          Step Three
-        </p>
-        <p class="text-lg ">
-          Assign Driver
-        </p>
-      </div>
-      <div>
-        <p class="text-sm text-gray-400">
-          Step Four
-        </p>
-        <p class="text-lg ">
-          Request Client Confirmation
-        </p>
-      </div>
-      <div>
-        <p class="text-sm text-gray-400">
-          Step Five
-        </p>
-        <p class="text-lg ">
-          Finalize Booking
-        </p>
-      </div>
+    <div class="pb-1 px-32 pt-2 w-full flex items-center justify-between
+          content-evenly bg-white border border-indigo-100 shadow-lg">
+      <?php
+        function buildDiv($isActive, $subscript, $text) {
+          $activeDiv = 
+          '
+            <div class="border-indigo-400 border-b-4 pb-4 pl-2">
+              <p class="text-sm text-indigo-500">
+                '. $subscript .'
+              </p>
+              <p class="text-lg font-medium">
+                '. $text .'
+              </p>
+            </div>
+           ';
+          $defaultDiv =
+          '
+          <div>
+            <p class="text-sm text-gray-400">
+            '. $subscript .'
+            </p>
+            <p class="text-lg ">
+              '. $text .'
+            </p>
+          </div>
+          ';
+
+          return ($isActive ? $activeDiv : $defaultDiv);
+        } 
+
+        $isVehicleAssigned = mysqli_num_rows( $resultSet['vehicleBookingResult'] ) > 0;
+        $isDriverAssigned = mysqli_num_rows( $resultSet['driverInfoResult'] ) > 0;
+        $isSentForClientConfirmation = $bookingInfo["status"]>=3;
+        $isFinalized = $bookingInfo["status"]>=4;
+        if(mysqli_num_rows( $resultSet['bookingInfoResult'] ) > 0) {
+
+        }
+         
+        echo buildDiv($isVehicleAssigned, 'Step One', 'Assign Vehicle');
+        echo buildDiv($isDriverAssigned, 'Step Two', 'Assign Driver');
+        echo buildDiv($isSentForClientConfirmation, 'Step Three', 'Client Confirmation');
+        echo buildDiv($isFinalized, 'Step Four', 'Finalize Booking');
+
+      ?>
+    </div>
+    
+    <!-- hidden submit to client div  -->
+    <div class="mb-8 px-6 pt-0 w-full flex items-center justify-between
+            bg-gray-100 border border-indigo-100 shadow-sm">
+            
+    <?php
+      if($isVehicleAssigned && $isDriverAssigned && !$isSentForClientConfirmation) {
+        echo '
+        <div>
+          <p class="text-xl font-semibold">
+            
+          </p>
+        </div>   
+        <div class="my-4">
+          <a href="./admin.booking.overview.php?submit&id='. $_REQUEST['id'].'" id="submit" name="submit" type="submit" 
+            class="flex bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded">
+              Send For Client Confirmation
+          </a>
+        </div>
+        ';
+      }
+    ?>
     </div>
 
     <!-- Booking Overview -->
@@ -127,9 +177,6 @@
           <p class="text-xl font-bold text-gray-900">Booking Summary</p>
         </span>
         <?php
-          // get associated information about the booking and client
-          $bookingInfo = mysqli_fetch_assoc( $resultSet['bookingInfoResult'] );
-
           echo '
           <div class="flex justify-between items-center border-b border-indigo-200 my-4 pb-2">
             <p class="text-base text-gray-500">Client Name</p>
@@ -167,9 +214,6 @@
 
         <!-- Assign Vehicle Section -->
         <?php
-          // get associated information about the vehicles reserved for the booking
-          $vehicleBooking = mysqli_fetch_assoc( $resultSet['vehicleBookingResult'] );
-
           if(mysqli_num_rows( $resultSet['vehicleBookingResult'] ) > 0)
           {
             echo '
