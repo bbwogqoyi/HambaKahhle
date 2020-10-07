@@ -20,4 +20,6 @@ function executeQuery($query) {
   return $result;
 }
 
+define("HAMBAKAHLE_ROOT", "/hambakahle/public");
+
 ?>

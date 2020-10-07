@@ -22,21 +22,67 @@
     <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
       <nav>
         <ul class="pt-4 lg:pt-0 lg:flex items-center justify-between text-base text-gray-700">
-          <li><a
-              class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400"
-              href="index.php">Home</a></li>
-          <li><a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
-              href="#">About</a></li>
-          <li><a
-              class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
-              href="#">Contact</a></li>
+          <?php
+            $activeClasses = "font-semibold text-indigo-400 lg:border-indigo-400";
+            if( isset($_COOKIE["adminID"]) ) {
+              echo '
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
+                      href="#">
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
+                      href="#">
+                    Manage Assets
+                  </a>
+                </li>
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
+                      href="#">
+                    Reports
+                  </a>
+                </li>
+              ';
+            } else {
+              echo '
+                <li>  
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400" 
+                      href="index.php">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
+                      href="#">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
+                      href="#">
+                    Contact
+                  </a>
+                </li>
+              ';
+            }
+          ?>
+              
         </ul>
       </nav>
-      <a href="#" class="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor">
-        <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
-          src="https://images.unsplash.com/photo-1509305717900-84f40e786d82?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=144&h=144&q=80"
-          alt="Nkosinathi Nkomo">
-      </a>
+      <?php
+        if( isset($_COOKIE["adminID"]) ) {
+          echo '
+            <a href="#" class="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor">
+              <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
+                src="https://images.unsplash.com/photo-1509305717900-84f40e786d82?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=144&h=144&q=80"
+                alt="Nkosinathi Nkomo">
+            </a>
+          ';
+        }
+      ?>
+      
 
     </div>
   </div>
