@@ -46,7 +46,7 @@
     // changing booking status to 'Awaiting Client Confirmation'
     $updateBookingQuery = 
       "UPDATE booking b
-        SET b.status = 3
+        SET b.statusID = 3
         WHERE b.bookingID=".$_REQUEST['id']
       ;
 
@@ -97,7 +97,7 @@
   <div class="mt-16 mx-auto w-full lg:w-4/5">
 
     <!-- Booking Status Visualizer -->
-    <div class="pb-1 px-32 pt-2 w-full flex items-center justify-between
+    <div class="px-32 pt-2 w-full flex items-center justify-between
           content-evenly bg-white border border-indigo-100 shadow-lg">
       <?php
         function buildDiv($isActive, $subscript, $text) {
@@ -129,8 +129,8 @@
 
         $isVehicleAssigned = mysqli_num_rows( $resultSet['vehicleBookingResult'] ) > 0;
         $isDriverAssigned = mysqli_num_rows( $resultSet['driverInfoResult'] ) > 0;
-        $isSentForClientConfirmation = $bookingInfo["status"]>=3;
-        $isFinalized = $bookingInfo["status"]>=4;
+        $isSentForClientConfirmation = $bookingInfo["statusID"]>=3;
+        $isFinalized = $bookingInfo["statusID"]>=4;
         if(mysqli_num_rows( $resultSet['bookingInfoResult'] ) > 0) {
 
         }
@@ -156,7 +156,7 @@
           </p>
         </div>   
         <div class="my-4">
-          <a href="./admin.booking.overview.php?submit&id='. $_REQUEST['id'].'" id="submit" name="submit" type="submit" 
+          <a href="./booking.overview.php?submit&id='. $_REQUEST['id'].'" id="submit" name="submit" type="submit" 
             class="flex bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded">
               Send For Client Confirmation
           </a>
@@ -292,16 +292,16 @@
             ';
           } else {
             echo '
-              <div class="w-full mx-auto py-8 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
-                <a href="../driver/admin.driver.php?bookingID='. $_REQUEST["id"] .'">
-                  <span class="pb-6 flex items-center">
-                    <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <p class="text-xl font-bold text-gray-900">Assign Driver</p>
-                  </span>
-                </a>
-              </div>
+              <a href="../driver/admin.driver.php?bookingID='. $_REQUEST["id"] .'" 
+                  class="w-full mx-auto py-8 flex justify-center border border-indigo-200 
+                  bg-gray-100 hover:bg-indigo-100 shadow">
+                <span class="pb-6 flex items-center">
+                  <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <p class="text-xl font-bold text-gray-900">Assign Driver</p>
+                </span>
+              </a>
             ';
           }
         ?>
