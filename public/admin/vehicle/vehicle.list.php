@@ -10,7 +10,7 @@ function queryAvailableVehicles() {
       where v.registrationNumber not in
       (
         SELECT vb.registrationNumber from vehiclebooking vb, ( 
-          SELECT bookingID from booking b where b.status>=3 and  b.status<=5 ) b
+          SELECT bookingID from booking b where b.statusID>=3 and  b.statusID<=5 ) b
         where vb.bookingID = b.bookingID
       )
     ";
@@ -35,7 +35,7 @@ if( isset($_POST['submit']) ) {
     foreach($_POST['check_list'] as $registrationNumber){
       assignSelectedVehiclesToBooking($registrationNumber, $_REQUEST['bookingID']);
     }
-    $redirectURL = '../booking/admin.booking.overview.php?id='. $_REQUEST['bookingID'];
+    $redirectURL = '../booking/booking.overview.php?id='. $_REQUEST['bookingID'];
     header("Location: $redirectURL");
   }
 } else {
@@ -70,6 +70,38 @@ if( isset($_POST['submit']) ) {
     require_once("../../component_partials/topbar.nav.php");
   ?>
 
+  <!-- Booking Status Visualizer -->
+  <div class="mt-12 w-full flex items-center bg-white 
+      border-1 border-b border-indigo-700 shadow-lg">
+    <div class="py-2 md:w-1/2 px-6 md:px-0 md:mx-auto flex justify-between 
+        content-evenly ">
+      <div class="flex flex-col items-center">
+        <p class="text-base font-medium text-indigo-600">
+          Number Of Seats
+        </p>
+        <p class="text-lg font-medium text-gray-700">
+          Main
+        </p>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="text-base font-medium text-indigo-600">
+          Collection Town
+        </p>
+        <p class="text-lg font-medium text-gray-700">
+          Main
+        </p>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="text-base font-medium text-indigo-600">
+          Start Date
+        </p>
+        <p class="text-lg font-medium text-gray-700">
+          Main
+        </p>
+      </div>
+    </div>
+  </div>
+
   <!-- Page Content-->
   <div class="mt-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full md:w-4/5 rounded">
   <form action='vehicle.list.php?bookingID=<?php echo $_REQUEST["bookingID"]; ?>' method="POST"> <!--  href="vehicle.list.php" -->
@@ -90,7 +122,7 @@ if( isset($_POST['submit']) ) {
           placeholder="Search" />
         </div>
       </div>
-      <!-- Button -  href="./admin.booking.overview.php?'. $actionLink .'"  -->
+      <!-- Button -  href="./booking.overview.php?'. $actionLink .'"  -->
       <button id="submit" name="submit" type="submit" 
         class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded">
         Assign Car(s)
