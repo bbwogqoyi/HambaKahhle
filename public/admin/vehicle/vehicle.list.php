@@ -67,7 +67,7 @@ if( isset($_POST['submit']) ) {
 <body class="antialiased bg-gray-200">
   <!-- Top Navbar -->
   <?php
-    require_once("../../component_partials/topbar.nav.php");
+    require_once("../../component_partials/admin.topbar.nav.php");
   ?>
 
   <!-- Booking Status Visualizer -->

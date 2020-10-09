@@ -24,29 +24,54 @@
         <ul class="pt-4 lg:pt-0 lg:flex items-center justify-between text-base text-gray-700">
           <?php
             $activeClasses = "font-semibold text-indigo-400 lg:border-indigo-400";
-            echo '
-              <li>
-                <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent 
-                md:hover:border-indigo-400"
-                    href="\hambakahle/public/admin/booking/index.php">
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent 
-                md:hover:border-indigo-400"
-                    href="\hambakahle/public/admin/assets/index.php">
-                  Manage Assets
-                </a>
-              </li>
-              <li>
-                <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent 
-                md:hover:border-indigo-400 lg:mb-0 mb-2"
-                    href="#">
-                  Reports
-                </a>
-              </li>
-            ';
+            $isBookingDashboard = isset($GLOBALS['active_nav_item']) && ($GLOBALS['active_nav_item'] == 'admin_dashboard');
+            $isAssetsDashboard = isset($GLOBALS['active_nav_item']) && ($GLOBALS['active_nav_item'] == 'assets_dashboard');
+
+            if( isset($_COOKIE["employeeID"]) ) {
+              echo '
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent 
+                  md:hover:border-indigo-400 '. ($isBookingDashboard ? $activeClasses : "") .'"
+                      href="\hambakahle/public/admin/booking/index.php">
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent 
+                  md:hover:border-indigo-400 '. ($isAssetsDashboard ? $activeClasses : "") .'"
+                      href="\hambakahle/public/admin/assets/index.php">
+                    Manage Assets
+                  </a>
+                </li>
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
+                      href="#">
+                    Reports
+                  </a>
+                </li>
+              ';
+            } else {
+              echo '
+                <li>  
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400" 
+                      href="index.php">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
+                      href="#">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
+                      href="#">
+                    Contact
+                  </a>
+                </li>
+              ';
+            }
           ?>
               
         </ul>
