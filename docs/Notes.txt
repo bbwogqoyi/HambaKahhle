@@ -216,3 +216,6 @@ $test_data = array(
   )
 );
 
+-- git to untrack files
+git rm --cached <path-name>
+git rm --cached "public\common\db.config.local.php"

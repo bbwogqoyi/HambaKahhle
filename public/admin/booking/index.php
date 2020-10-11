@@ -49,7 +49,7 @@ function getBookings(){
 <body class="antialiased bg-gray-200">
   <!-- Top Navbar -->
   <?php
-    require_once("../../component_partials/topbar.nav.php");
+    require_once("../../component_partials/admin.topbar.nav.php");
   ?>
 
   <!-- Page Content-->
@@ -66,6 +66,7 @@ function getBookings(){
       </button>
     </div>
 
+    <!-- dynamic content -->
     <table class="table-fixed text-left w-full">
       <thead class="bg-gray-200">
         <tr>

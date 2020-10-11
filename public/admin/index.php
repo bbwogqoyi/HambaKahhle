@@ -64,7 +64,7 @@ if( isset($_REQUEST['submit']) ) {
 <body class="bg-gray-100 h-screen font-sans">
   <!-- Top Navbar -->
   <?php
-    require_once(dirname(__DIR__) . "../component_partials/topbar.nav.php");
+    require_once(dirname(__DIR__) . "../component_partials/admin.topbar.nav.php");
   ?>
 
   <form action="index.php" method="POST">
