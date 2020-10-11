@@ -33,8 +33,8 @@ function queryAvailableVehicles() {
     <!-- Assets Page Navbar -->
     <div class="">
       <nav class="flex flex-col sm:flex-row">
-        <a href="./index.php" class="text-indigo-400 py-4 px-6 block hover:text-indigo-700 hover:font-semibold focus:outline-none  
-          border-b-2 font-medium border-indigo-500" >
+        <a href="./index.assets.php" class="text-indigo-400 py-4 px-6 block hover:text-indigo-700 
+          hover:font-semibold focus:outline-none border-b-2 font-medium border-indigo-500" >
           Vehicles
         </a>
         <a href="./depots.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none">
@@ -53,9 +53,11 @@ function queryAvailableVehicles() {
         echo searchbar('index.php');
       ?>
       
-      <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
+      <!-- <a href="../vehicle/add.vehicle.php" -->
+      <a href="#"
+          class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
         Add New Vehicle
-      </button>
+      </a>
     </div>
 
     <!-- dynamic content -->
@@ -87,10 +89,15 @@ function queryAvailableVehicles() {
           {
             $row_index+=1;
             $actionLink = "#";
+            //href="../vehicle/view.vehicle.php?registrationNumber='. $row["registrationNumber"] . '"
             echo '
               <tr>
-                <td id="reg_'. $row_index .'" class="border px-4 py-4 text-indigo-500 font-medium">
-                  <a class="hover:border-b-2 border-indigo-600" href="'. $row["registrationNumber"] . '">'. $row["registrationNumber"] . '</a>
+                <td class="border px-4 py-4 text-indigo-500 font-medium">
+                  <a 
+                    href="#"
+                    class="hover:border-b-2 border-indigo-600" >
+                    '. $row["registrationNumber"] . '
+                  </a>
                 </td>
                 <td class="border px-4 py-4">'. $row["numberOfSeats"] . '</td>
                 <td class="border px-4 py-4">'. $row["make"] . '</td>

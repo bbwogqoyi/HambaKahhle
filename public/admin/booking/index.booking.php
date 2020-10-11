@@ -58,12 +58,12 @@ function getBookings(){
     <div class="flex justify-between w-full items-center mb-10"> 
       <?php
         require_once("../../component_partials/searchbar.php");
-        echo searchbar('index.php');
+        echo searchbar('index.booking.php');
       ?>
       
-      <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-10 rounded">
+      <!-- <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-10 rounded">
         Assign
-      </button>
+      </button> -->
     </div>
 
     <!-- dynamic content -->

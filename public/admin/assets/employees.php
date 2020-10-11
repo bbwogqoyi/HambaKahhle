@@ -34,7 +34,7 @@ function queryAvailableVehicles() {
     <!-- Assets Page Navbar -->
     <div class="">
       <nav class="flex flex-col sm:flex-row">
-        <a href="./index.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none"  >
+        <a href="./index.assets.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none"  >
             Vehicles
         </a>
         <a href="./depots.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none" >

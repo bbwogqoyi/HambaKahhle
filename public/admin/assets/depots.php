@@ -33,7 +33,7 @@ function queryAvailableVehicles() {
     <!-- Assets Page Navbar -->
     <div class="">
       <nav class="flex flex-col sm:flex-row">
-        <a href="./index.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none"  >
+        <a href="./index.assets.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none"  >
             Vehicles
         </a>
         <a href="./depots.php" class="text-indigo-400 py-4 px-6 block hover:text-indigo-700 hover:font-semibold focus:outline-none  
@@ -43,7 +43,7 @@ function queryAvailableVehicles() {
         <a href="./employees.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none">
             Employees
         </a>
-        </nav>
+      </nav>
     </div>
 
     <!-- Searchbar + Button -->
@@ -52,10 +52,11 @@ function queryAvailableVehicles() {
         require_once("../../component_partials/searchbar.php");
         echo searchbar('index.php');
       ?>
-      
-      <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
-        Add New Depot
-      </button>
+
+      <a href="../depot/maintain.depot.php?insertDepot"
+          class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
+          Add New Depot
+      </a>
     </div>
 
     <!-- dynamic content -->
