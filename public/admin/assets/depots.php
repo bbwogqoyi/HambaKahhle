@@ -83,19 +83,23 @@ function queryAvailableVehicles() {
           }
         ?>
         <?php
-          $row_index=0;
           while($result!=null && $row = mysqli_fetch_assoc($result))
           {
-            $row_index+=1;
-            $actionLink = "#";
             echo '
-              <tr>
-                <td class="border px-4 py-4">'. $row["depotName"] . '</td>
-                <td class="border px-4 py-4">'. $row["streetNumber"] . '</td>
-                <td class="border px-4 py-4">'. $row["streetName"] . '</td>
-                <td class="border px-4 py-4">'. $row["town"] . '</td>
-                <td class="border px-4 py-4">'. $row["contactNumber"] . '</td>
-                <td class="border px-4 py-4">'. $row["numberOfBedsAvailable"] . '</td>
+              <tr class="group">
+                <td class="border px-4 py-4 text-indigo-500 font-medium group-hover:bg-gray-100">
+                  <a 
+                    href="../depot/maintain.depot.php?viewDepot&depotID='. $row["depotID"] .'"
+                    class="hover:border-b-2 border-indigo-600" >
+                    '. $row["depotName"] . '
+                  </a>  
+                </td>
+                
+                <td class="border px-4 py-4 group-hover:bg-gray-100">'. $row["streetNumber"] . '</td>
+                <td class="border px-4 py-4 group-hover:bg-gray-100 ">'. $row["streetName"] . '</td>
+                <td class="border px-4 py-4 group-hover:bg-gray-100">'. $row["town"] . '</td>
+                <td class="border px-4 py-4 group-hover:bg-gray-100">'. $row["contactNumber"] . '</td>
+                <td class="border px-4 py-4 group-hover:bg-gray-100">'. $row["numberOfBedsAvailable"] . '</td>
               </tr>
             ';
           }
