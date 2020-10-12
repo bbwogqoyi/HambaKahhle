@@ -70,6 +70,7 @@ if( isset($_POST['updateDepot']) ) {
 
 if( isset($_POST['deleteDepot']) ) {
   deleteExistingVehicle($_REQUEST['depotID']);
+  header("Location: ../assets/depots.php");
 }
 ?>
 
@@ -111,7 +112,7 @@ if( isset($_POST['deleteDepot']) ) {
           </div>
           <div class="ml-2 mr-6">
             <span class="font-semibold">Successfully Saved!</span>
-            <span class="block text-gray-500">Anyone with a link can now view this file</span>
+            <span class="block text-gray-500">The database mutation completed without fault</span>
           </div>
         </div>
       </div>
