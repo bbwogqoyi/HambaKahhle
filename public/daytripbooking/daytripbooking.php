@@ -99,7 +99,7 @@
                           
                             <div class="inline-flex">
                                 <div class="flex items-center">
-                                    <input type="submit"  id="submit" name="submit" value ="ADD" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded"/>
+                                    <input type="submit"  id="submit" name="submit" value ="submit" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded"/>
                                     
                                     
                                 </div>
@@ -123,15 +123,17 @@
 		$dropLocation =  $_REQUEST['dropLocation'];
 
 		$bookingID =  $_REQUEST['id'];
-
+		$bed = "yes";
+		
 		require_once("../config/config.php");
 		$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
 		
-			$query = "INSERT INTO daytrip (tripDate, bookingID, tripTime, pickLocation,dropLocation)
-			VALUES ('$tripDate','$bookingID', '$tripTime','$pickLocation', '$dropLocation');";
+			$query = "INSERT INTO daytrip (tripDate, bedRequest, bookingID)
+			VALUES ('$tripDate','$bed', '$bookingID')";
 
 
-			$result = mysqli_query($conn, $query) ;
+			$result = mysqli_query($conn, $query) or die("Oops, something went wrong, Could not Add trip") ;
+			
 			if($result === false) {
 			echo " <script type='text/javascript'>alert('failed to add!.');</script>";
 				echo "Could not execute query: " . $result . " query: " . $query ;
@@ -144,7 +146,6 @@
 			mysqli_close($conn);
 	}
 	else{
-		echo " <script type='text/javascript'>alert('not working!.');</script>";
 }
 	?>
 </body>

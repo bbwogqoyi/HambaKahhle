@@ -65,7 +65,7 @@
     <div class="container mx-auto h-full flex justify-center items-center " >
         <div class="w-2/3 lg:w-1/3" >
             <h1 class="font-light text-4xl mb-1/8 text-center text-3xl antialiased font-extrabold indigo-400">Book a Trip</h1>
-            <form action="../clientdashboard/clientdashboard.php" method="POST" >
+            <form action="booking.php" method="POST" >
                 <div class="border-indigo-400 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg font-medium text-2xl">
                     <div class="mb-4">
 
@@ -178,15 +178,15 @@
 		$trailer =  $_REQUEST['trailer'];
 		$numPassengers =  $_REQUEST['numPassengers'];
 		$clientID =  $_COOKIE['clientID'];
-
+		$status = 1;
 		require_once("../config/config.php");
 		$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
 		
-			$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer)
-			VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer');";
+			$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer,statusID)
+			VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer','$status')";
 
 
-			$result = mysqli_query($conn, $query) ;
+			$result = mysqli_query($conn, $query) or die("Could not execute") ;
 		
 			if($result === false) {
 
@@ -197,6 +197,7 @@
 			}
 			else{
 				echo " <script type='text/javascript'>alert('Added booking successfully! Now add some day trips to your booking.');</script>";
+				header("Location: ../clientdashboard/clientdashboard.php");
 				}
 			mysqli_close($conn);
 		}

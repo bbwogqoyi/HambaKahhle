@@ -15,45 +15,51 @@
 
   require_once("../config/config.php");
 
-  if(isset($_REQUEST['submit'])) {
-	   $conn = mysqli_connect($servername, $username, $password, $database) or die("There was a problem connecting to the server!");
+ if(!isset($_COOKIE["clientID"])) {
+	  if(isset($_REQUEST['submit'])) {
+		   $conn = mysqli_connect($servername, $username, $password, $database) or die("There was a problem connecting to the server!");
 
-		$email = $_POST['email'];
-		$password = $_POST['password'];
+			$email = $_POST['email'];
+			$password = $_POST['password'];
 
-		$query = 
-		  "SELECT clientID,email,password FROM clients WHERE email =\"" . $email ."\"";
-		  $result = mysqli_query($conn, $query) or die("Could not execute query");
+			$query = 
+			  "SELECT clientID,email,password FROM clients WHERE email =\"" . $email ."\"";
+			  $result = mysqli_query($conn, $query) or die("Could not execute query");
 
-		  if($row = $result->fetch_assoc()){
+			  if($row = $result->fetch_assoc()){
 		  
-				if($row["email"] == $email){
+					if($row["email"] == $email){
 
-					if($row['password'] == $password){
-						echo " <script type='text/javascript'>alert('Logged in succesfully');</script>";
-						setcookie("email", $email,time() + 3600, '/');
-						setcookie("clientID", $row["clientID"],time() + 3600, '/');
-							header("Location: ../clientdashboard/clientdashboard.php");
+						if($row['password'] == $password){
+							echo " <script type='text/javascript'>alert('Logged in succesfully');</script>";
+							setcookie("email", $email,time() + 3600, '/');
+							setcookie("clientID", $row["clientID"],time() + 3600, '/');
+								header("Location: ../clientdashboard/clientdashboard.php");
+						}
+						else{
+							echo " <script type='text/javascript'>alert('Incorrect password');</script>";
+						}
+
 					}
 					else{
-						echo " <script type='text/javascript'>alert('Incorrect password');</script>";
+						echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
 					}
-
-				}
-				else{
-					echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
-				}
 
 
 		    
-		  }
-		  else{
-			echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
-		   }
-		mysqli_close($conn);
+			  }
+			  else{
+				echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
+			   }
+			mysqli_close($conn);
 
-  }else{
-  }
+	  }else{
+	  }
+}
+else{
+	header("Location: ../clientdashboard/clientdashboard.php");
+}
+
 
 ?>
 
