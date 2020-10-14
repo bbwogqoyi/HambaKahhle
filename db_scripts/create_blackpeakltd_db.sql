@@ -241,9 +241,11 @@ CREATE TABLE `employee` (
 DROP TABLE IF EXISTS `daytrip`;
 CREATE TABLE `daytrip` (
   `tripNumber` int NOT NULL AUTO_INCREMENT UNIQUE,
-  `tripDate` date DEFAULT NULL,
+  `tripDate` DATETIME DEFAULT NULL,
   `bedRequest` varchar(255) DEFAULT NULL,
   `bookingID` int DEFAULT NULL,
+  `collectionPoint` VARCHAR(512) NULL,
+  `destinationPoint` VARCHAR(512) NULL,
   PRIMARY KEY (`tripNumber`),
   KEY `bookingID` (`bookingID`),
   CONSTRAINT `daytrip_ibfk_1` FOREIGN KEY (`bookingID`) REFERENCES `booking` (`bookingID`)

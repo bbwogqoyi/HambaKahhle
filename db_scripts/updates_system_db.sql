@@ -19,3 +19,9 @@ CREATE TABLE `address` (
 ALTER TABLE `booking` MODIFY COLUMN `initialCollectionPoint` int NOT NULL;
 ALTER TABLE `booking` ADD FOREIGN KEY (`initialCollectionPoint`) 
 REFERENCES `address`(`addressID`);
+
+-- modified 'daytrip' table change datatype for tripdate column and 2 new columns
+ALTER TABLE `daytrip` MODIFY COLUMN `tripDate` DATETIME NOT NULL;
+ALTER TABLE `daytrip` 
+ADD COLUMN `collectionPoint` VARCHAR(512) NULL,
+ADD COLUMN `destinationPoint` VARCHAR(512) NULL;
