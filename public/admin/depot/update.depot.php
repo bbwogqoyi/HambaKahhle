@@ -16,11 +16,6 @@ function retrieveExistingVehicle($depotID) {
   return executeQuery($query);
 }
 
-function deleteExistingVehicle($depotID) {
-  $query = "DELETE FROM depot d WHERE d.depotID='$depotID'";
-  return executeQuery($query);
-}
-
 function updateExistingDepot($depotID, $depotName, $streetNumber, $streetName, $town, $contactNumber, $numberOfRooms) {
   $query = 
     "UPDATE depot d
@@ -37,15 +32,6 @@ function updateExistingDepot($depotID, $depotName, $streetNumber, $streetName, $
   return executeQuery($query);
 }
 
-function insertNewDepot($depotName, $streetNumber, $streetName, $town, $contactNumber, $numberOfRooms) {
-  $query = 
-    "INSERT INTO depot (depotName, streetNumber, streetName, town, contactNumber, numberOfBedsAvailable)
-      VALUES ('$depotName', '$streetNumber', '$streetName', '$town', '$contactNumber','$numberOfRooms')"
-    ;
-
-  return executeQuery($query);
-}
-
 if( isset($_POST['insertDepot']) || isset($_POST['updateDepot']) ) {
   $depotName = filter_var($_POST['depot_name'], FILTER_SANITIZE_STRING);
   $numberOfRooms = filter_var($_POST['depot_room_count'], FILTER_SANITIZE_STRING);
@@ -55,22 +41,13 @@ if( isset($_POST['insertDepot']) || isset($_POST['updateDepot']) ) {
   $town = filter_var($_POST['depot_town'], FILTER_SANITIZE_STRING);
 }
 
-if( isset($_POST['insertDepot']) ) {
-  $dbMutationStatus = 
-    insertNewDepot($depotName, $streetNumber, $streetName, $town, $contactNumber, $numberOfRooms);
-}
-
 if( isset($_POST['updateDepot']) ) {
   $depotID = filter_var($_REQUEST['depotID'], FILTER_SANITIZE_STRING);
   $dbMutationStatus=
     updateExistingDepot($depotID, $depotName, $streetNumber, $streetName, $town, $contactNumber, $numberOfRooms);
 
-  $_REQUEST['viewDepot'] = true;
-}
-
-if( isset($_POST['deleteDepot']) ) {
-  deleteExistingVehicle($_REQUEST['depotID']);
-  header("Location: ../assets/depots.php");
+  $url = "./view.depot.php?depotID=$depotID";
+  header("Location: ".$url);
 }
 ?>
 
@@ -80,7 +57,7 @@ if( isset($_POST['deleteDepot']) ) {
   <link rel="stylesheet" href="../../css/tailwind.css" />
   <link rel="stylesheet" href="../../css/custom.css" />
   <script type="text/javascript" src="../../js/pristine.min.js"></script>
-  <title>Maintain Depot</title>
+  <title>Update Depot</title>
   <style>
     .has-success .form-control {
       border-bottom: 2px solid #168b3f;
@@ -139,18 +116,14 @@ if( isset($_POST['deleteDepot']) ) {
       <?php 
 
         $queryParam = ( isset($_REQUEST['depotID']) ? '?depotID='.$_REQUEST['depotID'] : '');
-
-        echo 'action="./maintain.depot.php'. $queryParam .'"';
+        echo 'action="./update.depot.php'. $queryParam .'"';
       ?>
       >
       <div class="w-full mx-auto flex">
         <!-- Retrieve data about the selected depot -->
         <?php
-          $depot = null;
-          if( isset($_REQUEST['viewDepot']) || isset($_REQUEST['editDepot']) ) {
-            $result = retrieveExistingVehicle($_REQUEST['depotID']);
-            $depot = mysqli_fetch_assoc($result);
-          }
+          $result = retrieveExistingVehicle($_REQUEST['depotID']);
+          $depot = mysqli_fetch_assoc($result);
         ?>
         <!-- Depot Info -->
         <div class="flex flex-col w-full md:w-1/2 mb-6">
@@ -161,14 +134,11 @@ if( isset($_POST['deleteDepot']) ) {
                 Depot Name
             </label>
             <input
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'disabled value="'. $depot['depotName'] .'"' : "" ); ?>
-              <?php echo ( isset($_REQUEST['editDepot']) ? 'value="'. $depot['depotName'] .'"' : "" ); ?>
+            <?php echo ( 'value="'. $depot['depotName'] .'"' ); ?>
               name="depot_name" id="depot_name" type="text" placeholder="Hamilton Building" required
               data-pristine-pattern="/^[a-zA-Z\s]*$/"
-              class="form-control appearance-none block w-full border text-gray-700 border-gray-200 
-              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'bg-white' : 'bg-gray-200' ); ?>
-              ">
+              class="form-control appearance-none block w-full border bg-gray-200 text-gray-700 border-gray-200 
+              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white">
           </div>
           <div class="form-group w-full px-3 mb-6 ">
             <label 
@@ -177,13 +147,10 @@ if( isset($_POST['deleteDepot']) ) {
                 Number of Rooms
             </label>
             <input
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'disabled value="'. $depot['numberOfBedsAvailable'] .'"' : "" ); ?>
-              <?php echo ( isset($_REQUEST['editDepot']) ? 'value="'. $depot['numberOfBedsAvailable'] .'"' : "" ); ?>
+              <?php echo ( 'value="'. $depot['numberOfBedsAvailable'] .'"' ); ?>
               name="depot_room_count" id="depot_room_count" type="number" placeholder="10" maxlength="4" required 
-              class="form-control appearance-none block w-full text-gray-700 border border-gray-200 rounded
-               py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
-               <?php echo ( isset($_REQUEST['viewDepot']) ? 'bg-white' : 'bg-gray-200' ); ?>
-               ">
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded
+               py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
           </div>
           <div class="form-group w-full px-3 mb-6 ">
             <label 
@@ -192,14 +159,11 @@ if( isset($_POST['deleteDepot']) ) {
                 Depot Contact Number
             </label>
             <input 
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'disabled value="'. $depot['contactNumber'] .'"' : "" ); ?>
-              <?php echo ( isset($_REQUEST['editDepot']) ? 'value="'. $depot['contactNumber'] .'"' : "" ); ?>
+              <?php echo ( 'value="'. $depot['contactNumber'] .'"' ); ?>
               name="depot_contact_number" id="depot_contact_number" type="text" placeholder="011-120-7877" required
               data-pristine-pattern="/^[-0-9\s]*$/"
-              class="form-control appearance-none block w-full text-gray-700 border border-gray-200 
-              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'bg-white' : 'bg-gray-200' ); ?>
-              " >
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 
+              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" >
           </div>
         </div>
 
@@ -212,13 +176,10 @@ if( isset($_POST['deleteDepot']) ) {
                 Street Number
             </label>
             <input 
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'disabled value="'. $depot['streetNumber'] .'"' : "" ); ?>
-              <?php echo ( isset($_REQUEST['editDepot']) ? 'value="'. $depot['streetNumber'] .'"' : "" ); ?>
+              <?php echo ( 'value="'. $depot['streetNumber'] .'"' ); ?>
               name="depot_street_number" id="depot_street_number" type="number" placeholder="" required
-              class="form-control appearance-none block w-full  text-gray-700 border border-gray-200 
-              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'bg-white' : 'bg-gray-200' ); ?>
-              " >
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 
+              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" >
           </div>
           <div class="form-group w-full px-3 mb-6 ">
             <label 
@@ -227,14 +188,11 @@ if( isset($_POST['deleteDepot']) ) {
                 Street Name
             </label>
             <input 
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'disabled value="'. $depot['streetName'] .'"' : "" ); ?>
-              <?php echo ( isset($_REQUEST['editDepot']) ? 'value="'. $depot['streetName'] .'"' : "" ); ?>
+              <?php echo ( 'value="'. $depot['streetName'] .'"' ); ?>
               name="depot_street_name" id="depot_street_name" type="text" placeholder="" required
               data-pristine-pattern="/^[a-zA-Z\s]*$/" 
-              class="form-control appearance-none block w-full text-gray-700 border border-gray-200 
-              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'bg-white' : 'bg-gray-200' ); ?>
-              " >
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 
+              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" >
           </div>
           <div class="form-group w-full px-3 mb-6 ">
             <label 
@@ -243,61 +201,22 @@ if( isset($_POST['deleteDepot']) ) {
                 Depot Town
             </label>
             <input 
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'disabled value="'. $depot['town'] .'"' : "" ); ?> 
-              <?php echo ( isset($_REQUEST['editDepot']) ? 'value="'. $depot['town'] .'"' : "" ); ?>
+              <?php echo ( 'value="'. $depot['town'] .'"' ); ?>
               name="depot_town" id="depot_town" type="text" placeholder="" required
               data-pristine-pattern="/^[a-zA-Z\s]*$/" 
-              class="form-control appearance-none block w-full text-gray-700 border border-gray-200 
-              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
-              <?php echo ( isset($_REQUEST['viewDepot']) ? 'bg-white' : 'bg-gray-200' ); ?>
-              " >
+              class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 
+              rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" >
           </div>
         </div>
       </div>
 
       <!-- Button -->
       <div class="pr-4 mt-8 mb-4 w-full flex items-center justify-end">
-        <?php
-          if( isset($_REQUEST['insertDepot']) ) {
-            echo '
-            <button 
-              type="submit" id="insertDepot" name="insertDepot"
-              class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
-                Add New Depot
-            </button>
-            ';
-          }
-
-          if( isset($_REQUEST['editDepot']) ) {
-            echo '
-            <button 
-              type="submit" id="updateDepot" name="updateDepot"
-              class="bg-indigo-400 hover:bg-indigo-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
-                Update Depot
-            </button>
-            ';
-          } 
-
-          if( isset($_REQUEST['viewDepot']) ) {
-            echo '
-            <button 
-              type="submit" id="editDepot" name="editDepot"
-              class="bg-indigo-400 hover:bg-indigo-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
-                Edit Depot
-            </button>
-            ';
-            echo '
-            <button 
-              type="submit" id="deleteDepot" name="deleteDepot"
-              class="bg-red-400 hover:bg-red-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
-                Delete Depot
-            </button>
-            ';
-          }
-
-        ?>
-
-
+        <button 
+          type="submit" id="updateDepot" name="updateDepot"
+          class="bg-indigo-400 hover:bg-indigo-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
+            Update Depot
+        </button>
       </div>
     </form>
   </div>

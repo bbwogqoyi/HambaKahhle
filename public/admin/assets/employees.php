@@ -7,7 +7,7 @@ require_once(dirname(__DIR__) . "../../auth/authorization.php");
 //import database utils
 require_once(dirname(__DIR__) . "../../common/utils.php");
 
-function queryAvailableVehicles() {
+function queryAvailableEmployees() {
   $query = 
     "SELECT e.*, t.short_description FROM employee e, employeetype t
       where e.employeeTypeID=t.employeeTypeID LIMIT 20";
@@ -54,9 +54,10 @@ function queryAvailableVehicles() {
         echo searchbar('index.php');
       ?>
       
-      <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
+      <a href="../employee/add.employee.php"
+          class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
         Add New Employee
-      </button>
+      </a>
     </div>
 
     <!-- dynamic content -->
@@ -70,7 +71,7 @@ function queryAvailableVehicles() {
       </thead>
       <tbody class="text-gray-700">
         <?php
-          $result = queryAvailableVehicles();
+          $result = queryAvailableEmployees();
           if($result==null || mysqli_num_rows($result)<1) 
           {
             echo 
@@ -88,7 +89,7 @@ function queryAvailableVehicles() {
             echo '
               <tr>
                 <td class="flex items-center border px-4 py-4">
-                  <a href="#" class="lg:ml-4  flex items-center justify-start lg:mb-0 mb-4 pointer-cursor">
+                  <a href="../employee/view.employee.php?employeeID='. $row["employeeID"] .'" class="lg:ml-4  flex items-center justify-start lg:mb-0 mb-4 pointer-cursor">
                     <img class="rounded-full w-12 h-12 mr-4 border-2 border-transparent hover:border-indigo-800"
                       src="https://images.unsplash.com/photo-1509305717900-84f40e786d82?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=144&h=144&q=80"
                       alt="Nkosinathi Nkomo">

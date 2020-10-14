@@ -148,7 +148,7 @@ require_once(dirname(__DIR__) . "../../common/utils.php");
       <!-- Button -->
       <div class="mt-16 mb-4 flex justify-end w-full items-center">
         <button 
-          type="submit" id="submit" name="submit"
+          type="submit" id="" name="submit"
           class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
             Add New Vehicle
         </button>

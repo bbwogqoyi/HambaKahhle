@@ -53,9 +53,9 @@ function queryAvailableVehicles() {
         echo searchbar('index.php');
       ?>
 
-      <a href="../depot/maintain.depot.php?insertDepot"
+      <a href="../depot/add.depot.php"
           class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
-          Add New Depot
+          Add New Depot(s)
       </a>
     </div>
 
@@ -89,7 +89,7 @@ function queryAvailableVehicles() {
               <tr class="group">
                 <td class="border px-4 py-4 text-indigo-500 font-medium group-hover:bg-gray-100">
                   <a 
-                    href="../depot/maintain.depot.php?viewDepot&depotID='. $row["depotID"] .'"
+                    href="../depot/view.depot.php?depotID='. $row["depotID"] .'"
                     class="hover:border-b-2 border-indigo-600" >
                     '. $row["depotName"] . '
                   </a>  

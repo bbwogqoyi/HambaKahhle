@@ -54,7 +54,7 @@ function queryAvailableVehicles() {
       ?>
       
       <!-- <a href="../vehicle/add.vehicle.php" -->
-      <a href="#"
+      <a href="../vehicle/add.vehicle.php"
           class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
         Add New Vehicle
       </a>
@@ -94,7 +94,7 @@ function queryAvailableVehicles() {
               <tr>
                 <td class="border px-4 py-4 text-indigo-500 font-medium">
                   <a 
-                    href="#"
+                    href="../vehicle/view.vehicle.php?registrationNumber='. $row["registrationNumber"] . '"
                     class="hover:border-b-2 border-indigo-600" >
                     '. $row["registrationNumber"] . '
                   </a>
