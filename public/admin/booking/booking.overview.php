@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
   require_once(dirname(__DIR__) . "../../auth/authorization.php");
+  $GLOBALS['active_nav_item'] = 'admin_dashboard';
   
   if(!isset($_REQUEST["id"])) {
     header("Location: ../index.php");
@@ -55,7 +56,7 @@
     $updateBookingResult = mysqli_query($conn, $updateBookingQuery) or die("Error on query!");
     mysqli_close($conn);
 
-    $redirectURL = './index.php'. $_REQUEST['bookingID'];
+    $redirectURL = './index.booking.php'. $_REQUEST['bookingID'];
     header("Location: $redirectURL");
   }
   
@@ -221,7 +222,7 @@
             // Attention Icon
             echo ' 
               <svg  class="w-6 h-6 mr-2 fill-current stroke-current text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 500 500">
-                <path class="fill-current text-yellow-500" fill="none" stroke="currentColor" d="M490.258 248.375c0 132.547-107.453 240-240 240-132.551 0-240-107.453-240-240s107.449-240 240-240c132.547 0 240 107.453 240 240zm0 0" />
+                <path class="fill-current text-yellow-400" fill="none" stroke="currentColor" d="M490.258 248.375c0 132.547-107.453 240-240 240-132.551 0-240-107.453-240-240s107.449-240 240-240c132.547 0 240 107.453 240 240zm0 0" />
                 <path stroke-width="10" d="M466.512 332.313c-35.559 91.69-125.063 151.003-223.364 148.007C144.848 477.328 59.113 412.684 29.2 319a8 8 0 00-10.054-5.191c-4.211 1.34-6.536 5.843-5.192 10.054C46 424.183 137.918 493.32 243.191 496.293c105.274 2.973 200.942-60.871 238.602-159.223l15.2 4.711 3.558-89.718-47.985 75.914zm0 0M34 164.438C69.66 72.43 159.617 13.047 258.234 16.413c98.621 3.363 184.32 68.742 213.621 162.969a8.004 8.004 0 007.641 5.601c.813 0 1.621-.12 2.399-.363 4.222-1.309 6.578-5.793 5.265-10.016C455.77 73.7 363.88 3.77 258.254.402 152.629-2.965 56.473 60.972 18.719 159.68l-15.16-4.711L0 244.688l47.945-75.915zm0 0"/>
                 <path stroke-width="10" d="M258.258 80.375a8 8 0 00-16 0v272a8 8 0 0016 0zm0 0M250.258 376.375c-4.422 0-8 3.582-8 8v32a8 8 0 0016 0v-32a8 8 0 00-8-8zm0 0"/>
               </svg>'
@@ -257,7 +258,7 @@
             ';
           } else {
             echo '
-              <a href="../vehicle/vehicle.list.php?bookingID='. $_REQUEST["id"] .'" class="w-full mx-auto py-8 mb-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
+              <a href="../vehicle/assign.vehicle.php?bookingID='. $_REQUEST["id"] .'" class="w-full mx-auto py-8 mb-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
                 <span class="pb-6 flex items-center">
                   <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -271,16 +272,22 @@
         
         
         <!-- Add Trailers Section -->
-        <div class="w-full mx-auto py-8 my-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
-          <a href="#">
-            <span class="pb-6 flex items-center">
-              <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <p class="text-xl font-bold text-gray-900">Add Trailers</p>
-            </span>
-          </a>
-        </div>
+        <?php 
+          if($bookingInfo["trailer"]) {
+            echo '
+              <div class="w-full mx-auto py-8 my-6 flex justify-center border border-indigo-200 bg-gray-100 hover:bg-indigo-100 shadow">
+                <a href="#">
+                  <span class="pb-6 flex items-center">
+                    <svg class="w-8 h-8 mr-2 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <p class="text-xl font-bold text-gray-900">Add Trailers</p>
+                  </span>
+                </a>
+              </div>
+            ';
+          }
+        ?>
       </div>
 
       <!-- Driver Summary -->
@@ -300,7 +307,7 @@
               // Attention Icon
               echo ' 
               <svg  class="w-6 h-6 mr-2 fill-current stroke-current text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 500 500">
-                <path class="fill-current text-yellow-500" fill="none" stroke="currentColor" d="M490.258 248.375c0 132.547-107.453 240-240 240-132.551 0-240-107.453-240-240s107.449-240 240-240c132.547 0 240 107.453 240 240zm0 0" />
+                <path class="fill-current text-yellow-400" fill="none" stroke="currentColor" d="M490.258 248.375c0 132.547-107.453 240-240 240-132.551 0-240-107.453-240-240s107.449-240 240-240c132.547 0 240 107.453 240 240zm0 0" />
                 <path stroke-width="10" d="M466.512 332.313c-35.559 91.69-125.063 151.003-223.364 148.007C144.848 477.328 59.113 412.684 29.2 319a8 8 0 00-10.054-5.191c-4.211 1.34-6.536 5.843-5.192 10.054C46 424.183 137.918 493.32 243.191 496.293c105.274 2.973 200.942-60.871 238.602-159.223l15.2 4.711 3.558-89.718-47.985 75.914zm0 0M34 164.438C69.66 72.43 159.617 13.047 258.234 16.413c98.621 3.363 184.32 68.742 213.621 162.969a8.004 8.004 0 007.641 5.601c.813 0 1.621-.12 2.399-.363 4.222-1.309 6.578-5.793 5.265-10.016C455.77 73.7 363.88 3.77 258.254.402 152.629-2.965 56.473 60.972 18.719 159.68l-15.16-4.711L0 244.688l47.945-75.915zm0 0"/>
                 <path stroke-width="10" d="M258.258 80.375a8 8 0 00-16 0v272a8 8 0 0016 0zm0 0M250.258 376.375c-4.422 0-8 3.582-8 8v32a8 8 0 0016 0v-32a8 8 0 00-8-8zm0 0"/>
               </svg>'

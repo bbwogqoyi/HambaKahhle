@@ -33,7 +33,7 @@ function queryAvailableVehicles() {
     <!-- Assets Page Navbar -->
     <div class="">
       <nav class="flex flex-col sm:flex-row">
-        <a href="./index.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none"  >
+        <a href="./index.assets.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none"  >
             Vehicles
         </a>
         <a href="./depots.php" class="text-indigo-400 py-4 px-6 block hover:text-indigo-700 hover:font-semibold focus:outline-none  
@@ -43,7 +43,7 @@ function queryAvailableVehicles() {
         <a href="./employees.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none">
             Employees
         </a>
-        </nav>
+      </nav>
     </div>
 
     <!-- Searchbar + Button -->
@@ -52,10 +52,11 @@ function queryAvailableVehicles() {
         require_once("../../component_partials/searchbar.php");
         echo searchbar('index.php');
       ?>
-      
-      <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
-        Add New Depot
-      </button>
+
+      <a href="../depot/add.depot.php"
+          class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
+          Add New Depot(s)
+      </a>
     </div>
 
     <!-- dynamic content -->
@@ -82,19 +83,23 @@ function queryAvailableVehicles() {
           }
         ?>
         <?php
-          $row_index=0;
           while($result!=null && $row = mysqli_fetch_assoc($result))
           {
-            $row_index+=1;
-            $actionLink = "#";
             echo '
-              <tr>
-                <td class="border px-4 py-4">'. $row["depotName"] . '</td>
-                <td class="border px-4 py-4">'. $row["streetNumber"] . '</td>
-                <td class="border px-4 py-4">'. $row["streetName"] . '</td>
-                <td class="border px-4 py-4">'. $row["town"] . '</td>
-                <td class="border px-4 py-4">'. $row["contactNumber"] . '</td>
-                <td class="border px-4 py-4">'. $row["numberOfBedsAvailable"] . '</td>
+              <tr class="group">
+                <td class="border px-4 py-4 text-indigo-500 font-medium group-hover:bg-gray-100">
+                  <a 
+                    href="../depot/view.depot.php?depotID='. $row["depotID"] .'"
+                    class="hover:border-b-2 border-indigo-600" >
+                    '. $row["depotName"] . '
+                  </a>  
+                </td>
+                
+                <td class="border px-4 py-4 group-hover:bg-gray-100">'. $row["streetNumber"] . '</td>
+                <td class="border px-4 py-4 group-hover:bg-gray-100 ">'. $row["streetName"] . '</td>
+                <td class="border px-4 py-4 group-hover:bg-gray-100">'. $row["town"] . '</td>
+                <td class="border px-4 py-4 group-hover:bg-gray-100">'. $row["contactNumber"] . '</td>
+                <td class="border px-4 py-4 group-hover:bg-gray-100">'. $row["numberOfBedsAvailable"] . '</td>
               </tr>
             ';
           }

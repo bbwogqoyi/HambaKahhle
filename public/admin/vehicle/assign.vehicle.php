@@ -104,7 +104,7 @@ if( isset($_POST['submit']) ) {
 
   <!-- Page Content-->
   <div class="mt-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full md:w-4/5 rounded">
-  <form action='vehicle.list.php?bookingID=<?php echo $_REQUEST["bookingID"]; ?>' method="POST"> <!--  href="vehicle.list.php" -->
+  <form action='assign.vehicle.php?bookingID=<?php echo $_REQUEST["bookingID"]; ?>' method="POST">
 
     
     <!-- (Searchbar + Button) Div -->

@@ -5,7 +5,7 @@
 require_once(dirname(__DIR__) . "../common/utils.php");
 
 if( isset($_COOKIE["employeeID"]) ) {
-  header("Location: ./booking/index.php");
+  header("Location: ./booking/index.booking.php");
 }
 
 if( isset($_REQUEST['submit']) ) {
@@ -19,11 +19,11 @@ if( isset($_REQUEST['submit']) ) {
   $result = executeQuery($query);
 
   if( $result!=null && $row=mysqli_fetch_assoc($result) ){
-    $cookieDuration = time() + 3600;
+    $cookieDuration = time() + 3*3600;
     setcookie("email", $row["email"], $cookieDuration, '/');
     setcookie("employeeID", $row["employeeID"], $cookieDuration, '/');
     setcookie("employeeTypeID", $row["employeeTypeID"], $cookieDuration, '/');
-    header("Location: ./booking/index.php");
+    header("Location: ./booking/index.booking.php");
   } 
   else{
     echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
