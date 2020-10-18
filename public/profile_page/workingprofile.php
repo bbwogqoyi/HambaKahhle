@@ -17,7 +17,7 @@
     require_once("config.php");
 
     //store the ID from the previous page
-    if(!isset($_COOKIE["ClientID"]))
+    if(isset($_COOKIE["ClientID"]))
     {
 
         $id = ($_COOKIE["ClientID"]);

@@ -10,15 +10,16 @@
 <body class="antialiased bg-gray-200" >
 <?php
     require_once("../component_partials/topbar.nav.php");
+    $profpic = null;
   ?>
  <?php 
     
     //add database credentials
     require_once("config.php");
 
-    if(!isset($_COOKIE["ClientID"]))
+    if(isset($_COOKIE["clientID"]))
     {
-      $id = ($_COOKIE["ClientID"]);
+      $id = ($_COOKIE["clientID"]);
 
       $connection = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DATABASE) or die("Could not connect to database!");
       //store the ID from the previous page
@@ -29,11 +30,11 @@
         
         if(isset($_FILES['file']['name']) && $_FILES['file']['name'] != "")
         {
-          $filename = "uploads/".$_FILES['file']['name'];
+          $filename = "Uploads/".$_FILES['file']['name'];
           move_uploaded_file($_FILES['file']['tmp_name'],$filename);
           if(file_exists($filename))
           {
-            $query = "UPDATE clients SET profileImage = '$filename' where ClientID = $id";
+            $query = "UPDATE clients SET profileImage = '$filename' where clientID = $id";
             $newResult = mysqli_query($connection, $query) or die("Could not retrieve data!");
 
           }
@@ -74,9 +75,9 @@
               require_once("config.php");
 
               //store the ID from the previous page
-              if(!isset($_COOKIE["ClientID"]))
+              if(isset($_COOKIE["clientID"]))
               {
-                $id = ($_COOKIE["ClientID"]);
+                $id = ($_COOKIE["clientID"]);
               
               
                 //connect to the database
@@ -86,7 +87,6 @@
                 $query = "SELECT profileImage FROM clients WHERE clientID = $id";
                 $result = mysqli_query($connection, $query) or die("Could not retrieve data!");
 
-                $profpic = null;
                 //get original details from database
                 while ($row = mysqli_fetch_array($result)) 
                 {
@@ -103,9 +103,11 @@
                 mysqli_close($connection); 
 
               }
+              
+              echo '<img id="profile-pic" class="h-56 w-56 rounded-lg" src="'.$profpic.'" alt="">'; 
           
 
-         ?><img id="profile-pic" class="h-56 w-56 rounded-lg" src="<?php echo $profpic ?>" alt=""> </span>
+         ?></span>
       
       <form  method = "post" enctype="multipart/form-data">
    <input type="file" name="file" ><br><br>

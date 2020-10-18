@@ -13,7 +13,7 @@ $id = 1;
 //add database credentials
 require_once("config.php");
 
-if(!isset($_COOKIE["ClientID"]))
+if(isset($_COOKIE["ClientID"]))
 {
     $id = !isset($_COOKIE["ClientID"]);
 

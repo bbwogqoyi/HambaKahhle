@@ -21,13 +21,16 @@
     }
   </style>
   <?php
+        
+        
 
         //add database credentials
         require_once("config.php");
 
         //store the ID from the previous page
-        if(!isset($_COOKIE["ClientID"]))
+        if(isset($_COOKIE["clientID"]))
         {
+          $id = $_COOKIE["clientID"];
         
         
           //connect to the database
@@ -35,6 +38,7 @@
           
           //issue the query instructions
           $query = "SELECT lastName, firstName, contactNumber, clientID, email, profileImage FROM clients WHERE clientID = $id";
+          
           $result = mysqli_query($connection, $query) or die("Could not retrieve data!");
           
           //get original details from database
@@ -47,12 +51,14 @@
               $profpic = $row['profileImage'];
               
               
+              
           }       
           
           //end the connection to the database
           mysqli_close($connection); 
 
         }
+      
 
   
   ?>
