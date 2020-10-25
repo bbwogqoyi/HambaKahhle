@@ -44,7 +44,18 @@ VALUES
 ("5N1AA0NC1DN312580", "2015-07-20", 5, "Volkswagen", "Golf 7", 2020, 2),
 ("1ZVBP8JS1C5665223", "2009-03-17", 12, "Nissan", "NV", 2012, 3),
 ("WBXPC934X9W965325", "2012-05-18", 16, "Toyota", "Quantum", 2019, 3),
-("1G6YV36A565629760", "2016-12-02", 5, "Mercedes-Benz", "C-200", 2008, 2);  
+("YBXPC934X9W963325", "2012-05-18", 6, "BMW", "X6", 2019, 3),
+("TTXPC934X9W965325", "2012-05-18", 6, "Audi", "Q7", 2019, 3),
+("1G6YV36A565629760", "2016-12-02", 5, "Mercedes-Benz", "C-200", 2008, 2),
+("1G6YVERTYT5629760", "2016-12-02", 5, "Mercedes-Benz", "C63 AMG", 2008, 2);  
+
+INSERT INTO depot 
+(depotName, streetNumber, streetName, town, contactNumber, numberOfBedsAvailable)
+VALUES 
+("Hamilton Building", 1, "Prince Alfred", "Grahamstown", "0123456789", 15),
+("Gallagher Convention Centre", 19, "Richards Drive", "Midrand", "0123456789", 9),
+("The Bat Centre", 45, "Small craft harbour", "Durban", "0123456789", 39),
+("The Pavilion Clock Tower", 5, "South Arm Road", "Cape Town", "0123456789", 21); 
 
 INSERT INTO driverlicense 
 (driverID, licenseCode)
