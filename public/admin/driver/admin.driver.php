@@ -4,6 +4,7 @@
 <?php
 $GLOBALS['active_nav_item'] = 'admin_dashboard';
 require_once(dirname(__DIR__) . "../../auth/authorization.php");
+authorize('employeeID', '../index.php');
 
 function buildLicenceList($licenceList) {
   $html = "";

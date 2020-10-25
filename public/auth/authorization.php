@@ -1,6 +1,10 @@
 <?php
-if( !isset($_COOKIE['employeeID']) ) {
-  $adminBaseUrl = "index.php"; //"admin/index.php";
-  header("Location: /hambakahle/public/admin/index.php");
+function authorize($cookieKey, $authenticationURL) {
+  if( !isset($_COOKIE[$cookieKey]) ) {
+    header("Location: ".$authenticationURL);
+  }
 }
+
+// $path = $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
+// echo str_replace($_SERVER['DOCUMENT_ROOT'], '', $path);
 ?>

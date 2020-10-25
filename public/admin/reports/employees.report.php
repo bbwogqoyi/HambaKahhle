@@ -9,6 +9,7 @@
 <?php
 $GLOBALS['active_nav_item'] = 'reports_dashboard';
 require_once(dirname(__DIR__) . "../../auth/authorization.php");
+authorize('employeeID', '../index.php');
 
 //import database utils
 require_once(dirname(__DIR__) . "../../common/utils.php");

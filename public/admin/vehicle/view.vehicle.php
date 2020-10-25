@@ -2,6 +2,8 @@
 <html lang="en">
 <?php
 require_once(dirname(__DIR__) . "../../auth/authorization.php");
+authorize('employeeID', '../index.php');
+
 $GLOBALS['active_nav_item'] = 'assets_dashboard';
 
 //import database credentials

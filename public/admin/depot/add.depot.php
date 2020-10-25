@@ -9,6 +9,7 @@ $dbMutationStatus=null;
 
 //import database utils
 require_once(dirname(__DIR__) . "../../auth/authorization.php");
+authorize('employeeID', '../index.php');
 require_once(dirname(__DIR__) . "../../common/utils.php");
 
 function insertNewDepot($depotName, $streetNumber, $streetName, $town, $contactNumber, $numberOfRooms) {
