@@ -94,15 +94,11 @@
       <p class="mb-8 text-4xl text-gray-700 font-semibold">
         Client Profile 
       </p>
-      <a 
-        href="../assets/employees.php" 
-        class="bg-red-400 hover:bg-red-700 text-white font-bold text-center text-lg py-4 px-auto w-56 rounded">
-        Cancel
-      </a>
+      
     </div>
 
     <!-- Employee Form -->
-    <form id="updateEmployeeForm" action="workingprofile.php" class="w-full mx-auto"  method="POST">
+    <form id="updateEmployeeForm" action="khumwp.php" class="w-full mx-auto"  method="POST">
       
       <div class="w-full flex flex-row justify-between items-center">
         
@@ -176,17 +172,13 @@
       </div>
 
       <!-- Button -->
-      <div class="pr-4 mt-1 mb-4 w-full flex items-center justify-end">
+      <div class="pr-4 mt-1 mb-4 w-full items-center justify-end">
         <button 
           
-          class="bg-indigo-400 hover:bg-indigo-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded" onclick="clickme2()">
+          class="bg-teal-500 hover:bg-teal-700 text-white font-bold text-center text-sm py-4 px-auto w-56  rounded" onclick="clickme2()">
             Edit Details
         </button>
-        <button 
-          type="submit" id="deleteEmployee" name="deleteEmployee"
-          class="bg-red-400 hover:bg-red-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
-            Delete Employee
-        </button>
+        
       </div>
     </form>
   </div>
@@ -236,7 +228,7 @@ function clickme(){
 
 function clickme2()
 {
-  location.href = "workingprofile.php";
+  location.href = "khumwp.php";
 }
 
   </script>
