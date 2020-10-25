@@ -8,11 +8,12 @@ function executeQuery($query) {
   $conn = 
     mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE)
     or die("Could not connect to database!");
-  
+
   // execute query
   $result = 
     mysqli_query($conn, $query)
-    or die("Could not execute query!");
+    or die("Error description: " . mysqli_error($conn));
+    // or die("Could not execute query!");
 
   // close db connection
   mysqli_close($conn);

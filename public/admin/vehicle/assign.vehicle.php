@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <?php
+$GLOBALS['active_nav_item'] = 'admin_dashboard';
+require_once(dirname(__DIR__) . "../../auth/authorization.php");
+
 //import database utils
 require_once(dirname(__DIR__) . "../../common/utils.php");
 
@@ -16,6 +19,12 @@ function queryAvailableVehicles() {
     ";
   $result = executeQuery($query);
   return $result;
+}
+
+function queryNumberOfPassengerInBooking($bookingID) {
+  $query = "SELECT b.numberOfPassengers from booking b where b.bookingID=$bookingID";
+  $result = executeQuery($query);
+  return mysqli_fetch_assoc($result)['numberOfPassengers'];
 }
 
 function assignSelectedVehiclesToBooking($registrationNumber, $bookingID) {
@@ -68,6 +77,7 @@ if( isset($_POST['submit']) ) {
   <!-- Top Navbar -->
   <?php
     require_once("../../component_partials/admin.topbar.nav.php");
+    
   ?>
 
   <!-- Booking Status Visualizer -->
@@ -77,26 +87,26 @@ if( isset($_POST['submit']) ) {
         content-evenly ">
       <div class="flex flex-col items-center">
         <p class="text-base font-medium text-indigo-600">
-          Number Of Seats
+          Number Of Passengers
         </p>
         <p class="text-lg font-medium text-gray-700">
-          Main
+          <?php echo queryNumberOfPassengerInBooking($_REQUEST['bookingID']); ?>
         </p>
       </div>
       <div class="flex flex-col items-center">
         <p class="text-base font-medium text-indigo-600">
-          Collection Town
+          Number Of Vehicles Assigned
         </p>
-        <p class="text-lg font-medium text-gray-700">
-          Main
+        <p id="vehiclesAssigned" class="text-lg font-medium text-gray-700">
+          0
         </p>
       </div>
       <div class="flex flex-col items-center">
         <p class="text-base font-medium text-indigo-600">
-          Start Date
+          Total Number Of Seats
         </p>
-        <p class="text-lg font-medium text-gray-700">
-          Main
+        <p id="totalSeats" class="text-lg font-medium text-gray-700">
+          0
         </p>
       </div>
     </div>
@@ -151,7 +161,7 @@ if( isset($_POST['submit']) ) {
             echo '
               <tr>
                 <td id="reg_'. $row_index .'" class="border px-4 py-4">'. $row["registrationNumber"] . '</td>
-                <td class="border px-4 py-4">'. $row["numberOfSeats"] . '</td>
+                <td class="border px-4 py-4">'. $row["numberOfSeats"] .'</td>
                 <td class="border px-4 py-4">'. $row["make"] . '</td>
                 <td class="border px-4 py-4">'. $row["model"] . '</td>
                 <td class="border px-4 py-4">'. $row["year"] . '</td>
@@ -161,7 +171,7 @@ if( isset($_POST['submit']) ) {
                     <input id="vehicleTicker_'. $row_index .'" value="'. $row["registrationNumber"] .'" name="check_list[]" 
                       type="checkbox" class="hidden" >
                     </input>
-                    <a onclick="clickEvt(this);" id="checkbox_'. $row_index .'" class="flex items-center group">
+                    <a onclick="clickEvt(this, '. $row["numberOfSeats"] .');" id="checkbox_'. $row_index .'" class="flex items-center group">
                       <svg id="checkbox_svg_'. $row_index .'" class="w-12 h-12 pl-2 pr-1 text-gray-400 group-hover:text-indigo-500" 
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
@@ -189,7 +199,11 @@ if( isset($_POST['submit']) ) {
       return arr;
     }
     
-    var clickEvt = function(elem) {
+    var clickEvt = function(elem, seats) {
+      // vehicle counter states
+      var vehiclesAssigned = document.getElementById('vehiclesAssigned');
+      var totalSeats = document.getElementById('totalSeats');
+
       // get the elements id value
       var elemSplit = elem.id.split('_');
       var elemID = elemSplit[elemSplit.length-1];
@@ -202,10 +216,16 @@ if( isset($_POST['submit']) ) {
       if(checkbox.checked) {
         document.getElementById('checkbox_svg_'+elemID).style.color  = 'rgba(76, 81, 191, var(--text-opacity))';
         document.getElementById('checkbox_txt_'+elemID).style.color  = 'rgba(102, 126, 234, var(--text-opacity))';
+
+        vehiclesAssigned.innerHTML = parseInt(vehiclesAssigned.innerHTML) + 1;
+        totalSeats.innerHTML = parseInt(totalSeats.innerHTML) + seats;
       }
       else {
         document.getElementById('checkbox_svg_'+elemID).style.color  = 'rgba(203, 213, 224, var(--text-opacity))';
         document.getElementById('checkbox_txt_'+elemID).style.color  = 'rgba(203, 213, 224, var(--text-opacity))';
+
+        vehiclesAssigned.innerHTML = parseInt(vehiclesAssigned.innerHTML) - 1;
+        totalSeats.innerHTML = parseInt(totalSeats.innerHTML) - seats;
       }
     }
   </script>
