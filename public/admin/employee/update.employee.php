@@ -212,6 +212,7 @@ if( isset($_POST['updateEmployee']) ) {
               <input
                 <?php echo ( 'value="'. $employee['password'] .'"'  ); ?>
                 name="password" id="password" type="password" placeholder="" required
+                data-pristine-required-message="Please choose a password" data-pristine-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/" data-pristine-pattern-message="Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
                 class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 
                 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
                 " >
@@ -224,6 +225,7 @@ if( isset($_POST['updateEmployee']) ) {
               </label>
               <input 
                 name="password2" id="password2" type="password" placeholder="" required
+                data-pristine-required-message="Please choose a password" data-pristine-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/" data-pristine-pattern-message="Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
                 class="form-control appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 
                 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
                 " >
@@ -266,17 +268,6 @@ if( isset($_POST['updateEmployee']) ) {
         }
         return false;
       }, "The password fields must match", 2, false);
-
-      // // A validator to check the password fields match
-      // var dropdown = document.getElementById("employeeTypeID");
-      // pristine.addValidator(dropdown, function(value) {
-      //   var selected = 0 + (elem.options[elem.selectedIndex].value);
-      //   console.log(selected);
-      //   if (selected !== null && selected >= 1 && selected <= 2){
-      //       return true;
-      //   }
-      //   return false;
-      // }, "Must select a valid option  ", 3, false);
 
       form.addEventListener('submit', function (e) {
         //e.preventDefault();

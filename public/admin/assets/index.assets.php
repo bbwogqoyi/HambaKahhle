@@ -29,7 +29,7 @@ function queryAvailableVehicles() {
   ?>
 
   <!-- Page Content-->
-  <div class="mt-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full lg:w-4/5">
+  <div class="mt-16 mb-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full lg:w-4/5">
     <!-- Assets Page Navbar -->
     <div class="">
       <nav class="flex flex-col sm:flex-row">
@@ -79,7 +79,7 @@ function queryAvailableVehicles() {
           {
             echo 
             '<tr class="text-2xl text-gray-600 text-center">
-            <td colspan="6">No Bookings</td>
+            <td colspan="10">No Vehicles</td>
             </tr>';
           }
         ?>
@@ -87,9 +87,6 @@ function queryAvailableVehicles() {
           $row_index=0;
           while($result!=null && $row = mysqli_fetch_assoc($result))
           {
-            $row_index+=1;
-            $actionLink = "#";
-            //href="../vehicle/view.vehicle.php?registrationNumber='. $row["registrationNumber"] . '"
             echo '
               <tr>
                 <td class="border px-4 py-4 text-indigo-500 font-medium">

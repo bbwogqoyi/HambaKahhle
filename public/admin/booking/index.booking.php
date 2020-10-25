@@ -85,7 +85,7 @@ function getBookings(){
           {
             echo 
             '<tr class="text-2xl text-gray-600 text-center">
-            <td colspan="6">No Bookings</td>
+            <td colspan="10">No Bookings</td>
             </tr>';
           }
 

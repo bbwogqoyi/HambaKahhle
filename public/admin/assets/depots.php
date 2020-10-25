@@ -78,7 +78,7 @@ function queryAvailableVehicles() {
           {
             echo 
             '<tr class="text-2xl text-gray-600 text-center">
-            <td colspan="6">No Depots</td>
+            <td colspan="10">No Depots</td>
             </tr>';
           }
         ?>

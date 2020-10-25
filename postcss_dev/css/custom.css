@@ -57,3 +57,15 @@
     opacity: 0;
   }
 }
+
+.has-success .form-control {
+  border-bottom: 2px solid #168b3f;
+}
+
+.has-danger .form-control {
+  border-bottom: 2px solid #dc1d34;
+}
+
+.form-group .text-help {
+  color: #dc1d34;
+}

@@ -2,6 +2,9 @@
 <html lang="en">
 
 <?php
+$GLOBALS['active_nav_item'] = 'admin_dashboard';
+require_once(dirname(__DIR__) . "../../auth/authorization.php");
+
 function buildLicenceList($licenceList) {
   $html = "";
   foreach($licenceList as $entry) {

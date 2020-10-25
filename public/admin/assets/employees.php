@@ -61,7 +61,7 @@ function queryAvailableEmployees() {
     </div>
 
     <!-- dynamic content -->
-    <table class="table-fixed text-left w-full">
+    <table class="table-auto text-left w-full">
       <thead class="bg-gray-200">
         <tr>
           <th class="w-1/6 px-4 py-2">Name</th>
@@ -76,7 +76,7 @@ function queryAvailableEmployees() {
           {
             echo 
             '<tr class="text-2xl text-gray-600 text-center">
-            <td colspan="6">No Employees</td>
+            <td colspan="10">No Employees</td>
             </tr>';
           }
         ?>

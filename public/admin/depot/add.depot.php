@@ -42,19 +42,6 @@ if( isset($_POST['insertDepot']) ) {
   <link rel="stylesheet" href="../../css/custom.css" />
   <script type="text/javascript" src="../../js/pristine.min.js"></script>
   <title>Maintain Depot</title>
-  <style>
-    .has-success .form-control {
-      border-bottom: 2px solid #168b3f;
-    }
-
-    .has-danger .form-control {
-      border-bottom: 2px solid #dc1d34;
-    }
-
-    .form-group .text-help {
-      color: #dc1d34;
-    }
-  </style>
 </head>
 <body class="bg-gray-200 antialiased font-sans">
   <!-- Top Navbar -->
