@@ -9,7 +9,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="stylesheet" href="../css/tailwind.css" />
   <link rel="stylesheet" href="../css/custom.css" />
-  <title>Booking</title>
+  <link rel="stylesheet" href="../css/styling.css" />
+  <title>Driver Dashboard</title>
 
   <style>
     #menu-toggle:checked+#menu {
@@ -76,7 +77,7 @@
     <!-- Searchbar + Button -->
     <div class="flex justify-between w-full items-center mx-4 mb-10"> 
       <div class="w-1/3">
-			<h1  class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400">My Bookings	<h1>
+			<h1  class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400">Driver Dashboard	<h1>
        </div>
 
 	    <div class="w-1/3">
@@ -96,7 +97,7 @@
     <table class="table-auto text-left w-full">
       <thead class="bg-gray-200">
         <tr>
-          <th class="w-1/6 px-4 py-2">initial Collection Point</th>
+          <th class="w-1/6 px-4 py-2">Initial Collection Point</th>
           <th class="w-1/6 px-4 py-2">Start Date</th>
           <th class="w-1/6 px-4 py-2">End Date</th>
           <th class="w-1/6 px-4 py-2">Number of passengers</th>

@@ -9,6 +9,9 @@
 		$endDate =  $_REQUEST['endDate'];
 		$trailer =  $_REQUEST['trailer'];
 		$numPassengers =  $_REQUEST['numPassengers'];
+		$lat =  $_REQUEST['lat'];
+		$lng =  $_REQUEST['lng'];
+		$loc =  "yes";
 		$clientID =  $_COOKIE['clientID'];
 		$date1 = strtotime($startDate);
 		$date2 = strtotime($endDate);
@@ -24,8 +27,8 @@
 		require_once("../config/config.php");
 		$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
 		
-			$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer,statusID)
-			VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer','$status')";
+			$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer,statusID,hasLocation,latitude,longitude)
+			VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer','$status','$loc','$lat','$lng')";
 
 
 			$result = mysqli_query($conn, $query) or die("Could not execute") ;
@@ -87,7 +90,7 @@
   </style>
 </head>
 
-<body onload="myMap()" class="antialiased bg-gray-200">
+<body class="antialiased bg-gray-200">
   <!-- Top Navbar -->
   <header class="bg-gray-600 lg:py-0 py-2">
     <div class="w-full flex flex-wrap items-center md:w-3/4 px-6 md:px-0 md:mx-auto">
@@ -193,7 +196,10 @@
 	   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
         Get My Location
       </label>
-	  <button  onclick="location()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Get Current Location</button>
+	   <div  style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;height: 100%;" id="googleMap" ></div>
+	            	   <input hidden type="text"  name="lat" id="lat">
+	            	   <input hidden  type="text"  name="lng" id="lng">
+
   </div>
   </div>
  <div class="flex flex-wrap -mx-3 mb-6">
@@ -226,7 +232,7 @@
  
 
   </div>
-   <div style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;position: absolute;top: 30%;left: 25%;width: 50%;height: 60%;" id="googleMap" style="width:100%;height:400px;"></div>
+ 
 
     <script>
 
@@ -234,7 +240,7 @@
         function myMap() {
 		  var x = document.getElementById("googleMap");
   
-    x.style.display = "none";
+    
                 if(navigator.geolocation){
                         navigator.geolocation.getCurrentPosition(showPosition);
                 }
@@ -245,8 +251,11 @@
         }
 
         function showPosition(position){
+		
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
+		 document.getElementById("lat").value =lat ;
+		 document.getElementById("lng").value =lng ;
 
             var mapProp= {
             center:new google.maps.LatLng(lat,lng),
@@ -256,6 +265,20 @@
             
 
         }
+
+		function Visibility(){
+		 
+			 var x = document.getElementById("googleMap");
+			 if(x.style.display === "block")
+			 {
+		 		 x.style.display = "none";
+			 }
+			 else
+			 {
+			    x.style.display = "block";
+			 }      
+
+		}
 
 
     </script>

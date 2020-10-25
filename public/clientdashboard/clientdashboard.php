@@ -209,14 +209,14 @@
 						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["numberOfPassengers"] . "</td>";
 						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["trailer"] . "</td>";
 						if($row["statusID"] == 1){
-							echo " <td class=\"border px-4 py-4 bg-gray-300\"> New</td>";
+							echo " <td class=\"border px-4 py-4 bg-gray-300\"> Booking Created</td>";
 						}
 						else if($row["statusID"] == 2){
 				
-							echo " <td class=\"border px-4 py-4 bg-gray-300\"> Issued</td>";
+							echo " <td class=\"border px-4 py-4 bg-gray-300\"> Pending...</td>";
 						}else if($row["statusID"] == 3){
 				
-							echo " <td class=\"border px-4 py-4 bg-gray-300\"> Awaiting confirmation</td>";
+							echo " <td class=\"border px-4 py-4 bg-gray-300\"> Awaiting your confirmation</td>";
 						}else if($row["statusID"] == 4){
 				
 							echo " <td class=\"border px-4 py-4 bg-gray-300\"> Finalized</td>";

@@ -9,6 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="stylesheet" href="../css/tailwind.css" />
   <link rel="stylesheet" href="../css/custom.css" />
+   <link rel="stylesheet" href="../css/styling.css" />
   <title>Day trips</title>
 
   <style>
