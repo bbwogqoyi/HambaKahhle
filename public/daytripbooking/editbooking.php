@@ -1,20 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 	<?php
-	if(isset($_REQUEST['submit'])){
-		$tripDate =  $_REQUEST['tripDate'];
-		$tripTime =  $_REQUEST['tripTime'];
-		$pickLocation =  $_POST['pickLocation'];
-		$dropLocation =  $_POST['dropLocation'];
-
-		$bookingID =  $_REQUEST['id'];
-		//$bed = "yes";
-		
-		require_once("../config/config.php");
+	require_once("../config/config.php");
 		$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
+	if(!isset($_REQUEST['submit'])){
 		
-			$query = "INSERT INTO daytrip (tripDate,tripTime, collectionPoint,destinationPoint, bookingID)
-			VALUES ('$tripDate','$tripTime','$pickLocation','$dropLocation', '$bookingID')";
+
+		
+		
+		
+		$query = "SELECT * FROM daytrip WHERE tripNumber =" .  $_REQUEST['id'];
+
+		if($result === false) {
+			echo " <script type='text/javascript'>alert('failed to add!.');</script>";
+			
+		}
+		else{
+		if($row = $result->fetch_assoc()){
+				echo "<div class=\"container mx-auto h-full flex justify-center items-center \">
+					<div class=\"w-2/3 lg:w-1/3\">
+						<h1 class=\"font-light text-4xl mb-1/8 text-center\">Add a Day Trip</h1>
+						<form action=\"editbooking.php?id= ". $_REQUEST['id'] ."\" method=\"POST\" >
+							<div class=\"border-blue-500 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg\">
+                          
+                          
+								<div class=\"mb-4\">
+									<label for=\"start\">Trip date:</label>
+									<div style=\"width: 10%;\"></div>
+									<input type=\"date\" id=\"tripDate\" name=\"tripDate\" 
+										  value=" . $row["tripDate"] . "\" >
+                                       
+								</div>
+								<div class=\"mb-4\">
+									<label for=\"start\">Pick up time:</label>
+									<div style=\"width: 10%;\"></div>
+									<input type=\"time\" id=\"tripTime\" name=\"tripTime\" value=" . $row["tripTime"] . "\">
+                                       
+                                       
+								</div>
+								<div class=\"mb-4\">
+									<label for=\"start\">Pick up location:</label>
+									<div style=\"width: 10%;\"></div>
+									<input type=\"text\"  name=" .  $row["collectionPoint"] . "\" value=" . $row["collectionPoint"] . "\">
+                      
+								</div>
+								<div class=\"mb-4\">
+									<label for=\"start\">drop off location:</label>
+									<div style=\"width: 10%;\"></div>
+									<input type=\"text\" id=\"dropLocation\" name=\"dropLocation\" value=" . $row["destinationPoint"] . "\">
+                      
+								</div>
+                           
+                         
+                          
+								<div class=\"inline-flex\">
+									<div class=\"flex items-center\">
+										<input type=\"submit\"  id=\"submit\" name=\"submit\" value =\"submit\" class=\"bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded\"/>
+                                    
+                                    
+									</div>
+									<div class=\"flex items-center ml-2\">
+										<button class=\"bg-red-600 hover:bg-teal text-white font-bold py-2 px-4 rounded\">
+											Cancel
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+                   
+					</div>
+				</div>";
+				}
+			}
+			mysqli_close($conn);
+
+		
+	}
+	else{
+	$tripDate =  $_REQUEST['tripDate'];
+		$tripTime =  $_REQUEST['tripTime'];
+		$pickLocation =  $_REQUEST['pickLocation'];
+		$dropLocation =  $_REQUEST['dropLocation'];
+
+		$tripID =  $_REQUEST['id'];
+}			$query = "UPDATE daytrip SET tripDate ='$tripDate' , tripTime='$tripTime', collectionPoint='$pickLocation', destinationPoint='$dropLocation' WHERE tripNumber=$tripID";
 
 
 			$result = mysqli_query($conn, $query) or die("Oops, something went wrong, Could not Add trip") ;
@@ -28,9 +97,6 @@
 				header("Location: ../daytripdashboard/daytripdashboard.php?id=" . $_REQUEST['id']);
 			}
 			mysqli_close($conn);
-	}
-	else{
-}
 	?>
 <head>
     <meta charset="UTF-8" />
@@ -92,59 +158,7 @@
 
     </header>
     </div >
-            <div class="container mx-auto h-full flex justify-center items-center ">
-                <div class="w-2/3 lg:w-1/3">
-                    <h1 class="font-light text-4xl mb-1/8 text-center">Add a Day Trip</h1>
-                    <form action="daytripbooking.php?id=<?php echo $_REQUEST['id'];?>" method="POST" >
-                        <div class="border-blue-500 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg">
-                          
-                          
-                            <div class="mb-4">
-                                <label for="start">Trip date:</label>
-                                <div style="width: 10%;"></div>
-                                <input type="date" id="tripDate" name="tripDate"
-                                      value="2020-11-22"
-                                       
-                            </div>
-                            <div class="mb-4">
-                                <label for="start">Pick up time:</label>
-                                <div style="width: 10%;"></div>
-                                <input type="time" id="tripTime" name="tripTime">
-                                       
-                                       
-                            </div>
-                            <div class="mb-4">
-                                <label for="start">Pick up location:</label>
-                                <div style="width: 10%;"></div>
-                                <input type="text" id="pickLocation" name="pickLocation" value="pickLocation">
-                      
-                            </div>
-                            <div class="mb-4">
-                                <label for="start">drop off location:</label>
-                                <div style="width: 10%;"></div>
-                                <input type="text" id="dropLocation" name="dropLocation" value="dropLocation">
-                      
-                            </div>
-                           
-                         
-                          
-                            <div class="inline-flex">
-                                <div class="flex items-center">
-                                    <input type="submit"  id="submit" name="submit" value ="submit" class="bg-blue-600 hover:bg-teal text-white font-bold py-2 px-4 rounded"/>
-                                    
-                                    
-                                </div>
-                                <div class="flex items-center ml-2">
-                                    <button class="bg-red-600 hover:bg-teal text-white font-bold py-2 px-4 rounded">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                   
-                </div>
-            </div>
+          
 
 
 </body>
