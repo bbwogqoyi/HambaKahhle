@@ -26,12 +26,11 @@ function retrieveVehicleInfo($registration) {
 
 function deleteExistingVehicle($registration) {
   $query = "DELETE FROM vehicle v WHERE v.registrationNumber='$registration'";
-  return executeQuery($query);
+  return executeQueryAndRedirectOnSucess($query, "../assets/index.assets.php");
 }
 
 if( isset($_POST['deleteVehicle']) ) {
-  // deleteExistingVehicle($_REQUEST['registrationNumber']);
-  // header("Location: ../assets/index.assets.php");
+  deleteExistingVehicle($_REQUEST['registrationNumber']);
 }
 ?>
 
@@ -42,6 +41,7 @@ if( isset($_POST['deleteVehicle']) ) {
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="stylesheet" href="../../css/tailwind.css" />
   <link rel="stylesheet" href="../../css/custom.css" />
+  <script type="text/javascript" src="../../js/pristine.min.js"></script>
   <title>View Vehicle</title>
 
   <style>
@@ -211,16 +211,16 @@ if( isset($_POST['deleteVehicle']) ) {
         </a>
         <button 
           type="submit" id="deleteVehicle" name="deleteVehicle"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
+          class="hidden bg-red-500 hover:bg-red-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
             Delete Vehicle
         </button>
-        <!-- <button 
+        <button 
           type="button"
-          onClick="confirmDelete();"
+          onClick="confirmDelete('deleteVehicle');"
           class="bg-red-500 hover:bg-red-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
-            Delete Vehicle Modal
-        </button> -->
-        <!-- href="../assets/index.assets.php"  -->
+            Delete Vehicle
+        </button> 
+        <!-- href="../assets/index.assets.php" -->
         
       </div>
     </form>

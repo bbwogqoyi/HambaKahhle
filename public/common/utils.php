@@ -15,12 +15,28 @@ function executeQuery($query) {
     or die("Error description: " . mysqli_error($conn));
     // or die("Could not execute query!");
 
+  
   // close db connection
   mysqli_close($conn);
 
   return $result;
 }
 
-define("HAMBAKAHLE_ROOT", "/hambakahle/public");
+function executeQueryAndRedirectOnSucess($query, $successURL) {
+  // database credentials
+  require_once("db.config.php");
 
+  // make connection to db
+  $conn = 
+    mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE)
+    or die("Could not connect to database!");
+
+  if(!mysqli_query($conn, $query))
+  {
+    //echo "Error description: " . mysqli_error($conn);
+    echo '<p class="bg-red-500 text-white text-center">The record you are attempting to delete is assocated with other information and can not be deleted at this time. Please contact support.</p>';
+  } else {
+    header("Location: ".$successURL);
+  }
+}
 ?>

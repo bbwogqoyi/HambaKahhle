@@ -21,8 +21,8 @@ function queryAvailableVehicles() {
           SELECT bookingID from booking b where b.statusID>=3 and  b.statusID<=5 ) b
         where vb.bookingID = b.bookingID
       )
-      and ( v.make LIKE '%$searchText%' 
-        or v.model LIKE '%$searchText%' 
+      having ( 
+        CONCAT(v.make, ' ', v.model) LIKE '%$searchText%' 
         or v.numberOfSeats LIKE '%$searchText%' 
         or v.registrationNumber='%$searchText%' )
       limit 30";

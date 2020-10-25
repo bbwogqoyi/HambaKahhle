@@ -17,21 +17,18 @@ function getBookings() {
     "SELECT c.firstName, c.lastName, b.*, s.*
       from clients c, booking_status s, (select * from booking) b
       where b.clientID = c.clientID and s.statusID=b.statusID and b.statusID>=2
-      and ( 
-        c.firstName LIKE '%$searchText%' 
-        or c.lastName LIKE '%$searchText%' 
+      having ( 
+        CONCAT(c.firstName, ' ', c.lastName) LIKE '%$searchText%'
         or s.short_description LIKE '%$searchText%' 
       )
-      limit 30;
-    ";
+      limit 30";
   } else {
     // issue query instructions
     $query = 
     "SELECT c.firstName, c.lastName, b.*, s.*
       from clients c, booking_status s, (select * from booking) b
       where b.clientID = c.clientID and s.statusID=b.statusID and b.statusID>=2
-      limit 30;
-    ";
+      limit 30";
   }
 
   // connect to the database 
@@ -126,11 +123,11 @@ function getBookings() {
           while ($result!=null && $row = mysqli_fetch_assoc($result)) {
             echo '
               <tr>
-                <td class="border px-4 py-2">'. $row["firstName"] . " " . $row["lastName"] .'</td>
-                <td class="border px-4 py-2">'. $row["initialCollectionPoint"] .'</td>
-                <td class="border px-4 py-2">'. $row["startDate"] .'</td>
-                <td class="border px-4 py-2">'. $row["endDate"] .'</td>
-                <td class="border px-4 py-2">'. $row["short_description"] .'</td>
+                <td class="border px-4 py-2 truncate">'. $row["firstName"] . " " . $row["lastName"] .'</td>
+                <td class="border px-4 py-2 truncate">'. $row["initialCollectionPoint"] .'</td>
+                <td class="border px-4 py-2 truncate">'. $row["startDate"] .'</td>
+                <td class="border px-4 py-2 truncate">'. $row["endDate"] .'</td>
+                <td class="border px-4 py-2 truncate">'. $row["short_description"] .'</td>
                 <td class="border py-2">
                   <span class="inline-flex justify-evenly w-full">
                     <!-- Edit button -->

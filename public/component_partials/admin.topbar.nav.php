@@ -98,8 +98,9 @@
 
 
 <div id="deleteModel" 
-  class="hidden absolute p-6 inset-x-0 mx-auto top-auto shadow-lg w-9/12 sm:w-1/2 lg:w-1/4 
+  class="hidden absolute p-6 inset-x-0 mx-auto top-auto shadow-lg w-9/12 sm:w-1/2 md:w-1/3 lg:w-1/4 
     rounded-md border border-gray-200 bg-white ">
+  <input class="hidden" id="btnID" type="text" />
   <div class="w-12 h-12 mt-2 bg-red-200 flex flex-shrink-0 rounded-full items-center">
     <svg class="w-8 h-8 text-red-700 mx-auto py-auto block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
@@ -112,12 +113,14 @@
 
     <div class="flex">
       <button 
-        type="submit" 
+        type="button" 
+        onClick="deleteRecord();"
         class="bg-red-500 hover:bg-red-700 text-gray-100 font-medium shadow-xs  border-red-600 border px-4 py-2 mr-3 rounded">
           Delete
       </button>
       <button
         type="button" 
+        onClick="closeDeleteModal();"
         class="bg-gray-3
         00 font-medium text-gray-500 border-gray-600 hover:border-gray-800 hover:text-gray-800 border px-4 py-2 rounded" >
           Cancel
@@ -128,14 +131,26 @@
 
 
 <script>
-  function closeModal() {
-
+  function deleteRecord() {
+    closeDeleteModal();
+    var form = document.getElementById("deleteModel");
+    var btnID = document.getElementById("btnID").value;
+    document.getElementById(btnID).click();
   }
 
-  function confirmDelete() {
+  function closeDeleteModal() {
+    var modal = document.getElementById("deleteModel");
+    modal.classList.remove("flex");
+    modal.classList.add("hidden");
+  }
+
+  function confirmDelete(btnID) {
     var modal = document.getElementById("deleteModel");
     modal.classList.remove("hidden");
     modal.classList.add("flex");
+
+    // ugly hack will refactor later
+    document.getElementById("btnID").value = btnID;
   }
 
   function searchTextChange() {

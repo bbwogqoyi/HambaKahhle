@@ -32,8 +32,11 @@ function queryAvailableDrivers() {
     ) d
     where dl.driverID = d.driverID
     and l.licenseCode = dl.licenseCode
-    and ( d.firstName LIKE '%$searchText%' or d.lastName LIKE '%$searchText%' or d.hometown LIKE '%$searchText%' )
     group by dl.driverID
+    having ( 
+        CONCAT(d.firstName, ' ',d.lastName) LIKE '%$searchText%' 
+        or d.hometown LIKE '%$searchText%' 
+    )
     limit 30";
   } else {
     $query = 
