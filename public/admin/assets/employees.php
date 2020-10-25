@@ -3,14 +3,29 @@
 <?php
 $GLOBALS['active_nav_item'] = 'assets_dashboard';
 require_once(dirname(__DIR__) . "../../auth/authorization.php");
+authorize('employeeID', '../index.php');
 
 //import database utils
 require_once(dirname(__DIR__) . "../../common/utils.php");
 
 function queryAvailableEmployees() {
-  $query = 
+   // issue query instructions
+  if( isset($_REQUEST['searchText']) ) {
+    $searchText = $_REQUEST['searchText'];
+
+    $query = 
+      "SELECT e.*, t.short_description FROM employee e, employeetype t
+      where e.employeeTypeID=t.employeeTypeID
+      having (
+        concat_ws(' ', e.firstName, e.lastName) LIKE '%$searchText%'
+        or t.short_description LIKE '%$searchText%'
+      ) LIMIT 20";
+  } else {
+    $query = 
     "SELECT e.*, t.short_description FROM employee e, employeetype t
       where e.employeeTypeID=t.employeeTypeID LIMIT 20";
+  }
+  
   $result = executeQuery($query);
   return $result;
 }
@@ -49,10 +64,28 @@ function queryAvailableEmployees() {
 
     <!-- Searchbar + Button -->
     <div class="mt-8 flex justify-between w-full items-center mb-10"> 
-      <?php
-        require_once("../../component_partials/searchbar.php");
-        echo searchbar('index.php');
-      ?>
+      <div class="w-1/3">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <svg class="h-6 w-6 text-gray-600"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </span>
+          <form id="searchForm" action='./employees.php' method="GET" >
+            <input class="hidden" id="bookingID" name="bookingID" value="<?php echo $_REQUEST['bookingID']; ?>" />
+            <input 
+            <?php echo (isset($_REQUEST['searchText']) ? ( 'value="'.$_REQUEST['searchText'].'"') : "" );?>
+            type="text" id="searchText" name="searchText" oninput="searchTextChange()"
+            class="py-3 pl-10 w-full text-lg bg-white border border-grey-400 rounded-md text-gray-800 placeholder-gray-500  shadow"
+            placeholder="Search" />
+            <span id="searchBtn" class="absolute inset-y-0 right-0 pl-3 hidden items-center">
+              <button type="submit" onclick="search();" class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-6 mr-2 rounded">
+                Go
+              </button>
+            </span>
+          </form>
+        </div>
+      </div>
       
       <a href="../employee/add.employee.php"
           class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded">
