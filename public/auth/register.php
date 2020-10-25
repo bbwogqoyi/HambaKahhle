@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/tailwind.css" />
   <link rel="stylesheet" href="../css/custom.css" />
-  <script type="text/javascript" src="validators.js"></script>
+  <script type="text/javascript" src="../js/pristine.min.js"></script>
   <title>Sign Up</title>
 </head>
 
@@ -36,7 +36,7 @@
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-2/3 lg:w-1/3">
       <h1 class="font-light text-4xl mb-6 text-center">Register</h1>
-      <form id="newUserForm" action="register.php" method="POST" onsubmit="return validateRegistation();">
+      <form id="newUserForm" action="register.php" method="POST" >
         <div class="border-blue-500 p-8 border-t-8 bg-white mb-6 rounded-lg shadow-lg">
 
           <div class="mb-4">
@@ -47,44 +47,44 @@
               class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
               placeholder="Nkosinathi" />
           </div>
-          <div class="mb-4">
+          <div class="form-group mb-4">
             <label class="font-bold text-grey-darker block mb-2">
               Lastname
             </label>
             <input type="text" id="lastname" name="lastname"
-              class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
+              class="form-control block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
               placeholder="Nkomo" />
           </div>
-          <div class="mb-4">
+          <div class="form-group mb-4">
             <label class="font-bold text-grey-darker block mb-2">
               Email
             </label>
             <input type="text" id="email" name="email"
-              class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
+              class="form-control block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
               placeholder="n.nkomo@campus.ru.ac.za" />
           </div>
-          <div class="mb-4">
+          <div class="form-group mb-4">
             <label class="font-bold text-grey-darker block mb-2">
               Contact Number
             </label>
             <input type="number" id="contact" name="contact"
-              class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
+              class="form-control block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
               placeholder="076 XXX XX87" />
           </div>
-          <div class="mb-4">
+          <div class="form-group mb-4">
             <label class="font-bold text-grey-darker block mb-2">
               Password
             </label>
             <input type="password" id="password" name="password"
-              class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
+              class="form-control block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
               placeholder="Password" />
           </div>
-          <div class="mb-4">
+          <div class="form-group mb-4">
             <label class="font-bold text-grey-darker block mb-2">
               Confirm Password
             </label>
             <input type="password" id="confirm_password" name="confirm_password"
-              class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
+              class="form-control block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow"
               placeholder="Password" />
           </div>
           <div class="inline-flex">
@@ -107,59 +107,26 @@
       </div>
     </div>
   </div>
-</body>
-<script>
-  var validateRegistation = function() {
-    isValid = 
-      inputValidator
-      .getElementById("firstname")
-      .isNotEmptyOrWhitespace()
-      .getState();
-  
-    isValid =
-      inputValidator
-      .getElementById("lastname")
-      .isNotEmptyOrWhitespace()
-      .getState()
-      && isValid;
+  <script>
+    window.onload = function () {
+      var form = document.getElementById("newUserForm");
 
-    isValid =
-      inputValidator
-      .getElementById("email")
-      .emailFormat()
-      .getState()
-      && isValid;
-    
-    isValid = 
-      inputValidator
-      .getElementById("contact")
-      .predicate(
-        function(value) {
-          return value!==undefined && value.length>=10 && value.length<12;
+      // create the pristine instance
+      var pristine = new Pristine(form);
+      form.addEventListener('submit', function (e) {
+        //e.preventDefault();
+        
+        // check if the form is valid
+        console.log(pristine.validate());
+        var valid = pristine.validate(); // returns true or false
+        if(valid) {
+          return true;
+        } else {
+          e.preventDefault();
         }
-      )
-      .getState()
-      && isValid;
-
-    isValid = 
-      inputValidator
-      .getElementById("password")
-      .isNotEmptyOrWhitespace()
-      .getState()
-      && isValid;
-      
-    isValid = 
-      inputValidator
-      .getElementById("confirm_password")
-      .matchingHTMLElement("password")
-      .getState()
-      && isValid;
-    
-    console.log(isValid);
-    if(isValid) document.getElementById("newUserForm").submit();
-    return isValid;
-  }
+        //return pristine.validate(); // returns true or false
+      });
+    };
 </script>
-
-
+</body>
 </html>
