@@ -214,12 +214,12 @@ if( isset($_POST['deleteVehicle']) ) {
           class="bg-red-500 hover:bg-red-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
             Delete Vehicle
         </button>
-        <button 
+        <!-- <button 
           type="button"
           onClick="confirmDelete();"
           class="bg-red-500 hover:bg-red-700 text-white font-bold text-center text-lg py-4 px-auto w-56 mr-2 rounded">
             Delete Vehicle Modal
-        </button>
+        </button> -->
         <!-- href="../assets/index.assets.php"  -->
         
       </div>

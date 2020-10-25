@@ -131,10 +131,22 @@
   function closeModal() {
 
   }
-  
+
   function confirmDelete() {
     var modal = document.getElementById("deleteModel");
     modal.classList.remove("hidden");
     modal.classList.add("flex");
   }
+
+  function searchTextChange() {
+    var searchText = document.getElementById("searchText").value || "";
+    if(searchText.length>0) {
+      document.getElementById("searchBtn").style.display= "flex";
+    }
+  }
+  
+  function search() {
+    var form = document.getElementById("searchForm");
+    form.submit();
+  };
 </script>

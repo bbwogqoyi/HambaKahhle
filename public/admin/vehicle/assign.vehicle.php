@@ -8,7 +8,12 @@ require_once(dirname(__DIR__) . "../../auth/authorization.php");
 require_once(dirname(__DIR__) . "../../common/utils.php");
 
 function queryAvailableVehicles() {
-  $query = 
+
+  // issue query instructions
+  if( isset($_REQUEST['searchText']) ) {
+    $searchText = $_REQUEST['searchText'];
+    
+    $query = 
     "SELECT * from vehicle v
       where v.registrationNumber not in
       (
@@ -16,7 +21,22 @@ function queryAvailableVehicles() {
           SELECT bookingID from booking b where b.statusID>=3 and  b.statusID<=5 ) b
         where vb.bookingID = b.bookingID
       )
-    ";
+      and ( v.make LIKE '%$searchText%' 
+        or v.model LIKE '%$searchText%' 
+        or v.numberOfSeats LIKE '%$searchText%' 
+        or v.registrationNumber='%$searchText%' )
+      limit 30";
+  } else {
+    $query = 
+    "SELECT * from vehicle v
+      where v.registrationNumber not in
+      (
+        SELECT vb.registrationNumber from vehiclebooking vb, ( 
+          SELECT bookingID from booking b where b.statusID>=3 and  b.statusID<=5 ) b
+        where vb.bookingID = b.bookingID
+      ) limit 30";
+  }
+
   $result = executeQuery($query);
   return $result;
 }
@@ -114,7 +134,7 @@ if( isset($_POST['submit']) ) {
 
   <!-- Page Content-->
   <div class="mt-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full md:w-4/5 rounded">
-  <form action='assign.vehicle.php?bookingID=<?php echo $_REQUEST["bookingID"]; ?>' method="POST">
+  <form class="flex flex-col w-full" action='assign.vehicle.php?bookingID=<?php echo $_REQUEST["bookingID"]; ?>' method="POST">
 
     
     <!-- (Searchbar + Button) Div -->
@@ -127,11 +147,23 @@ if( isset($_POST['submit']) ) {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
           </span>
-          <input type="text" id="searchBar" name="searchBar"
-          class="py-3 pl-10 w-full text-lg bg-white border border-grey-400 rounded-md text-gray-800 placeholder-gray-500 shadow"
-          placeholder="Search" />
+
+            <input class="hidden" id="bookingID" name="bookingID" value="<?php echo $_REQUEST['bookingID']; ?>" />
+            <input 
+              <?php echo (isset($_REQUEST['searchText']) ? ( 'value="'.$_REQUEST['searchText'].'"') : "" );?>
+              type="text" id="searchText" name="searchText" oninput="searchTextChange()"
+              class="py-3 pl-10 w-full text-lg bg-white border border-grey-400 rounded-md text-gray-800
+               placeholder-gray-500  shadow"
+              placeholder="Search" />
+            <span id="searchBtn" class="absolute inset-y-0 right-0 pl-3 hidden items-center">
+              <button type="submit" onclick="search();" class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-6 mr-2 rounded">
+                Go
+              </button>
+            </span>
+
         </div>
       </div>
+
       <!-- Button -  href="./booking.overview.php?'. $actionLink .'"  -->
       <button id="submit" name="submit" type="submit" 
         class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded">

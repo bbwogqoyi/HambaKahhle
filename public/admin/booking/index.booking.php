@@ -8,14 +8,31 @@ require_once(dirname(__DIR__) . "../../auth/authorization.php");
 
 $GLOBALS['active_nav_item'] = 'admin_dashboard';
 
-function getBookings(){
-  // issue query instructions
-  $query = 
-  "SELECT c.firstName, c.lastName, b.*, s.*
-    from clients c, booking_status s, (select * from booking) b
-    where b.clientID = c.clientID and s.statusID=b.statusID and b.statusID>=2
-    limit 20;
-  ";
+function getBookings() {
+
+  if( isset($_REQUEST['searchText']) ) {
+    $searchText = $_REQUEST['searchText'];
+
+    $query = 
+    "SELECT c.firstName, c.lastName, b.*, s.*
+      from clients c, booking_status s, (select * from booking) b
+      where b.clientID = c.clientID and s.statusID=b.statusID and b.statusID>=2
+      and ( 
+        c.firstName LIKE '%$searchText%' 
+        or c.lastName LIKE '%$searchText%' 
+        or s.short_description LIKE '%$searchText%' 
+      )
+      limit 30;
+    ";
+  } else {
+    // issue query instructions
+    $query = 
+    "SELECT c.firstName, c.lastName, b.*, s.*
+      from clients c, booking_status s, (select * from booking) b
+      where b.clientID = c.clientID and s.statusID=b.statusID and b.statusID>=2
+      limit 30;
+    ";
+  }
 
   // connect to the database 
   $result = executeQuery($query);
@@ -56,10 +73,27 @@ function getBookings(){
   <div class="mt-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full lg:w-4/5">
     <!-- Searchbar + Button -->
     <div class="flex justify-between w-full items-center mb-10"> 
-      <?php
-        require_once("../../component_partials/searchbar.php");
-        echo searchbar('index.booking.php');
-      ?>
+      <div class="w-1/3">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <svg class="h-6 w-6 text-gray-600"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </span>
+          <form id="searchForm" action='./index.booking.php' method="GET" >
+            <input 
+            <?php echo (isset($_REQUEST['searchText']) ? ( 'value="'.$_REQUEST['searchText'].'"') : "" );?>
+            type="text" id="searchText" name="searchText" oninput="searchTextChange()"
+            class="py-3 pl-10 w-full text-lg bg-white border border-grey-400 rounded-md text-gray-800 placeholder-gray-500  shadow"
+            placeholder="Search" />
+            <span id="searchBtn" class="absolute inset-y-0 right-0 pl-3 hidden items-center">
+              <button type="submit" onclick="search();" class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-6 mr-2 rounded">
+                Go
+              </button>
+            </span>
+          </form>
+        </div>
+      </div>
       
       <!-- <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-10 rounded">
         Assign
