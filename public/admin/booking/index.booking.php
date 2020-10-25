@@ -140,14 +140,14 @@ function getBookings() {
                       </span> 
                     </a>
                     <!-- Delete button -->
-                    <a href="#">
-                      <span class="flex flex-col items-center justify-items-center">
+                    <button onClick="confirmDelete(null)" >
+                      <span class="flex flex-col items-center justify-items-center active:border-none">
                         <svg class="text-red-300 hover:text-red-700 h-6 w-6 m-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                         <p class="font-thin text-sm -mt-1">Delete</p> 
                       </span> 
-                    </a>
+                    </button>
                   </span>
                 </td>
               </tr>
