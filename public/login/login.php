@@ -139,7 +139,7 @@ else{
       </div>
     </div>
 
-    <script src="appr.js"></script>
+    <script src="appi.js"></script>
 </body>
 
 </html>
