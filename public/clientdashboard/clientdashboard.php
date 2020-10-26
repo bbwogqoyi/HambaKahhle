@@ -134,11 +134,66 @@
                 href="#">About</a></li>
           </ul>
         </nav>
-        <a href="#" class="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor">
-          <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
-            src="https://images.unsplash.com/photo-1509305717900-84f40e786d82?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=144&h=144&q=80"
-            alt="Nkosinathi Nkomo">
-        </a>
+        <?php
+             $profpic = null;
+
+                //add database credentials
+              require_once("../config/config.php");
+
+              //store the ID from the previous page
+              if(isset($_COOKIE["clientID"]))
+              {
+                $id = ($_COOKIE["clientID"]);
+              
+                
+                //connect to the database
+                $connection = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
+                
+                //issue the query instructions
+                $query = "SELECT profileImage FROM clients WHERE clientID = $id";
+                $result = mysqli_query($connection, $query) or die("Could not retrieve data!");
+
+                //get original details from database
+                while ($row = mysqli_fetch_array($result)) 
+                {
+                  
+                    $profpic = $row['profileImage']; 
+                } 
+
+                if($profpic == null)
+                {
+                  $profpic = "Uploads/Default.jpg";
+
+                }
+                
+                //end the connection to the database
+                mysqli_close($connection); 
+
+              }
+
+         ?>
+       <?php
+      
+      if(isset($_COOKIE["clientID"]))
+      {
+          $clientID = $_COOKIE["clientID"];
+          echo '
+          <div class="realtive">
+            <button class="block h-10 w-10 rounded-full overflow-hidden border-1 border-gray 500 focus:outline-none focus:border-white lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor" onclick="myFunction()" >
+              <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400"
+                src="../profile_page/'.$profpic.'"
+                alt="Nkosinathi Nkomo">
+            </button>
+            <div hidden id="myDIV" class="absolute top-auto  mt-2 py-2 w-48 bg-gray-300 rounded-lg shadow-xl"> 
+              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Home</a>
+              <a href="../profile_page/profile12.php?clientID='.$clientID.'" class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Profile</a>
+              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Help</a>
+              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white" onclick="logout()">LogOut</a>
+            </div>
+          </div> ';
+      } 
+
+      ?>
   
       </div>
     </div>
@@ -345,6 +400,32 @@
     }
 
 
+    function myFunction()
+     {
+        var x = document.getElementById("myDIV");
+        
+        if (x.style.display === "block" ) {
+          x.style.display = "none";
+          
+        } else {
+          x.style.display = "block";
+        }
+      }
 
+    function logout()
+    {
+      var txt;
+      if (confirm("Press a Ok to logOut!")) {
+        txt = "You pressed OK!";
+        location.replace("../logout/logout.php");
+
+      } else {
+        txt = "You pressed Cancel!";
+      }
+      document.getElementById("demo").innerHTML = txt;
+    }  
+
+
+</script>
 </body>
   </html>
