@@ -66,7 +66,8 @@ function insertNewVehicle() {
 
 $vehicle = null;
 if( isset($_REQUEST['submit']) ) {
-  $result = insertNewVehicle();
+  $dbMutationStatus = insertNewVehicle();
+  
 }
 
 

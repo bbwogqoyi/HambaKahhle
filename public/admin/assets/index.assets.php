@@ -37,7 +37,10 @@ function queryAvailableVehicles() {
   <title>Assets</title>
 </head>
 <body class="antialiased bg-gray-200">
-   
+  <!-- Top Navbar -->
+  <?php
+    require_once("../../component_partials/admin.topbar.nav.php");
+  ?>
 
   <!-- Page Content-->
   <div class="mt-16 mb-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full lg:w-4/5">
@@ -67,7 +70,6 @@ function queryAvailableVehicles() {
             </svg>
           </span>
           <form id="searchForm" action="./index.assets.php" method="GET" >
-            <input class="hidden" id="bookingID" name="bookingID" value="<?php echo $_REQUEST['bookingID']; ?>" />
             <input 
             <?php echo (isset($_REQUEST['searchText']) ? ( 'value="'.$_REQUEST['searchText'].'"') : "" );?>
             type="text" id="searchText" name="searchText" oninput="searchTextChange()"

@@ -73,7 +73,6 @@ function queryAvailableVehicles() {
             </svg>
           </span>
           <form id="searchForm" action='./depots.php' method="GET" >
-            <input class="hidden" id="bookingID" name="bookingID" value="<?php echo $_REQUEST['bookingID']; ?>" />
             <input 
             <?php echo (isset($_REQUEST['searchText']) ? ( 'value="'.$_REQUEST['searchText'].'"') : "" );?>
             type="text" id="searchText" name="searchText" oninput="searchTextChange()"
