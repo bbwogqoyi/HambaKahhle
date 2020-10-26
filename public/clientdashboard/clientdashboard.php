@@ -51,6 +51,10 @@
   border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
 
+a {
+  color: #000;
+}
+
 /* Tooltip text */
 .tooltipe .tooltiptexte {
   visibility: hidden;
@@ -222,6 +226,11 @@
             <button class="bg-indigo-300 hover:bg-indigo-500 text-white font-bold py-2 px-6 mr-2 rounded">
 			<?php
            echo " <a href=\"../booking/booking.php?id=" .  $_COOKIE['clientID'] . "\"> New Booking</a>";
+			  ?>
+            </button>
+            <button class="bg-indigo-300 hover:bg-indigo-500 text-white font-bold py-2 px-6 mr-2 rounded">
+			<?php
+           echo " <a href=\"../booking/bookingWithMaps.php?id=" .  $_COOKIE['clientID'] . "\"> New Booking with location</a>";
 			  ?>
             </button>
 			

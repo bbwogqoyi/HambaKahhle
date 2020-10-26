@@ -33,8 +33,8 @@
 					require_once("../config/config.php");
 					$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
 		
-						$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer,statusID,hasLocation,latitude,longitude)
-						VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer','$status','$loc','$lat','$lng')";
+						$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer,statusID,hasLocation)
+						VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer','$status','$loc')";
 
 
 						$result = mysqli_query($conn, $query) or die("Could not execute") ;
@@ -138,7 +138,6 @@
       <div class="w-1/3">
     			<h1  class=" block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 lg:py-6 lg:px-4 px-0  border-b-2 border-transparent md:hover:border-indigo-400
 				lg:border-gray-300"><a href="../clientdashboard/clientdashboard.php">Client Dashboard</a> -> Add New booking<h1>
-          
 
       </div> 
 	  <div class="w-1/3">
