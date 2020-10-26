@@ -220,7 +220,8 @@ CREATE TABLE employeeType (
 INSERT INTO employeeType(employeeTypeID, short_description)
 VALUES
 (1, 'Admin'),
-(2, 'HR');
+(2, 'HR'),
+(3, 'Manager');
 
 -- New tables: 'employee' and 'address'
 DROP TABLE IF EXISTS `employee`;
