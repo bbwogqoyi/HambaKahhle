@@ -9,7 +9,6 @@ require_once(dirname(__DIR__) . "../../auth/authorization.php");
 $GLOBALS['active_nav_item'] = 'admin_dashboard';
 
 function getBookings() {
-
   if( isset($_REQUEST['searchText']) ) {
     $searchText = $_REQUEST['searchText'];
 
@@ -35,6 +34,12 @@ function getBookings() {
   $result = executeQuery($query);
 
   return $result;
+}
+
+function deleteBooking() {
+  // if( isset($_POST['deleteModalBookingID']) ) {
+  //   $query
+  // }
 }
 
 ?>
@@ -65,6 +70,60 @@ function getBookings() {
   <?php
     require_once("../../component_partials/admin.topbar.nav.php");
   ?>
+
+  <!-- Delete Confirmation Modal + Form -->
+  <form id="deleteBookingForm" class="hidden" action="./index.booking.php" method="POST">
+    <input id="deleteModalBookingID" name="deleteModalBookingID" class="hidden" type="text" />
+  </form>
+  <div 
+    id="deleteModal" 
+    class="hidden absolute p-6 inset-x-0 mx-auto top-auto shadow-lg w-9/12 sm:w-1/2 md:w-1/3 lg:w-1/4 
+      rounded-md border border-gray-200 bg-white ">
+    <div class="w-12 h-12 mt-2 bg-red-200 flex flex-shrink-0 rounded-full items-center">
+      <svg class="w-8 h-8 text-red-700 mx-auto py-auto block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+      </svg>
+    </div>
+    <div class="pl-8">
+      <p class="text-2xl font-semibold text-gray-800">Delete record</p>
+      <p class="text-gray-600 text-sm">Are you sure you want to delete this record? All of data will be permanantly removed from our servers forever.</p>
+      <p class="text-gray-600 text-sm mb-4">This action cannot be undone.</p>
+
+      <div class="flex">
+        <button 
+          type="button" 
+          onClick="deleteBookingRecord();"
+          class="bg-red-500 hover:bg-red-700 text-gray-100 font-medium shadow-xs  border-red-600 border px-4 py-2 mr-3 rounded">
+            Delete
+        </button>
+        <button
+          type="button" 
+          onClick="closeModal();"
+          class="bg-gray-3
+          00 font-medium text-gray-500 border-gray-600 hover:border-gray-800 hover:text-gray-800 border px-4 py-2 rounded" >
+            Cancel
+        </button>
+      </div>
+    </div>
+    <script>
+      function closeModal() {
+        var modal = document.getElementById("deleteModal");
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+      }
+
+      function showModal(bookingID) {
+        document.getElementById("deleteModalBookingID").value = parseInt(bookingID);
+        var modal = document.getElementById("deleteModal");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function deleteBookingRecord() {
+        document.getElementById("deleteBookingForm").submit();
+      }
+    </script>
+  </div>
 
   <!-- Page Content-->
   <div class="mt-16 py-8 px-6 mx-auto bg-white flex flex-wrap items-center w-full lg:w-4/5">
@@ -140,7 +199,7 @@ function getBookings() {
                       </span> 
                     </a>
                     <!-- Delete button -->
-                    <button onClick="confirmDelete(null)" >
+                    <button onClick="showModal(\''.$row["bookingID"].'\')" >
                       <span class="flex flex-col items-center justify-items-center active:border-none">
                         <svg class="text-red-300 hover:text-red-700 h-6 w-6 m-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
