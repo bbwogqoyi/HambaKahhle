@@ -40,27 +40,21 @@
 						else{
 							echo " <script type='text/javascript'>alert('Incorrect password');</script>";
 						}
-
 					}
 					else{
 						echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
 					}
-
-
-		    
 			  }
 			  else{
 				echo " <script type='text/javascript'>alert('This email is not resigestered!');</script>";
 			   }
 			mysqli_close($conn);
-
 	  }else{
 	  }
 }
 else{
 	header("Location: ../clientdashboard/clientdashboard.php");
 }
-
 
 ?>
 
@@ -120,6 +114,18 @@ else{
             <button class="btn transparent" id="sign-up-btn">
               Sign up
             </button>
+
+          <div class="flex flex-col mt-12">
+            <a href="../driver/driverlogin.php" 
+            class="text-lg font-medium text-white hover:text-indigo-400">
+              Driver Login
+            </a>
+            <a href="../admin/index.php" 
+            class="mt-8 text-lg font-medium text-white hover:text-indigo-400">
+              Admin Login
+            </a>
+          </div>
+            
           </div>
           <img src="lgo.gif" class="image" alt="" />
         </div>
