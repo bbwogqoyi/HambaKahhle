@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/tailwind.css" />
     <link rel="stylesheet" href="../css/custom.css" />
     <link rel="stylesheet" href="../css/styling.css" />
+    <link rel="stylesheet" href="footer.css" />
     <script tyepe= "text/javascript" src="../js/pristine.min.js"></script>
     <style>
         .has-success .form-control {
@@ -20,7 +21,8 @@
         .form-group .text-help {
           color: #dc1d34;
         }
-    
+        
+       
     
     
     
@@ -52,7 +54,7 @@
                 class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400"
                 href="#">Bookings</a></li>
             <li><a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
-                href="#">Home</a></li>
+                href="../index.html">Home</a></li>
             <li><a
                 class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
                 href="#">About</a></li>
@@ -109,10 +111,11 @@
                 alt="Nkosinathi Nkomo">
             </button>
             <div hidden id="myDIV" class="absolute top-auto  mt-2 py-2 w-48 bg-gray-300 rounded-lg shadow-xl"> 
-              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Home</a>
-              <a href="../profile_page/profile12.php?clientID='.$clientID.'" class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Profile</a>
-              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Help</a>
-              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white" onclick="logout()">LogOut</a>
+              <a href="../index.html"class="block px-4 py-2 hover:bg-indigo-500 text-black hover:text-black">Home</a>
+              <a href="../profile_page/profile12.php?clientID='.$clientID.'" class="block px-4 py-2 hover:bg-indigo-500 text-black hover:text-black">Profile</a>
+              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 text-black hover:text-black">Help</a>
+              <a href="../clientdashboard/clientdashboard.php"class="block px-4 py-2 text-black hover:bg-indigo-500 hover:text-black">Dashboard</a>
+              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 text-black hover:text-black" onclick="logout()">LogOut</a>
             </div>
           </div> ';
       } 
@@ -315,6 +318,9 @@ window.onload = function()
 
 
 </script>
+
+
+
     
 </body>
 

@@ -6,7 +6,15 @@
     <link rel="stylesheet" href="../css/tailwind.css" />
   <link rel="stylesheet" href="../css/custom.css" />
   <link rel="stylesheet" href="../css/styling.css" />
+  <link rel="stylesheet" href="footer.css"/>
     <title>Document</title>
+    <style> footer{
+      position: absolute ;
+      bottom: 0%;
+      width: 100%;
+      
+    }
+     </style>
 </head>
 <body class="antialiased bg-gray-200" >
 <header class="bg-gray-600 lg:py-0 py-2">
@@ -33,7 +41,7 @@
                 class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400"
                 href="#">Bookings</a></li>
             <li><a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
-                href="#">Home</a></li>
+                href="../index.html">Home</a></li>
             <li><a
                 class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
                 href="#">About</a></li>
@@ -90,10 +98,11 @@
                 alt="Nkosinathi Nkomo">
             </button>
             <div hidden id="myDIV" class="absolute top-auto  mt-2 py-2 w-48 bg-gray-300 rounded-lg shadow-xl"> 
-              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Home</a>
-              <a href="../profile_page/profile12.php?clientID='.$clientID.'" class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Profile</a>
+              <a href="../index.html"class="block px-4 py-2 hover:bg-indigo-500 hover:text-black">Home</a>
+              <a href="../profile_page/profile12.php?clientID='.$clientID.'" class="block px-4 py-2 hover:bg-indigo-500 hover:text-black">Profile</a>
               <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white">Help</a>
-              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-white" onclick="logout()">LogOut</a>
+              <a href="../clientdashboard/clientdashboard.php"class="block px-4 py-2 hover:bg-indigo-500 hover:text-black">Dashboard</a>
+              <a href="#"class="block px-4 py-2 hover:bg-indigo-500 hover:text-black" onclick="logout()">LogOut</a>
             </div>
           </div> ';
       } 
@@ -252,6 +261,76 @@
  
  
 </script>
+  <footer>
+
+      
+    <div class="row-footer">
+      <div class="column-footer"  id="col-md-3 col-sm-6col-xs-12 segment-one">
+        <a href="#hero"><img src ="bgn.png" style="width:200px;height:50px;"></a>
+      
+
+        <p>Hamba Kahle was founded in 2019 to provide transportation for you</p>
+    <h3>Follow us on:</h3>
+    <i class="fa fa-facebook" style="font-size:24px;"></i>
+    <a href="#"><i class="fa fa-twitter" style="font-size:24px;"></i></a>
+    <a href="#"><i class="fa fa-instagram" style="font-size:24px;color:white;"></i></a>
+      
+    </div>
+      <div class="column-footer"  ><div class= segment-two>
+
+        <h3> Navigation</h3>
+    <ul>
+    <li><a href="page.html">about</a></li>
+    <li><a href="abouts=us.html">contact</a></li>
+    <a href="us.html" >refunds</a>
+    <li><a href="SITE MAP.html">site map</a></li>
+    <li><a href="help.html">F Q&A</a></li>  <li>
+    <li> <a href="TC.html">Terms and condition</a></li>
+
+
+
+    </ul>
+      </div>
+    </div>
+
+      <div class="column-footer" >
+
+        <h3>Help on:</h3>
+    <ul>
+    <li><a href="#">Booking</a></li>
+    <li><a href="#">login</a></li>
+
+    <li> <a href="#">cancellaton</a></li>
+
+
+    </ul>
+      </div>
+      <div class="column-footer"  id="col-md-3 col-sm-6col-xs-12 segment-four">
+
+        <h3>Our News letter:</h3>
+    <p>subscribe to get daily news on our specials <p>
+    <form action="">
+    <input type="email">
+    <input type="submit" value="subscribe">
+    </form>
+    <p><i class="fab fa-cc-mastercard" style="font-size:24px;"></i>
+    <i class="fab fa-cc-paypal" style="font-size:24px;"></i>
+    <i class="fab fa-cc-visa" style="font-size:24px;"></i>
+
+    </p>
+
+
+      </div>
+
+
+
+    <div class="bottom-footer">
+    <p>
+    &copy; Hambakahletravelagency@Rhodesuniversity.com | Designed by BlackPeak
+    </p>
+    </div>
+    </div>
+</footer>
 
     
 </body>
