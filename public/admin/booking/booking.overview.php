@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <?php
+  require_once(dirname(__DIR__) . "../../common/utils.php");
   require_once(dirname(__DIR__) . "../../auth/authorization.php");
   authorize('employeeID', '../index.php');
   $GLOBALS['active_nav_item'] = 'admin_dashboard';
@@ -29,6 +30,7 @@
     $driverQuery =
       "SELECT b.bookingID, d.* from driver d, booking b
         where d.driverID=b.driverID and b.bookingID=$bookingID";
+  
 
     $bookingInfoResult = mysqli_query($conn, $bookingInfoQuery) or die("Error on query!");
     $vehicleBookingResult = mysqli_query($conn, $vehicleBookingQuery) or die("Error on query!");
@@ -59,6 +61,36 @@
 
     $redirectURL = './index.booking.php'. $_REQUEST['bookingID'];
     header("Location: $redirectURL");
+  }
+
+  if( isset($_REQUEST['startBooking']) ) {
+    $bookingID = $_REQUEST['id'];
+    $query = 
+      "UPDATE booking b
+      set b.statusID=5
+      where b.bookingID in ($bookingID);";
+
+    executeQuery($query);
+  }
+
+  if( isset($_REQUEST['cancelBooking']) ) {
+    $bookingID = $_REQUEST['id'];
+    $query = 
+      "UPDATE booking b
+      set b.statusID=7
+      where b.bookingID in ($bookingID);";
+
+    executeQuery($query);
+  }
+
+  if( isset($_REQUEST['endBooking']) ) {
+    $bookingID = $_REQUEST['id'];
+    $query = 
+      "UPDATE booking b
+      set b.statusID=6
+      where b.bookingID in ($bookingID);";
+
+    executeQuery($query);
   }
   
   $resultSet = getBookingDetails($_REQUEST["id"]);
@@ -133,8 +165,12 @@
 
         $isVehicleAssigned = mysqli_num_rows( $resultSet['vehicleBookingResult'] ) > 0;
         $isDriverAssigned = mysqli_num_rows( $resultSet['driverInfoResult'] ) > 0;
-        $isSentForClientConfirmation = $bookingInfo["statusID"]>=3;
-        $isFinalized = $bookingInfo["statusID"]>=4;
+        $isSentForClientConfirmation = $bookingInfo["statusID"] >= 3;
+        $isFinalized = $bookingInfo["statusID"] >= 4;
+        $isBookingInProgress = $bookingInfo["statusID"] == 5;
+        $isBookingCompleted = $bookingInfo["statusID"] == 6;
+        $isBookingCancelled = $bookingInfo["statusID"] == 7;
+      
         if(mysqli_num_rows( $resultSet['bookingInfoResult'] ) > 0) {
 
         }
@@ -148,17 +184,12 @@
     </div>
     
     <!-- hidden submit to client div  -->
-    <div class="mb-8 px-6 pt-0 w-full flex items-center justify-between
+    <div class="mb-8 px-6 pt-0 w-full flex items-center justify-end
             bg-gray-100 border border-indigo-100 shadow-sm">
             
     <?php
       if($isVehicleAssigned && $isDriverAssigned && !$isSentForClientConfirmation) {
-        echo '
-        <div>
-          <p class="text-xl font-semibold">
-            
-          </p>
-        </div>   
+        echo ' 
         <div class="my-4">
           <a href="./booking.overview.php?submit&id='. $_REQUEST['id'].'" id="submit" name="submit" type="submit" 
             class="flex bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded">
@@ -166,6 +197,35 @@
           </a>
         </div>
         ';
+      }
+
+      if($isFinalized && !$isBookingInProgress && !$isBookingCompleted ) {
+        echo '
+          <div class="my-4 mx-2">
+            <a href="./booking.overview.php?startBooking&id='. $_REQUEST['id'].'" id="submit" name="submit" type="submit" 
+              class="flex bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded">
+                Start Booking
+            </a>
+          </div>';
+        
+        echo '
+        <div class="my-4">
+          <a href="./booking.overview.php?cancelBooking&id='. $_REQUEST['id'].'" id="submit" name="submit" type="submit" 
+            class="flex bg-red-400 hover:bg-red-700 text-white font-bold py-3 px-10 rounded">
+              Cancel Booking
+          </a>
+        </div>
+        ';
+      }
+
+      if($isBookingInProgress) {
+        echo '
+          <div class="my-4 mx-2">
+            <a href="./booking.overview.php?endBooking&id='. $_REQUEST['id'].'" id="submit" name="submit" type="submit" 
+              class="flex bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded">
+                Complete Booking
+            </a>
+          </div>';
       }
     ?>
     </div>
@@ -355,10 +415,6 @@
 
       </div>
     </div>
-    
-
   </div>
-
 </body>
-
 </html>
