@@ -60,6 +60,9 @@ function queryAvailableVehicles() {
         <a href="./employees.php" class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold  focus:outline-none">
             Employees
         </a>
+        <a href="./drivers.php"  class="text-gray-600 py-4 px-6 block hover:text-indigo-500 hover:font-semibold focus:outline-none" >
+            Drivers
+        </a>
       </nav>
     </div>
 
