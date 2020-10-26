@@ -21,6 +21,34 @@
       display: flex;
     }
 
+	 
+  /* Tooltip container */
+.tooltipc {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltipc .tooltiptextc {
+  visibility: hidden;
+  width: 120px;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltipc:hover .tooltiptextc {
+  visibility: visible;
+  }
+
   </style>
 </head>
 
@@ -52,9 +80,9 @@
           <ul class="pt-4 lg:pt-0 lg:flex items-center justify-between text-base text-gray-700">
             <li><a
                 class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400"
-                href="#">Bookings</a></li>
+                href="#">Dashboard</a></li>
             <li><a class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400"
-                href="#">Home</a></li>
+                href="../index.html">Home</a></li>
             <li><a
                 class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 lg:mb-0 mb-2"
                 href="#">About</a></li>
@@ -77,7 +105,7 @@
     <!-- Searchbar + Button -->
     <div class="flex justify-between w-full items-center mx-4 mb-10"> 
       <div class="w-1/3">
-			<h1  class="py-3 lg:py-6 lg:px-4 px-0 block border-b-4 border-transparent md:hover:border-indigo-400 font-semibold text-indigo-400 lg:border-indigo-400">Driver Dashboard	<h1>
+			<h1  class=" block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 lg:py-6 lg:px-4 px-0  border-b-2 border-transparent md:hover:border-indigo-400   lg:border-gray-300">Driver Dashboard	<h1>
        </div>
 
 	    <div class="w-1/3">
@@ -94,16 +122,17 @@
     </div>
 
     <!-- Content Table  echo "  -->
-    <table class="table-auto text-left w-full">
+    <table class="table-fixed text-left w-full">
       <thead class="bg-gray-200">
         <tr>
+         
           <th class="w-1/6 px-4 py-2">Initial Collection Point</th>
           <th class="w-1/6 px-4 py-2">Start Date</th>
           <th class="w-1/6 px-4 py-2">End Date</th>
           <th class="w-1/6 px-4 py-2">Number of passengers</th>
           <th class="w-1/6 px-4 py-2">Trailer</th>
           <th class="w-1/6 px-4 py-2">Status</th>
-          <th class="w-1/12 px-4 py-1">Options</th>
+          <th class="w-1/6 px-4 py-1">Options</th>
         </tr>
       </thead>
       <tbody class="text-gray-700">
@@ -112,6 +141,8 @@
 	 require_once("../config/config.php");
 	 
 	$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
+
+	
 		$driverCookie = $_COOKIE['driverID'];
 		
 		$query = "SELECT * FROM booking WHERE driverID = " . $driverCookie;
@@ -122,7 +153,9 @@
 		$i = 0;
 
 		while($row = $result->fetch_assoc()){
-				 if($i % 2 != 0){
+				 if($i % 2 != 0 && ($row["statusID"] == 4 || $row["statusID"] == 5 || $row["statusID"] == 6 || $row["statusID"] == 7)){
+					
+					
 						echo " <td class=\"border px-4 py-4 bg-blue-200\"> " . $row["initialCollectionPoint"] . "</td>";
 						echo " <td class=\"border px-4 py-4 bg-blue-200\"> " . $row["startDate"] . "</td>";
 						echo " <td class=\"border px-4 py-4 bg-blue-200\"> " . $row["endDate"] . "</td>";
@@ -154,7 +187,7 @@
 				
 				
 				}
-			else{
+			elseif($i % 2 == 0 && ($row["statusID"] == 4 || $row["statusID"] == 5 || $row["statusID"] == 6 || $row["statusID"] == 7)){
 				echo " <td class=\"border px-4 py-4\"> " . $row["initialCollectionPoint"] . "</td>";
 				echo " <td class=\"border px-4 py-4\"> " . $row["startDate"] . "</td>";
 				echo " <td class=\"border px-4 py-4\"> " . $row["endDate"] . "</td>";
@@ -184,22 +217,40 @@
 						}
 			 }
 			// echo "</tr>";
+			if($i % 2 == 0 && ($row["statusID"] == 4 || $row["statusID"] == 5 || $row["statusID"] == 6 || $row["statusID"] == 7)){
 			echo " <td class=\"border py-1\">
-          
+          <span class=\"inline-flex w-full justify-between px-3\">
               <a class\"self-center\" href=\"../driver/drivertrips.php?id=" . $row['bookingID'] . "\">
-                <svg alt=\"Edit\" class=\"self-auto text-blue-300 hover:text-blue-700 h-6 w-6 m-2\" fill=\"none\"  stroke=\"currentColor\">
-<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 12a3 3 0 11-6 0 3 3 0 016 0z\" />
+                <svg alt=\"Edit\" class=\"self-auto text-blue-300 hover:text-blue-700 h-3 w-3 m-2\" fill=\"none\"  stroke=\"currentColor\">
+			<span class=\"inline-flex w-full justify-center px-3\">
+			
+									   <a class\"self-center tooltipc\" href=\"../driver/drivertrips.php?id=" . $row['bookingID'] . "\">
+										<svg alt=\"Edit\" class=\"text-blue-300 hover:text-blue-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
+										  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 12a3 3 0 11-6 0 3 3 0 016 0z\" />
+			  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z\" />
+										  <p class=\"font-semibold text-xs text-center -mt-1\">View</p> 
+									   </svg>
+
+									  </a>
+					
+					 <a class=\"tooltipe\"  href=\"../booking/map.php?id=" . $row['bookingID'] . "&lng=" . $row["longitude"] .  "&lat=" . $row["latitude"]  . 
+						  "\">
+							<svg alt=\"Edit\" class=\"text-blue-300 hover:text-blue-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
+							  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 12a3 3 0 11-6 0 3 3 0 016 0z\" />
   <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z\" />
-                  <p class=\"font-thin text-sm text-center -mt-1\">View</p> 
-			   </svg>
-		
-              </a>
-           
+							  <p class=\"font-semibold text-xs text-center -mt-1\">Get location</p> 
+						   </svg>
+
+						  </a>
+					
+									</span>
            
           </td> ";
 		   echo " </tr>";
 			 $i = $i + 1;
+			 }
 		}
+		
 	
 	
  	mysqli_close($conn);

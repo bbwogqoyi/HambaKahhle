@@ -18,7 +18,7 @@
 		$result = mysqli_query($conn, $query) or die("Oops!, could not delete");
 	
 		echo " <script type='text/javascript'>alert('Successfully deleted booking');</script>";
-
+		setcookie("message", "Successfully deleted booking",time() + 3600, '/');
 
 
 

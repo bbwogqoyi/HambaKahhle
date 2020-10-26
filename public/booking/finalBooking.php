@@ -8,7 +8,7 @@
 		
 		
 		$id = $_REQUEST['id'];
-		$status = 2;
+		$status = 4;
 
 		$query = "UPDATE booking SET statusID = '$status' 
 WHERE bookingID = $id
@@ -16,8 +16,7 @@ WHERE bookingID = $id
 
 		$result = mysqli_query($conn, $query) or die("Could not execute query");
 		
-	echo " <script type='text/javascript'>alert('Successfully Issued booking,Please wait for confirmation');</script>";
-			setcookie("message", "Successfully Accepted booking",time() + 3600, '/');
+	echo " <script type='text/javascript'>alert('Successfully Issued final booking,Please wait for confirmation');</script>";
 
 
 

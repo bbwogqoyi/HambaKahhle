@@ -100,7 +100,7 @@ $conn = mysqli_connect($servername, $username, $password, $database) or die("Cou
     <!-- Searchbar + Button -->
     <div class="flex justify-between w-full items-center mx-4 mb-10"> 
       <div class="w-1/3">
-    			<h1  class=" block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 lg:py-6 lg:px-4 px-0  border-b-2 border-transparent md:hover:border-indigo-400   lg:border-gray-300"><a href="../clientdashboard/clientdashboard.php">Client Dashboard</a> -> <a href="../daytripdashboard/daytripdashboard.php<?php echo "?id=" . $_REQUEST['id']; ?>"> My day trips</a> - > Add Day Trip<h1>
+    			<h1  class=" block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 lg:py-6 lg:px-4 px-0  border-b-2 border-transparent md:hover:border-indigo-400   lg:border-gray-300"><a href="../clientdashboard/clientdashboard.php">Client Dashboard</a> -> <a href="../daytripdashboard/daytripdashboard.php<?php echo "?id=" . $_REQUEST['id'] . "&cp=" . $_REQUEST['cp']; ?>"> My day trips</a> - > Add Day Trip<h1>
 
       </div> 
 	  <div class="w-1/3">

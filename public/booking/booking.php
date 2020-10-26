@@ -7,65 +7,62 @@
 		//$destination =  $_REQUEST['destination'];
 		$startDate =  $_REQUEST['startDate'];
 		$endDate =  $_REQUEST['endDate'];
-		$trailer =  $_REQUEST['trailer'];
-		$numPassengers =  $_REQUEST['numPassengers'];
-		$lat =  $_REQUEST['lat'];
-		$lng =  $_REQUEST['lng'];
-		$loc =  "yes";
-		$clientID =  $_COOKIE['clientID'];
-		$date1 = strtotime($startDate);
-		$date2 = strtotime($endDate);
-
-		if($date1 > $date2){
-			echo " <script type='text/javascript'>alert('Your Start date is after your end date!');</script>";
-				header("Location: booking.php");
-		}
-		else{
-		// Date 2 is >
+		//echo " <script type='text/javascript'>alert('Your Start date is after your end date!');</script>";
 		
-		$status = 1;
-		require_once("../config/config.php");
-		$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
 		
-			$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer,statusID,hasLocation,latitude,longitude)
-			VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer','$status','$loc','$lat','$lng')";
+		if( strtotime($startDate) < strtotime($endDate) ) {
+				
+					
+					$trailer =  $_REQUEST['trailer'];
+					$numPassengers =  $_REQUEST['numPassengers'];
+					$lat =  $_REQUEST['lat'];
+					$lng =  $_REQUEST['lng'];
+					$loc =  "yes";
+					$clientID =  $_COOKIE['clientID'];
+					$date1 = strtotime($startDate);
+					$date2 = strtotime($endDate);
 
-
-			$result = mysqli_query($conn, $query) or die("Could not execute") ;
+					if($date1 > $date2){
+						echo " <script type='text/javascript'>alert('Your Start date is after your end date!');</script>";
+							header("Location: booking.php");
+					}
+					else{
+					// Date 2 is >
 		
-			if($result === false) {
+					$status = 1;
+					require_once("../config/config.php");
+					$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
+		
+						$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer,statusID,hasLocation,latitude,longitude)
+						VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer','$status','$loc','$lat','$lng')";
 
-				echo "Could not execute query: " . $result . " quer: " . $query ;
-									header("Location: booking.php");
+
+						$result = mysqli_query($conn, $query) or die("Could not execute") ;
+		
+						if($result === false) {
+
+							echo "Could not execute query: " . $result . " quer: " . $query ;
+												//header("Location: booking.php");
 
 			
-			}
-			else{
-				echo " <script type='text/javascript'>alert('Added booking successfully! Now add some day trips to your booking.');</script>";
-				header("Location: ../clientdashboard/clientdashboard.php");
-				}
-			mysqli_close($conn);
-			}
+						}
+						else{
+							setcookie("message", "Successfully added booking",time() + 3600, '/');
+							header("Location: ../clientdashboard/clientdashboard.php");
+							}
+
+							
+						mysqli_close($conn);
+						}
+
+		}
+		else{
+			echo "Your start date is after your end date!";
+		}
 		}
 		
 	?>
-	<script>
-		function location() {
-  var x = document.getElementById("googleMap");
-  
-    x.style.display = "block";
-  
-   
-}
-	</script>
-	<script>
-		function inita() {
-  var x = document.getElementById("googleMap");
-  
-    x.style.display = "none";
-  
-}
-	</script>
+	
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -90,7 +87,7 @@
   </style>
 </head>
 
-<body class="antialiased bg-gray-200">
+<body onload = "myMap()" class="antialiased bg-gray-200">
   <!-- Top Navbar -->
   <header class="bg-gray-600 lg:py-0 py-2">
     <div class="w-full flex flex-wrap items-center md:w-3/4 px-6 md:px-0 md:mx-auto">
@@ -139,7 +136,8 @@
     <!-- Searchbar + Button -->
     <div class="flex justify-between w-full items-center mx-4 mb-10"> 
       <div class="w-1/3">
-    			<h1  class=" block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 lg:py-6 lg:px-4 px-0  border-b-2 border-transparent md:hover:border-indigo-400   lg:border-gray-300"><a href="../clientdashboard/clientdashboard.php">Client Dashboard</a> -> Add New booking<h1>
+    			<h1  class=" block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 lg:py-6 lg:px-4 px-0  border-b-2 border-transparent md:hover:border-indigo-400
+				lg:border-gray-300"><a href="../clientdashboard/clientdashboard.php">Client Dashboard</a> -> Add New booking<h1>
 
       </div> 
 	  <div class="w-1/3">
@@ -172,7 +170,7 @@
       </label>
    
          <input type="date" id="startDate" name="startDate"
-                               value="2020-07-22"
+                               
                                min="2020-01-01" max="2021-12-31" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
     </div>
     <div class="w-full md:w-1/2 px-3">
@@ -180,7 +178,7 @@
        End Date
       </label>
                         <input type="date" id="endDate" name="endDate"
-                               value="2020-07-22"
+                              
                                min="2020-01-01" max="2021-12-31" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
 	</div>
   </div>
@@ -189,7 +187,8 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
         Initial collection Point
       </label>
-           <textarea style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;"  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name"  name="initialCollectionPoint" id="initialCollectionPoint" max=500></textarea>
+           <textarea style="border: 2px solid black;
+  border-radius: 4px;padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;"  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name"  name="initialCollectionPoint" id="initialCollectionPoint" max=500></textarea>
 
     </div>
 	  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -197,8 +196,8 @@
         Get My Location
       </label>
 	   <div  style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;height: 100%;" id="googleMap" ></div>
-	            	   <input hidden type="text"  name="lat" id="lat">
-	            	   <input hidden  type="text"  name="lng" id="lng">
+	            	   <input style="opacity: 0;" type="text"  name="lat" id="lat">
+	            	   <input style="opacity: 0;"  type="text"  name="lng" id="lng">
 
   </div>
   </div>
@@ -208,20 +207,23 @@
       Number of passengers
       </label>
    
-         	   <input style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;"  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name" type="number" value=0 name="numPassengers" id="numPassengers" max=500>
+         	   <input style="border: 2px solid black;
+  border-radius: 4px;padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;"  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name" type="number" value=0 name="numPassengers" id="numPassengers" max=500>
 
     </div>
     <div class="w-full md:w-1/2 px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
+      <label class="block uppercase  text-gray-700 text-xs font-bold mb-2" for="grid-last-name" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
        Would you like a trailer?
       </label>
-                       <select name="trailer" id="trailer" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+	  <h3>Trailer</h3>
+                       <select name="trailer" id="trailer" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;" class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
 
                         </select>
 	</div>
-	 <div class"w-full content-around py-3" style="padding-top: 0.75rem;padding-bottom: 0.75rem;padding-left: 0.75rem;">
+	
+	 <div class="w-full content-around py-3" style="padding-top: 0.75rem;padding-bottom: 0.75rem;padding-left: 0.75rem;">
   <button class="content-around flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 justify-center rounded" type="submit" name="submit" id="submit">
       Book Now
     </button>
@@ -254,8 +256,10 @@
 		
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
-		 document.getElementById("lat").value =lat ;
+		document.getElementById("lat").value =lat ;
+	
 		 document.getElementById("lng").value =lng ;
+		// document.getElementById("startDate").value = Date();
 
             var mapProp= {
             center:new google.maps.LatLng(lat,lng),
@@ -266,19 +270,7 @@
 
         }
 
-		function Visibility(){
-		 
-			 var x = document.getElementById("googleMap");
-			 if(x.style.display === "block")
-			 {
-		 		 x.style.display = "none";
-			 }
-			 else
-			 {
-			    x.style.display = "block";
-			 }      
-
-		}
+		
 
 
     </script>

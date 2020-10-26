@@ -112,47 +112,112 @@
 	 require_once("../config/config.php");
 	$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
 		$bookingID = $_REQUEST['id'];
+		
 		$query = "SELECT * FROM daytrip WHERE bookingID = " . $_REQUEST['id'] ;
 
 		$result = mysqli_query($conn, $query) or die("Could not execute query");
 		$i = 0;
 
-		while($row = $result->fetch_assoc()){
-				 if($i % 2 != 0){
-				echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["tripDate"] . "</td>";
-				echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["tripTime"] . "</td>";
-				echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["collectionPoint"] . "</td>";
-				echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["destinationPoint"] . "</td>";
+		if(mysqli_num_rows($result)!=0){
+		
+		
+				while($row = $result->fetch_assoc()){
+						 if($i % 2 != 0){
+						echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["tripDate"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["tripTime"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["collectionPoint"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["destinationPoint"] . "</td>";
 				
 				
-				}
-			else{
-				echo " <td class=\"border px-4 py-4 \"> " . $row["tripDate"] . "</td>";
-				echo " <td class=\"border px-4 py-4 \"> " . $row["tripTime"] . "</td>";
-				echo " <td class=\"border px-4 py-4 \"> " . $row["collectionPoint"] . "</td>";
-				echo " <td class=\"border px-4 py-4\"> " . $row["destinationPoint"] . "</td>";
-			 }
-			// echo "</tr>";
-			echo " <td class=\"border flex justify-between py-2\">
-            <span class=\"inline-flex w-full justify-between px-3\">
-              <a  href=\"../daytripbooking/edittrip.php?id=" . $row['tripNumber'] . "&bid=" . $bookingID . "\">
-                <svg alt=\"Edit\" class=\"text-blue-300 hover:text-blue-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
-                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z\"/>
-				  <p class=\"font-thin text-sm text-center -mt-1\">Edit</p> 
+						}
+					else{
+						echo " <td class=\"border px-4 py-4 \"> " . $row["tripDate"] . "</td>";
+						echo " <td class=\"border px-4 py-4 \"> " . $row["tripTime"] . "</td>";
+						echo " <td class=\"border px-4 py-4 \"> " . $row["collectionPoint"] . "</td>";
+						echo " <td class=\"border px-4 py-4\"> " . $row["destinationPoint"] . "</td>";
+					 }
+					// echo "</tr>";
+					echo " <td class=\"border flex justify-between py-2\">
+					<span class=\"inline-flex w-full justify-between px-3\">
+					  <a  href=\"../daytripbooking/edittrip.php?id=" . $row['tripNumber'] . "&bid=" . $bookingID . "\">
+						<svg alt=\"Edit\" class=\"text-blue-300 hover:text-blue-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
+						  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z\"/>
+						  <p class=\"font-thin text-sm text-center -mt-1\">Edit</p> 
 
-			  </svg>
-               <!-- Delete button -->
-              <a href=\"../daytripbooking/deletetrip.php?id=" . $row['tripNumber'] . "&bid=" . $bookingID . "\" onClick =\" return confirm('Are you sure you want to delete this trip?')\" >
-                <svg class=\"text-red-300 hover:text-red-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
-                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z\"/>
-                <p class=\"font-thin text-sm text-center -mt-1\">Delete</p> 
-			   </svg>
-              </a>
-            </span>
-          </td> ";
-		   echo " </tr>";
-			 $i = $i + 1;
+					  </svg>
+					   <!-- Delete button -->
+					  <a href=\"../daytripbooking/deletetrip.php?id=" . $row['tripNumber'] . "&bid=" . $bookingID . "\" onClick =\" return confirm('Are you sure you want to delete this trip?')\" >
+						<svg class=\"text-red-300 hover:text-red-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
+						  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z\"/>
+						<p class=\"font-thin text-sm text-center -mt-1\">Delete</p> 
+					   </svg>
+					  </a>
+					</span>
+				  </td> ";
+				   echo " </tr>";
+					 $i = $i + 1;
+				}
 		}
+		else{
+		if(isset( $_REQUEST['sd'])){
+			$startDate =  $_REQUEST['sd'];
+				$initialCollectionPoint =  $_REQUEST['cp'];
+		}
+		
+		$tripTime =  "06:44";
+		
+		$dropLocation = "Add a destination point to this single day trip";
+			$query = "INSERT INTO daytrip (tripDate,tripTime, collectionPoint,destinationPoint, bookingID)
+			VALUES ('$startDate','$tripTime','$initialCollectionPoint','$dropLocation', '$bookingID')";
+
+			$result = mysqli_query($conn, $query) or die("Could not execute query");
+			echo "ADD several day trips to your booking";
+			$query = "SELECT * FROM daytrip WHERE bookingID = " . $_REQUEST['id'] ;
+
+		$result = mysqli_query($conn, $query) or die("Could not execute query");
+		$i = 0;
+
+		
+		
+		
+				while($row = $result->fetch_assoc()){
+						 if($i % 2 != 0){
+						echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["tripDate"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["tripTime"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["collectionPoint"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-blue-500\"> " . $row["destinationPoint"] . "</td>";
+				
+				
+						}
+					else{
+						echo " <td class=\"border px-4 py-4 \"> " . $row["tripDate"] . "</td>";
+						echo " <td class=\"border px-4 py-4 \"> " . $row["tripTime"] . "</td>";
+						echo " <td class=\"border px-4 py-4 \"> " . $row["collectionPoint"] . "</td>";
+						echo " <td class=\"border px-4 py-4\"> " . $row["destinationPoint"] . "</td>";
+					 }
+					// echo "</tr>";
+					echo " <td class=\"border flex justify-between py-2\">
+					<span class=\"inline-flex w-full justify-between px-3\">
+					  <a  href=\"../daytripbooking/edittrip.php?id=" . $row['tripNumber'] . "&bid=" . $bookingID  . "&cp=" . $cp . "&sd=" . $sd . "\">
+						<svg alt=\"Edit\" class=\"text-blue-300 hover:text-blue-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
+						  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z\"/>
+						  <p class=\"font-thin text-sm text-center -mt-1\">Edit</p> 
+
+					  </svg>
+					   <!-- Delete button -->
+					  <a href=\"../daytripbooking/deletetrip.php?id=" . $row['tripNumber'] . "&bid=" . $bookingID   . "&cp=" . $cp . "&sd=" . $sd  . "\" onClick =\" return confirm('Are you sure you want to delete this trip?')\" >
+						<svg class=\"text-red-300 hover:text-red-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
+						  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z\"/>
+						<p class=\"font-thin text-sm text-center -mt-1\">Delete</p> 
+					   </svg>
+					  </a>
+					</span>
+				  </td> ";
+				   echo " </tr>";
+					 $i = $i + 1;
+				}
+		}
+		
 	
 	
  	mysqli_close($conn);
