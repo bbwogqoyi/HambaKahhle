@@ -1,0 +1,161 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat:300, 400, 700&display=swap';
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 170vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ebecef;
+    position: relative;
+}
+
+/*container*/
+h3{
+    color: black;
+
+}
+.about{
+    background: url(servv.gif) no-repeat left;
+    background-size: 50%;
+    background-color: transparent;
+    overflow: auto;
+    padding: 100px 0;
+}
+
+.row-footer p{
+    color:white;
+}
+.inner-section{
+    width: 55%;
+    float: right;
+    background-color: #fdfdfd;
+    padding: 100px;
+    box-shadow: 0px 0px 18px 0 #0000002c;
+
+    
+     
+}
+.inner-section h1{
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 400;
+  
+}
+.text{
+    font-size: 13px;
+    color: #545454;
+    line-height: 30px;
+    text-align: justify;
+    margin-bottom: 40px;
+}
+
+
+@media screen and (max-width:1200px){
+    .inner-section{
+        padding: 80px;
+    }
+}
+@media screen and (max-width:1000px){
+    .about{
+        background-size: 100%;
+        padding: 100px 40px;
+    }
+    .inner-section{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:600px){
+    .about{
+        padding: 0;
+    }
+    .inner-section{
+        padding: 60px;
+    }
+    .skills button{
+        font-size: 19px;
+        padding: 5px;
+        width: 160px;
+    }
+}
+
+/* footer */
+
+.row-footer{
+    
+    background-color:#63636F;
+    
+    color:white;
+  
+position: absolute;
+margin-top: -200px;
+    
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+    }
+   
+    * {
+     box-sizing: border-box;
+   }
+   
+   /* */
+   .column-footer {
+     color:white;
+     float: left;
+     width: 25%;
+     padding: 10px;
+     height: 200px; 
+     bottom: 0%;
+   }
+   
+
+   .row-footer:after {
+     content: "";
+     display: table;
+     clear: both;
+   }
+   ul{
+	   list-style-type: none;
+   }
+ .column-footer a {
+	  font-size: 16px;
+	  color:white ;
+	  font-family: Montserrat;
+	  font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 300;
+	letter-spacing: 2px;
+    }
+ h3{
+	font-size: 18px;
+	color: white;
+	font-family: Montserrat;
+	font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 300;
+	letter-spacing: 2px;
+ }
+.bottom-footer p{
+  
+  font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 200;
+	letter-spacing: 2px;
+}
+
+  
+  
+  #footer ul li a{color:white;}
+  header{
+      background-color: #63636F;
+  }

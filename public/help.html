@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styling.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/abt.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="nnn.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/helpcss.css">
+ 
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="nnn.png" sizes="128x123" type="image/png"> 
+
+
+  <title>FQ&A</title>
+</head>
+<style>
+  
+.about{
+    background: url(ttc.jpg) no-repeat left;
+    background-size: 50%;
+    background-color: transparent;
+    overflow: auto;
+    padding: 100px 0;
+}
+body{
+    min-height: 170vh;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    background-color: #ebecef;
+    position: relative;
+}
+</style>
+<body>
+  <!-- Header -->
+  <section id="header">
+    <div class="header container">
+      <div class="nav-bar">
+        <div class="brand">
+          <a href="#hero"><img src ="index_images/bgn.png"></a>
+        </div>
+        <div class="nav-list">
+          <div class="tops"><div class="bar"></div></div>
+          <ul>
+            <li><a href="index.html" data-after="Home">Home</a></li>
+            <li><a href="page.html">About</a></li>
+            <li><a href="abouts=us.html" >Contact</a></li>
+            <li><a href="login/login.php" type="button"  >Login</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+   <!-- fQ&A-->
+    <section class="service"></section>
+    <div class="about">
+      
+        <div class="inner-section">
+          <div><h1 class="section-title"> <span>F</span>requently Asked Question</h1></div>
+            <p class="text">
+              
+              <div class="accordian">
+
+                <div class="card">
+                    <div class="card-header">
+                       <h3>BOOKING </h3>
+                       <span class="fa fa-minus"></span>
+                    </div>
+                    <div class="card-body">
+                        <p>
+
+                          When booking with Hamba Kahle,your booking can consist of one or more Day Trips.
+Each Booking should have a Start date and an End date, and number of passengers of the group to be
+transported
+                        </p>
+                    </div>
+                </div>
+          
+                <div class="card">
+                    <div class="card-header">
+                       <h3> booking confitmation </h3>
+                       <span class="fa fa-plus"></span>
+                    </div>
+                    <div class="card-body">
+                        <p>once we as humba kahle admin recieve your booking ,we will send a notification on your dashboard and indicate to you your details of you pick up and driver</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                       <h3>cancel or editing a booking </h3>
+                       <span class="fa fa-plus"></span>
+                    </div>
+                    <div class="card-body">
+                        <p> once you have booked there is a cancel button and edit button you can press those and delete 3 days before the trip ,after that please call us or email to notfy us of your change</p>
+                    </div>
+                </div>
+            </div>
+            </p>
+        
+        </div>
+    </div>
+
+</section>
+
+   <!-- SCRIPT FOR THE ANIMATION -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+	  $(".card-header").click(function(){
+       // self clicking close
+       if($(this).next(".card-body").hasClass("active")){
+       	
+       }
+
+	   $(".card .card-body").slideUp()
+	   $(".card .card-header span").removeClass("fa-minus").addClass("fa-plus");
+       $(this).next(".card-body").addClass("active").slideDown()
+        $(this).children("span").removeClass("fa-plus").addClass("fa-minus")
+
+	  })
+	})
+
+</script>
+   <!-- FOOTER STARTS-->
+<footer>
+
+
+  
+    <div class="row-footer">
+      <div class="column-footer"  id="col-md-3 col-sm-6col-xs-12 segment-one">
+        <a href="#hero"><img src ="index_images/bgn.png" style="width:200px;height:50px;"></a>
+      
+
+        <p>Hamba Kahle was founded in 2019 to provide transportation for you</p>
+  <h3>Follow us on:</h3>
+  <i class="fa fa-facebook" style="font-size:24px;"></i>
+  <a href="#"><i class="fa fa-twitter" style="font-size:24px;"></i></a>
+  <a href="#"><i class="fa fa-instagram" style="font-size:24px;color:white;"></i></a>
+      
+</div>
+      <div class="column-footer"  ><div class= segment-two>
+    
+        <h3> Navigation</h3>
+  <ul>
+    <li><a href="page.html">about</a></li>
+    <li><a href="abouts=us.html">contact</a></li>
+<li>    <a href="us.html" >refunds policy </a></li>
+    <li><a href="SITE MAP.html">site map</a></li>
+    <li><a href="help.html">F Q&a</a></li>  <li>
+     <li> <a href="TC.html">Terms and condition</a></li>
+  </ul>
+      </div>
+    </div>
+  
+      <div class="column-footer" >
+    
+        <h3>Help on:</h3>
+  <ul>
+    <li><a href="#">Booking</a></li>
+    <li><a href="#">login</a></li>
+    
+    <li> <a href="#">cancellaton</a></li>
+  
+    
+  
+  </ul>
+      </div>
+  
+  
+      <div class="column-footer"  id="col-md-3 col-sm-6col-xs-12 segment-four">
+    
+        <h3>Our News letter:</h3>
+  <p>subscribe to get daily news on our specials <p>
+   <form action="">
+     <input type="email">
+     <input type="submit" value="subscribe">
+   </form>
+   <p><i class="fab fa-cc-mastercard" style="font-size:24px;"></i>
+    <i class="fab fa-cc-paypal" style="font-size:24px;"></i>
+    <i class="fab fa-cc-visa" style="font-size:24px;"></i>
+
+    </p>
+   
+
+      </div>
+    
+  
+  
+  <div class="bottom-footer">
+  <p>
+  &copy; Hambakahletravelagency@Rhodesuniversity.com | Designed by BlackPeak
+  </p>
+  </div>
+  </div>
+  </footer>
+     <!-- FOOTER ENDS -->
+  <script src="apps.js"></script>
+</body>
+</html>

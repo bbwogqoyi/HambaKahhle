@@ -1,0 +1,192 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat:300, 400, 700&display=swap';
+body{
+    background-color: #f5f6fa;
+}
+footer p{
+	color:white;
+}
+
+.row-footer{
+    
+    background-color:#63636F;
+    
+    color:white;
+  
+
+    
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+    }
+   
+    * {
+     box-sizing: border-box;
+   }
+   
+   /* */
+   .column-footer {
+     color:white;
+     float: left;
+     width: 25%;
+     padding: 10px;
+     height: 200px; /* Should be removed. Only for demonstration */
+     bottom: 0%;
+   }
+   
+   /* Clear floats after the columns */
+   .row-footer:after {
+     content: "";
+     display: table;
+     clear: both;
+   }
+   ul{
+	   list-style-type: none;
+   }
+ .column-footer a {
+	  font-size: 16px;
+	  color:white ;
+	  font-family: Montserrat;
+	  font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 300;
+	letter-spacing: 2px;
+    }
+ h3{
+	font-size: 18px;
+	color: white;
+	font-family: Montserrat;
+	font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 300;
+	letter-spacing: 2px;
+ }
+.bottom-footer p{
+  font-size: 20px;
+  font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 400;
+	letter-spacing: 5px;
+}
+
+  
+  #footer .logo img {
+	width: 50px;
+	float: left;
+  }
+  
+  #footer ul li a{color:white;}
+  .foot-col-1 {
+	width: 30%;
+	display: inline-block;
+	margin-left: 20px;
+  }
+  
+  .foot-col-2 {
+	width: 18%;
+	display: inline-block;
+	
+  }
+  
+  .foot-col-3 {
+	width: 18%;
+	display: inline-block;
+	font-size: 15px;
+  }
+  
+  .foot-col-4 {
+	width: 30%;
+	display: inline-block;
+  }
+  
+  @media (max-width:1085px) {
+	.foot-col-1, .foot-col-4 {
+	  display: block;
+	  width: 90%;
+	  margin: 0 auto;
+	}
+	.foot-col-2,
+	.foot-col-3 {
+  width:49%;
+	}
+  }
+  
+ 
+#footer p {
+	color: white;
+	font-size: 1.3rem;
+	text-align: center;
+}
+/* End Footer */
+
+/* Keyframes */
+@keyframes hamburger_puls {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(1.4);
+	}
+}
+@keyframes text_reveal_box {
+	50% {
+		width: 100%;
+		left: 0;
+	}
+	100% {
+		width: 0;
+		left: 100%;
+	}
+}
+@keyframes text_reveal {
+	100% {
+		color: white;
+	}
+}
+@keyframes text_reveal_name {
+	100% {
+		color: #9c88ff;
+		font-weight: 500;
+	}
+}
+/* End Keyframes */
+
+/* Media Query For Tablet */
+@media only screen and (min-width: 768px) {
+	.cta {
+		font-size: 2.5rem;
+		padding: 20px 60px;
+	}
+	h1.section-title {
+		font-size: 6rem;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	/* header */
+	#header .hamburger {
+		display: none;
+	}
+	#header .nav-list ul {
+		position: initial;
+		display: block;
+		height: auto;
+		width: fit-content;
+		background-color: transparent;
+	}
+	#header .nav-list ul li {
+		display: inline-block;
+	}
+	#header .nav-list ul li a {
+		font-size: 1.8rem;
+	}
+	#header .nav-list ul a:after {
+        display: none;
+}
+}
+
