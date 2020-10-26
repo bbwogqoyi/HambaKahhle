@@ -22,6 +22,27 @@ function executeQuery($query) {
   return $result;
 }
 
+function executeMultipleQueries($queries) {
+  // database credentials
+  require_once("db.config.php");
+
+  // make connection to db
+  $conn = 
+    mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE)
+    or die("Could not connect to database!");
+
+  // execute query
+  $result = 
+    mysqli_multi_query($conn, $queries)
+    or die("Error description: " . mysqli_error($conn));
+    // or die("Could not execute query!");
+
+  // close db connection
+  mysqli_close($conn);
+
+  return $result;
+}
+
 function executeQueryAndRedirectOnSucess($query, $successURL) {
   // database credentials
   require_once("db.config.php");

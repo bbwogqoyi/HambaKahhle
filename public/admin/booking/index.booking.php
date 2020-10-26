@@ -36,10 +36,26 @@ function getBookings() {
   return $result;
 }
 
-function deleteBooking() {
-  // if( isset($_POST['deleteModalBookingID']) ) {
-  //   $query
-  // }
+if( isset($_POST['deleteModalBookingID']) ) {
+  $bookingID = $_POST['deleteModalBookingID'];
+
+  $query = 
+    "DELETE from booking b
+      where b.bookingID= '$bookingID';
+      
+      delete from vehiclebooking vb
+      where vb.bookingID = '$bookingID';
+      
+      delete from daytrip dt
+      where dt.bookingID = '$bookingID';
+      
+      delete from daytripdepot dd
+      where dd.tripNumber in (
+        select _dt.tripNumber from daytrip _dt
+        where _dt.bookingID = '$bookingID'
+      );";
+
+  executeMultipleQueries($query);
 }
 
 ?>
