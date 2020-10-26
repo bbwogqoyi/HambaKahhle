@@ -1,0 +1,56 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: "montserrat",sans-serif;
+}
+
+
+
+
+.us{
+  background: transparent;
+  text-align: center;
+}
+.us h1{
+  display: inline-block;
+  text-transform: uppercase;
+  border-bottom: 4px solid #9c88ff;
+  font-size: 20px;
+  padding-bottom: 10px;
+  margin-top: 40px;
+}
+.cen{
+  max-width: 1200px;
+  margin: auto;
+  overflow: hidden;
+  padding: 20px;
+}
+.us{
+  display: inline-block;
+  width: 100% ;
+  
+  margin: 0 -2px;
+  padding: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.us:hover{
+  background:transparent;
+}
+.us i{
+  color: #9c88ff;
+  font-size: 34px;
+  margin-bottom: 30px;
+}
+.us h2{
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0;
+}
+.us p{
+  color:black;
+  font-size: 15px;
+  font-weight: 500;
+}

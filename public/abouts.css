@@ -1,0 +1,247 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    min-height: 170vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ebecef;
+    position: relative;
+}
+.about{
+    background: url(car.jpg) no-repeat left;
+    background-size: 55%;
+    background-color: transparent;
+    overflow: auto;
+    padding: 100px 0;
+     
+}
+.inner-section{
+    width: 55%;
+    float: right;
+    background-color: #fdfdfd;
+    padding: 100px;
+    box-shadow: 0px 0px 18px 0 #0000002c;
+
+    
+     
+}
+.inner-section h1{
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: 900;
+  
+}
+.text{
+    font-size: 13px;
+    color: #545454;
+    line-height: 30px;
+    text-align: justify;
+    margin-bottom: 40px;
+}
+.skills button{
+    font-size: 22px;
+    text-align: center;
+    letter-spacing: 2px;
+    border: none;
+    border-radius: 20px;
+    padding: 8px;
+    width: 200px;
+    background-color: rgb(135, 110, 153);
+    color: white;
+    cursor: pointer;
+}
+.skills button:hover{
+    transition: 1s;
+    background-color:indigo;
+    color: white;
+}
+@media screen and (max-width:1200px){
+    .inner-section{
+        padding: 80px;
+    }
+}
+@media screen and (max-width:1000px){
+    .about{
+        background-size: 100%;
+        padding: 100px 40px;
+    }
+    .inner-section{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:600px){
+    .about{
+        padding: 0;
+    }
+    .inner-section{
+        padding: 60px;
+    }
+    .skills button{
+        font-size: 19px;
+        padding: 5px;
+        width: 160px;
+    }
+    
+}
+
+
+
+.row-footer{
+    
+    background-color:#63636F;
+    
+    color:white;
+  
+position: absolute;
+margin-top: -200px;
+    
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+    }
+   
+    * {
+     box-sizing: border-box;
+   }
+   
+   /* */
+   .column-footer {
+     color:white;
+     float: left;
+     width: 25%;
+     padding: 10px;
+     height: 200px; /* Should be removed. Only for demonstration */
+     bottom: 0%;
+   }
+   
+   /* Clear floats after the columns */
+   .row-footer:after {
+     content: "";
+     display: table;
+     clear: both;
+   }
+   ul{
+	   list-style-type: none;
+   }
+ .column-footer a {
+	  font-size: 16px;
+	  color:white ;
+	  font-family: Montserrat;
+	  font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 300;
+	letter-spacing: 2px;
+    }
+ h3{
+	font-size: 18px;
+	color: white;
+	font-family: Montserrat;
+	font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 300;
+	letter-spacing: 2px;
+ }
+.bottom-footer p{
+  
+  font-size: 15px;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 200;
+	letter-spacing: 2px;
+}
+
+  
+  
+  #footer ul li a{color:white;}
+
+  #contact .contact {
+    flex-direction: column;
+    display: flex;
+    flex-direction: wrap;
+    align-self: center;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+#contact .contact-items {
+	width: 400px;
+}
+#contact .contact-item {
+	width: 50%;
+	padding: 20px;
+	text-align: center;
+	border-radius: 10px;
+	padding: 30px;
+	margin: 30px;
+	display: flex;
+    justify-content: center;
+    align-self: center;
+	align-items: center;
+	flex-direction: column;
+	box-shadow: 0px 0px 18px 0 #0000002c;
+	transition: .3s ease box-shadow;
+	
+	background-image: linear-gradient(60deg, #eceff3 3%, #d4d2e6 100%);
+}
+#contact .contact-item:hover {
+	box-shadow: 0px 0px 5px 0 #9c88ff;
+}
+#contact .icon {
+	width: 70px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+#contact .contact-info h1 {
+	font-size: 2.5rem;
+	font-weight: 500;
+	margin-bottom: 5px;
+	
+}
+#contact .contact-info h2 {
+	font-size: 1.3rem;
+	line-height: 2rem;
+	font-weight: 500;
+	
+}
+
+#contact .contact {
+    flex-direction: column;
+    padding: 100px 0;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    min-width: 16vh;
+}
+#contact .contact-items {
+    width: 160%;
+    height: 50%;
+
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0;
+    
+}
+#contact .contact-item {
+    width: 30%;
+    margin: 0;
+    flex-direction: row;
+}
+#contact .contact-item .icon {
+    height: 100px;
+    width: 100px;
+}
+#contact .contact-item .icon img {
+    object-fit: contain;
+}
+#contact .contact-item .contact-info {
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+}
